@@ -23,12 +23,12 @@
 [data-theme='light'] {
   --color-bg: #f7f7f8;
   --color-text: #6e6581;
-  --color-border: rgba(220 121 55 / 35%);
-  --color-link: #ed7626;
+  --color-border: rgba(104 59 155 / 35%);
+  --color-link: #683b9b;
   --color-title: #5c493d;
   --color-subtitle: #9e9aa7;
   --color-logo: #ed7626;
-  --color-social: #a09b98;
+  --color-social: rgba(104 59 155 / 75%);
   --color-overlay: rgba(35 33 31 / 85%);
 }
 
@@ -122,5 +122,5 @@ a, [data-theme-link] {
 [data-initialized] body,
 [data-initialized] a,
 [data-initialized] [data-themable] {
-  transition: background-color 0.45s var(--ease-in-out), color 0.45s var(--ease-in-out); 
+  transition: background-color 0.45s var(--ease-in-out), color 0.45s var(--ease-in-out), border-color 0.45s var(--ease-in-out); 
 }

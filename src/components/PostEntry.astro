@@ -11,11 +11,12 @@ const { title, subTitle, href, date } = Astro.props;
 
 <article>
   <h2>
-    <a href={href}>{title}</a>
+    <a href={href} data-themable>{title}</a>
   </h2>
-  <p>{subTitle}</p>
+  <p set:html={subTitle} />
   <footer>
-    <time datetime={date.toISOString()}>{beautifyDate(date)}</time>
+    <time data-themable datetime={date.toISOString()}>{beautifyDate(date)}</time
+    >
     <a href={href}>Leer más <Sprite name="ri:arrow-right-double-line" /></a>
   </footer>
 </article>

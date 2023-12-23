@@ -32,20 +32,24 @@ import SocialLinks from './SocialLinks.astro';
 </div>
 
 <style>
-  div {
+  :global([data-theme='dark']) div {
+    --color: 46 43 54;
+
+    background-image: linear-gradient(
+      133.4deg,
+      rgba(var(--color) / 47%) 0%,
+      rgba(var(--color) / 0%) 100%
+    );
+  }
+
+  :global([data-theme='light']) div {
+    --color: 226 218 241;
+
     background-image: linear-gradient(
       133.4deg,
       rgba(var(--color) / 42%) 0%,
       rgba(var(--color) / 0%) 75%
     );
-  }
-
-  :global([data-theme='dark']) div {
-    --color: 46 43 54;
-  }
-
-  :global([data-theme='light']) div {
-    --color: 226 218 241;
   }
 
   section {
