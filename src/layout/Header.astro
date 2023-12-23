@@ -5,7 +5,8 @@ import Container from '@/components/Container.astro';
 
 <Container as="header">
   <a href="/" data-themable>
-    <Sprite name="jmlweb" />
+    <span class="sr-only">José Manuel Lucas</span>
+    <Sprite name="jmlweb" aria-hidden="true" />
   </a>
   <slot />
 </Container>
