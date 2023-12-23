@@ -1,0 +1,38 @@
+---
+const LINKS = [
+  {
+    name: 'Home',
+    link: '/',
+  },
+  {
+    name: 'Sobre mí',
+    link: '/sobre-mi',
+  },
+  {
+    name: 'Posts',
+    link: '/posts',
+  },
+  {
+    name: 'Charlas',
+    link: '/charlas',
+  },
+];
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath } = Astro.props;
+---
+
+<ul>
+  {
+    LINKS.map(({ name, link }) => (
+      <li>
+        <a href={link} aria-current={currentPath === link ? 'page' : undefined}>
+          {name}
+        </a>
+      </li>
+    ))
+  }
+</ul>

@@ -1,0 +1,70 @@
+---
+import { Sprite } from 'astro-icon';
+
+import { beautifyDate } from '@/pods/posts/beautifyDate';
+import type { PostItem } from '@/pods/posts/types';
+
+type Props = PostItem;
+
+const { title, subTitle, href, date } = Astro.props;
+---
+
+<article>
+  <h2>
+    <a href={href}>{title}</a>
+  </h2>
+  <p>{subTitle}</p>
+  <footer>
+    <time datetime={date.toISOString()}>{beautifyDate(date)}</time>
+    <a href={href}>Leer más <Sprite name="ri:arrow-right-double-line" /></a>
+  </footer>
+</article>
+
+<style>
+  h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--color-title);
+    line-height: 120%;
+
+    @media (width >= 1100px) {
+      font-size: 26px;
+    }
+  }
+
+  h2 a {
+    color: currentcolor;
+  }
+
+  p {
+    margin-block-start: 8px;
+    line-height: 160%;
+
+    @media (width >= 1100px) {
+      font-size: 17px;
+    }
+  }
+
+  footer {
+    margin-block-start: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+  }
+
+  time {
+    color: var(--color-subtitle);
+    font-weight: 500;
+  }
+
+  footer a {
+    font-weight: 600;
+  }
+
+  [astro-icon] {
+    width: 24px;
+    aspect-ratio: 1;
+    display: inline-block;
+  }
+</style>

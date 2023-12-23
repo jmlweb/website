@@ -1,0 +1,30 @@
+---
+import { map, pipe, slice, sortWith } from 'mochila-ts';
+import { getCollection } from 'astro:content';
+
+import MainLayout from '@/layout/MainLayout.astro';
+import Bio from '@/components/Bio/Bio.astro';
+import FeaturedPosts from '@/components/FeaturedPosts.astro';
+import PostEntry from '@/components/PostEntry.astro';
+import { toPostItem } from '@/pods/posts/toPostItem';
+import type { Post } from '@/pods/posts/types';
+
+const sortByDate = (
+  { data: { date: dateA } }: Post,
+  { data: { date: dateB } }: Post
+) => dateA.getTime() - dateB.getTime();
+
+const featuredPosts = pipe(
+  sortWith(sortByDate),
+  slice(0, 4),
+  map(toPostItem)
+)(await getCollection('posts'));
+console.log(featuredPosts);
+---
+
+<MainLayout title="José Manuel Lucas / Desarrollador Frontend" currentPath="/">
+  <Bio />
+  <FeaturedPosts>
+    {featuredPosts.map((props) => <PostEntry {...props} />)}
+  </FeaturedPosts>
+</MainLayout>

@@ -1,0 +1,67 @@
+---
+import 'node_modules/modern-normalize/modern-normalize.css';
+import '@/styles/global.css';
+import '@fontsource-variable/inter';
+
+import { Sprite } from 'astro-icon';
+
+import Footer from './Footer.astro';
+import Header from './Header.astro';
+import Menu from './Menu.astro';
+import MobileMenu from './MobileMenu.astro';
+import PageLinks from '@/components/PageLinks.astro';
+import SimpleTooltip from './SimpleTooltip.astro';
+import SkipToContent from './SkipToContent.astro';
+
+interface Props {
+  title: string;
+  currentPath?: string;
+}
+
+const { title, currentPath } = Astro.props;
+---
+
+<html lang="es" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="José Manuel Lucas | Frontend, TypeScript, CSS, Next.js"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <SkipToContent />
+    <Sprite.Provider>
+      <div id="root">
+        <Header>
+          <Menu>
+            <PageLinks currentPath={currentPath} />
+          </Menu>
+        </Header>
+        <main id="main">
+          <slot />
+        </main>
+        <Footer />
+      </div>
+      <MobileMenu>
+        <PageLinks currentPath={currentPath} />
+      </MobileMenu>
+    </Sprite.Provider>
+    <SimpleTooltip />
+  </body>
+</html>
+<style>
+  div {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+    min-height: 100vh;
+  }
+</style>
+<script is:inline>
+  document.documentElement.setAttribute('data-js', 'true');
+</script>

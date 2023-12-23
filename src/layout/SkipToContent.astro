@@ -1,0 +1,24 @@
+<a href="#main">Saltar al contenido</a>
+
+<style>
+  a {
+    display: block;
+    background: var(--color-text);
+    color: var(--color-bg);
+    min-width: 160px;
+    margin-left: -80px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 500;
+    top: 16px;
+    left: 50%;
+    padding: 8px;
+    position: absolute;
+    transform: translateY(calc(-100% - 16px));
+    transition: transform 0.3s;
+  }
+
+  a:focus {
+    transform: translateY(0%);
+  }
+</style>

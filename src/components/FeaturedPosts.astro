@@ -1,0 +1,41 @@
+---
+import Container from './Container.astro';
+---
+
+<Container as="section">
+  <h1>Últimos posts</h1>
+  <div>
+    <slot />
+  </div>
+</Container>
+
+<style>
+  section {
+    margin-block-start: 48px;
+  }
+
+  h1 {
+    font-size: 19px;
+    line-height: 135%;
+    font-weight: 500;
+    color: var(--color-subtitle);
+
+    @media (width >= 1100px) {
+      font-size: 20px;
+    }
+  }
+
+  div {
+    --gap: 48px;
+
+    margin-block-start: 24px;
+    display: grid;
+    grid-gap: var(--gap);
+
+    @media (width >= 1100px) {
+      --gap: 64px;
+
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

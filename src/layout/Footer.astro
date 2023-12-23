@@ -1,0 +1,113 @@
+---
+import Container from '@/components/Container.astro';
+---
+
+<Container as="footer">
+  <ul class="aux-links">
+    <li class="name">José Manuel Lucas</li>
+    <li>
+      <a href="/condiciones-legales">Términos de uso</a>
+    </li>
+    <li>
+      <a href="/politica-privacidad">Política de privacidad</a>
+    </li>
+  </ul>
+  <ul class="social-links">
+    <li>
+      <a
+        href="https://github.com/jmlweb"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-theme-link
+      >
+        Github
+      </a>
+    </li>
+    <li>
+      <a
+        href="https://twitter.com/jmlweb"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Twitter
+      </a>
+    </li>
+    <li>
+      <a
+        href="https://www.linkedin.com/in/josemanuellucas"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        LinkedIn
+      </a>
+    </li>
+  </ul>
+</Container>
+
+<style>
+  footer {
+    --font-size: 15px;
+
+    margin-top: auto;
+    padding-block: 96px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-size: var(--font-size);
+
+    @media (width >= 720px) {
+      --font-size: 16px;
+    }
+
+    @media (width >= 1100px) {
+      --font-size: 17px;
+
+      padding-block: 160px 32px;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  .social-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-weight: 500;
+  }
+
+  .social-links a {
+    padding: 8px 12px;
+  }
+
+  .aux-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 20px;
+  }
+
+  .aux-links a {
+    color: var(--color-subtitle);
+
+    @media (width >= 720px) {
+      font-size: 15px;
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .name {
+    font-size: 16px;
+    font-weight: 600;
+    width: 100%;
+    text-align: center;
+
+    @media (width >= 720px) {
+      font-size: var(--font-size);
+      width: unset;
+      text-align: unset;
+    }
+  }
+</style>

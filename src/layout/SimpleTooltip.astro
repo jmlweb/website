@@ -1,0 +1,140 @@
+<div id="simple-tooltip" class="tooltip" role="tooltip" hidden data-themable>
+  <span class="tooltip-content" data-themable></span>
+  <span class="tooltip-arrow" data-themable></span>
+</div>
+
+<style>
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .tooltip {
+    width: max-content;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--color-text);
+    color: var(--color-bg);
+    padding-block: 6px;
+    padding-inline: 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    animation: fade-in 0.25s var(--ease-in);
+  }
+
+  .tooltip-arrow {
+    position: absolute;
+    background-color: var(--color-text);
+    width: 6px;
+    aspect-ratio: 1;
+    transform: rotate(45deg);
+  }
+</style>
+
+<script>
+  import {
+    arrow,
+    computePosition,
+    flip,
+    offset,
+    shift,
+  } from '@floating-ui/dom';
+
+  const triggers = document.querySelectorAll<HTMLElement>('[data-tooltip]');
+  const tooltip = document.querySelector<HTMLDivElement>('#simple-tooltip');
+  const tooltipContent =
+    tooltip?.querySelector<HTMLDivElement>('.tooltip-content');
+  const tooltipArrow = tooltip?.querySelector<HTMLDivElement>('.tooltip-arrow');
+
+  if (!tooltip || !tooltipArrow || !tooltipContent) {
+    throw new Error('Tooltip elements not found');
+  }
+
+  triggers.forEach((trigger) => {
+    const showTooltip = () => {
+      const tooltipText =
+        trigger.dataset.tooltip ||
+        trigger.querySelector('.sr-only')?.textContent;
+      const config = {
+        offset: Number(trigger.dataset.offset || 8),
+        shiftPadding: Number(trigger.dataset.shiftPadding || 8),
+      };
+      if (!tooltipText) {
+        throw new Error('Tooltip text not found');
+      }
+
+      tooltipContent.textContent = tooltipText;
+
+      computePosition(trigger, tooltip, {
+        middleware: [
+          offset(config.offset),
+          flip(),
+          shift({
+            padding: config.shiftPadding,
+          }),
+          arrow({ element: tooltipArrow }),
+        ],
+      }).then(({ x, y, placement, middlewareData }) => {
+        Object.assign(tooltip.style, {
+          top: `${y}px`,
+          left: `${x}px`,
+        });
+
+        const { arrow } = middlewareData;
+        if (arrow == null) {
+          return;
+        }
+
+        const staticSide = {
+          top: 'bottom',
+          right: 'left',
+          bottom: 'top',
+          left: 'right',
+        }[placement.split('-')[0]]!;
+
+        Object.assign(tooltipArrow.style, {
+          left: arrow.x != null ? `${arrow.x}px` : '',
+          top: arrow.y != null ? `${arrow.y}px` : '',
+          right: '',
+          bottom: '',
+          [staticSide]: '-3px',
+        });
+      });
+      tooltip.hidden = false;
+    };
+
+    const hideTooltip = () => {
+      tooltip.hidden = true;
+    };
+
+    const LISTENERS = [
+      ['mouseenter', showTooltip],
+      ['mouseleave', hideTooltip],
+      ['focus', showTooltip],
+      ['blur', hideTooltip],
+    ] as const;
+
+    const switchListeners = (supportsHover: boolean) => {
+      LISTENERS.forEach(([event, listener]) => {
+        if (supportsHover) {
+          trigger.addEventListener(event, listener);
+        } else {
+          trigger.removeEventListener(event, listener);
+        }
+      });
+    };
+
+    window.matchMedia('(hover: hover)').addEventListener('change', (e) => {
+      switchListeners(e.matches);
+    });
+
+    switchListeners(window.matchMedia('(hover: hover)').matches);
+  });
+</script>

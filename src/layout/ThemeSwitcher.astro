@@ -1,0 +1,112 @@
+---
+import { Sprite } from 'astro-icon';
+---
+
+<button
+  type="button"
+  id="theme-toggler"
+  data-tooltip
+  data-offset="4"
+  aria-pressed="true"
+>
+  <span class="sr-only">Activar tema claro</span>
+  <Sprite pack="ri" name="moon-line" aria-hidden="true" />
+  <Sprite pack="ri" name="sun-line" aria-hidden="true" />
+</button>
+
+<style>
+  button {
+    display: none;
+    position: relative;
+    padding: 0;
+    width: 44px;
+    aspect-ratio: 1 / 1;
+    margin: -10px;
+    border: none;
+    background: none;
+    transition: color 0.25s var(--ease-in);
+    color: var(--color-subtitle);
+  }
+
+  :global([data-js]) button {
+    display: block;
+  }
+
+  /* supports hover media query */
+  @media (hover: hover) {
+    :global([data-theme='light']) button:hover {
+      color: #bb74dc;
+    }
+
+    :global([data-theme='dark']) button:hover {
+      color: #feeeaf;
+    }
+  }
+
+  [astro-icon] {
+    width: 24px;
+    aspect-ratio: 1 / 1;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+
+  :global([data-initialized]) [astro-icon] {
+    transition:
+      opacity 0.25s var(--ease-in-out),
+      transform 0.2s var(--ease-in-out);
+  }
+
+  :global([data-theme='light']) [astro-icon='ri:sun-line'],
+  :global([data-theme='dark']) [astro-icon='ri:moon-line'] {
+    opacity: 0;
+    transform: scale(0);
+  }
+</style>
+
+<script>
+  const toggler = document.querySelector<HTMLButtonElement>('#theme-toggler');
+  const text = toggler?.querySelector('.sr-only');
+  if (!toggler || !text) {
+    throw new Error('Theme toggler not found');
+  }
+
+  const getInitialTheme = (): 'light' | 'dark' => {
+    const storedTheme = localStorage.getItem('theme');
+    if (storedTheme && ['light', 'dark'].includes(storedTheme)) {
+      return storedTheme as 'light' | 'dark';
+    }
+    const prefersLight = window.matchMedia(
+      '(prefers-color-scheme: light)'
+    ).matches;
+    return prefersLight ? 'light' : 'dark';
+  };
+
+  const setDocumentTheme = (newTheme: 'light' | 'dark') => {
+    document.documentElement.dataset.theme = newTheme;
+    text.textContent = `Activar tema ${
+      newTheme === 'dark' ? 'claro' : 'oscuro'
+    }`;
+    toggler.setAttribute(
+      'aria-pressed',
+      newTheme === 'dark' ? 'true' : 'false'
+    );
+  };
+
+  setDocumentTheme(getInitialTheme());
+
+  setTimeout(() => {
+    document.documentElement.dataset.initialized = 'true';
+  }, 700);
+
+  toggler.addEventListener('click', () => {
+    const theme = document.documentElement.dataset.theme;
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    setDocumentTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+    setTimeout(() => {
+      toggler.blur();
+      toggler.focus();
+    }, 50);
+  });
+</script>

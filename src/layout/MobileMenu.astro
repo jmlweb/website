@@ -1,0 +1,190 @@
+---
+import { Sprite } from 'astro-icon';
+---
+
+<div class="menu" id="mobile-menu" data-open="false" hidden>
+  <div class="menu-overlay"></div>
+  <button
+    type="button"
+    aria-expanded="true"
+    aria-controls="mobile-menu"
+    data-theme-link
+    data-tooltip
+  >
+    <span class="sr-only">Cerrar menú</span>
+    <Sprite name="ri:close-line" />
+  </button>
+  <nav class="menu-content" aria-label="Menú móvil">
+    <slot />
+  </nav>
+</div>
+
+<style>
+  .menu {
+    pointer-events: none;
+
+    &[data-open='true'] {
+      pointer-events: auto;
+    }
+
+    @media (width >= 720px) {
+      display: none;
+    }
+  }
+
+  button {
+    background: transparent;
+    display: flex;
+    align-items: center;
+    width: 44px;
+    height: 44px;
+    position: absolute;
+    top: 18px;
+    right: 12px;
+    transition: opacity 0.4s ease-in-out;
+    opacity: 0;
+    z-index: 1;
+  }
+
+  [data-open='true'] button {
+    opacity: 1;
+  }
+
+  [astro-icon] {
+    width: 30px;
+    height: 30px;
+  }
+
+  .menu-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: var(--color-overlay);
+    opacity: 0;
+    transition: opacity 0.25s ease-in-out;
+    will-change: opacity;
+  }
+
+  [data-open='true'] .menu-overlay {
+    opacity: 1;
+  }
+
+  .menu-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background-color: var(--color-bg);
+    width: 300px;
+    max-width: calc(100% - 44px);
+    opacity: 0;
+    transform: translateX(100%);
+    transition:
+      transform 0.4s ease-in-out,
+      opacity 0.25s ease-in-out;
+    box-shadow: var(--shadow);
+    will-change: opacity, transform;
+  }
+
+  :global([data-theme='dark']) .menu-content {
+    --shadow: 0 0 1px 2px rgba(0 0 0 / 3%), 0 2px 6px 2px rgba(0 0 0 / 5%),
+      0 4px 12px 6px rgba(0 0 0 / 13%);
+  }
+
+  :global([data-theme='light']) .menu-content {
+    --shadow: 0 0 1px 1px rgba(0 0 0 / 50%), 0 2px 6px 2px rgba(0 0 0 / 50%),
+      0 4px 12px 6px rgba(0 0 0 / 30%), 0 8px 24px 8px rgba(0 0 0 / 20%);
+  }
+
+  [data-open='true'] .menu-content {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  nav :global(ul) {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-size: 20px;
+    font-weight: 540;
+    text-align: center;
+  }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLDivElement>('#root');
+  const menu = document.getElementById('mobile-menu');
+  const trigger = document.getElementById('mobile-menu-trigger');
+  const closer = menu?.querySelector('button');
+  const overlay = menu?.querySelector('.menu-overlay');
+  const content = menu?.querySelector('.menu-content');
+  if (!root || !menu || !trigger || !closer || !overlay || !content) {
+    throw new Error('No elements found for mobile menu');
+  }
+
+  const focusableElements = menu.querySelectorAll<
+    HTMLAnchorElement | HTMLButtonElement
+  >('a[href]:not([disabled]), button:not([disabled])');
+  const firstFocusableElement = focusableElements[0];
+  const lastFocusableElement = focusableElements[focusableElements.length - 1];
+
+  const onKeydown = (event: KeyboardEvent) => {
+    if (window.matchMedia('(width >= 720px)').matches) {
+      return;
+    }
+    if (event.key === 'Escape') {
+      closer.dispatchEvent(new MouseEvent('click'));
+      trigger.focus();
+    }
+
+    if (event.key === 'Tab') {
+      const mustBlock =
+        document.activeElement ===
+        (event.shiftKey ? firstFocusableElement : lastFocusableElement);
+      if (mustBlock) {
+        (event.shiftKey ? lastFocusableElement : firstFocusableElement).focus();
+        event.preventDefault();
+      }
+    }
+  };
+
+  const close = () => {
+    menu.dataset.open = 'false';
+    menu.setAttribute('aria-busy', 'true');
+    document.removeEventListener('keydown', onKeydown);
+    document.body.style.overflowY = '';
+    trigger.focus();
+    menu.ontransitionend = () => {
+      menu.hidden = true;
+      trigger.setAttribute('aria-expanded', 'false');
+      root.inert = false;
+      menu.setAttribute('aria-busy', 'false');
+    };
+  };
+
+  const open = () => {
+    menu.hidden = false;
+    menu.setAttribute('aria-busy', 'true');
+    document.body.style.overflowY = 'hidden';
+    menu.ontransitionend = () => {
+      document.addEventListener('keydown', onKeydown);
+      trigger.setAttribute('aria-expanded', 'true');
+      root.inert = true;
+      menu.setAttribute('aria-busy', 'false');
+    };
+    setTimeout(() => {
+      menu.dataset.open = 'true';
+      firstFocusableElement.focus();
+    }, 0);
+  };
+
+  [overlay, closer].forEach((element) => {
+    element.addEventListener('click', () => {
+      close();
+    });
+  });
+
+  trigger.addEventListener('click', open);
+</script>
