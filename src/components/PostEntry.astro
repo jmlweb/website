@@ -10,62 +10,28 @@ const { title, subTitle, href, date } = Astro.props;
 ---
 
 <article>
-  <h2>
-    <a href={href} data-themable>{title}</a>
-  </h2>
-  <p set:html={subTitle} />
-  <footer>
-    <time data-themable datetime={date.toISOString()}>{beautifyDate(date)}</time
+  <header>
+    <h2 class="text-2xl font-semibold">
+      <a
+        class="text-cinder-800 @hover:text-indigo-800 d:text-cinder-100 d:@hover:text-orange-100 transition-colors"
+        href={href}>{title}</a
+      >
+    </h2>
+    <time
+      class="text-cinder-500/80 d:text-cinder-300 font-medium transition-colors text-sm"
+      datetime={date.toISOString()}>{beautifyDate(date)}</time
     >
-    <a href={href}>Leer más <Sprite name="ri:arrow-right-double-line" /></a>
+  </header>
+  <p class="mt-3" set:html={subTitle} />
+  <footer class="mt-5 text-sm">
+    <a
+      class="font-semibold text-indigo-600 @hover:text-indigo-800 d:text-orange-200/90 d:@hover:text-orange-100 transition-colors group/link"
+      href={href}
+      aria-label={`Leer más sobre '${title}''`}
+      >Leer más<Sprite
+        class="w-6 aspect-square inline-block transition-transform group-hover/link:translate-x-0.5"
+        name="ri:arrow-right-double-line"
+      /></a
+    >
   </footer>
 </article>
-
-<style>
-  h2 {
-    font-size: 24px;
-    font-weight: 600;
-    color: var(--color-title);
-    line-height: 120%;
-
-    @media (width >= 1100px) {
-      font-size: 26px;
-    }
-  }
-
-  h2 a {
-    color: currentcolor;
-  }
-
-  p {
-    margin-block-start: 8px;
-    line-height: 160%;
-
-    @media (width >= 1100px) {
-      font-size: 17px;
-    }
-  }
-
-  footer {
-    margin-block-start: 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 14px;
-  }
-
-  time {
-    color: var(--color-subtitle);
-    font-weight: 500;
-  }
-
-  footer a {
-    font-weight: 600;
-  }
-
-  [astro-icon] {
-    width: 24px;
-    aspect-ratio: 1;
-    display: inline-block;
-  }
-</style>

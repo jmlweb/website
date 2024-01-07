@@ -1,0 +1,21 @@
+---
+import { Sprite } from 'astro-icon';
+
+interface Props {
+  name: 'moon-line' | 'sun-line';
+}
+
+const { name } = Astro.props;
+---
+
+<Sprite
+  data-theme={name === 'moon-line' ? 'dark' : 'light'}
+  class:list={[
+    'w-6 aspect-square',
+    'absolute top-2.5 left-2.5',
+    'transition-transition opacity-0 scale-0',
+  ]}
+  pack="ri"
+  name={name}
+  aria-hidden="true"
+/>

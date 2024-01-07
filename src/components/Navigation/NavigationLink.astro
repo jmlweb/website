@@ -1,0 +1,25 @@
+---
+interface Props {
+  name: string;
+  link: string;
+  isCurrent?: boolean;
+}
+
+const { name, link, isCurrent } = Astro.props;
+---
+
+<a
+  href={link}
+  aria-current={isCurrent ? 'page' : undefined}
+  class:list={[
+    'transition-colors duration-300',
+    isCurrent
+      ? 'text-cinder-950/30 d:text-cinder-200/60'
+      : 'text-cinder-500 @hover:text-cinder-700 d:text-cinder-200/90 d:@hover:text-cinder-100',
+    isCurrent
+      ? 'line-through d:decoration-cinder-200/75'
+      : 'underline underline-offset-8 decoration-transparent @hover:decoration-cinder-700/50 d:@hover:decoration-cinder-100/75',
+  ]}
+>
+  {name}
+</a>

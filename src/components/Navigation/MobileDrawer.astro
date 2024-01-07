@@ -1,0 +1,151 @@
+---
+import { Sprite } from 'astro-icon';
+
+import { SECTIONS } from '@/config/sections';
+import NavigationLink from './NavigationLink.astro';
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath } = Astro.props;
+---
+
+<div
+  class:list={[
+    'group',
+    'pointer-events-none data-open:pointer-events-auto',
+    'md:hidden',
+  ]}
+  id="mobile-menu"
+  data-open="false"
+  hidden
+  aria-live="assertive"
+>
+  <div
+    class:list={[
+      'fixed inset-0',
+      'opacity-0 g-open:opacity-100',
+      'transition-opacity',
+      'bg-black/70',
+    ]}
+  >
+  </div>
+  <button
+    class:list={[
+      'flex items-center',
+      'w-11 p-2 -mx-2',
+      'bg-transparent color-cinder-500 d:color-cinder-300',
+      'absolute top-[18px] right-5 z-1',
+      'transition-opacity',
+      'opacity-0 g-open:opacity-100',
+    ]}
+    type="button"
+    aria-expanded="true"
+    aria-controls="mobile-menu"
+    data-theme-link
+    data-tooltip
+  >
+    <span class="sr-only">Cerrar menú</span>
+    <Sprite
+      name="ri:close-line"
+      class="w-7.5 aspect-square"
+      aria-hidden="true"
+    />
+  </button>
+  <nav
+    class:list={[
+      'flex flex-col justify-center',
+      'fixed inset-y-0 right-0',
+      'bg-cinder-50 text-cinder-600',
+      'd:bg-cinder-950 d:text-cinder-300',
+      'w-xs max-w-[calc(100%-44px)]',
+      'opacity-0 g-open:opacity-100',
+      'translate-x-full g-open:translate-x-0',
+      'transition-transition duration-300',
+      'shadow-xl shadow-black/70 d:shadow-black/90',
+    ]}
+    aria-label="Menú móvil"
+  >
+    <ul class="flex flex-col gap-2.5 text-xl font-medium text-center">
+      {
+        SECTIONS.map((sectionProps) => (
+          <li>
+            <NavigationLink
+              {...sectionProps}
+              isCurrent={sectionProps.link === currentPath}
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</div>
+
+<script>
+  import { isMenuOpen } from '@/store';
+  import { querySelector, querySelectorAll } from '@/pods/dom';
+
+  const root = querySelector<HTMLDivElement>('#root');
+  const menu = querySelector<HTMLDivElement>('#mobile-menu');
+  const trigger = querySelector<HTMLButtonElement>('#mobile-menu-trigger');
+  const closer = querySelector('button', menu);
+  const overlay = querySelector('div', menu);
+  const focusableElements = querySelectorAll<
+    HTMLAnchorElement | HTMLButtonElement
+  >('a[href]:not([disabled]), button:not([disabled])', menu);
+  const firstFocusableElement = focusableElements[0];
+  const lastFocusableElement = focusableElements[focusableElements.length - 1];
+
+  const onKeydown = (event: KeyboardEvent) => {
+    if (window.matchMedia('(width >= 720px)').matches) {
+      return;
+    }
+    if (event.key === 'Escape') {
+      isMenuOpen.set(false);
+      trigger.focus();
+    }
+
+    if (event.key === 'Tab') {
+      const mustBlock =
+        document.activeElement ===
+        (event.shiftKey ? firstFocusableElement : lastFocusableElement);
+      if (mustBlock) {
+        (event.shiftKey ? lastFocusableElement : firstFocusableElement).focus();
+        event.preventDefault();
+      }
+    }
+  };
+
+  isMenuOpen.subscribe((state) => {
+    menu.setAttribute('aria-busy', 'true');
+    document.body.style.overflowY = state ? 'hidden' : '';
+    if (state) {
+      menu.hidden = false;
+      menu.ontransitionend = () => {
+        document.addEventListener('keydown', onKeydown);
+        root.inert = true;
+        menu.setAttribute('aria-busy', 'false');
+      };
+      setTimeout(() => {
+        menu.dataset.open = 'true';
+        firstFocusableElement.focus();
+      }, 0);
+    } else {
+      menu.dataset.open = 'false';
+      document.removeEventListener('keydown', onKeydown);
+      menu.ontransitionend = () => {
+        trigger.focus();
+        menu.hidden = true;
+        root.inert = false;
+        menu.setAttribute('aria-busy', 'false');
+      };
+    }
+  });
+
+  [overlay, closer].forEach((element) => {
+    element.addEventListener('click', () => {
+      isMenuOpen.set(false);
+    });
+  });
+</script>

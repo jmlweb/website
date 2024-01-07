@@ -1,75 +1,33 @@
 ---
 import { Sprite } from 'astro-icon';
+
 import Container from '@/components/Container.astro';
+import ThemeSwitcher from '@/components/ThemeSwitcher/ThemeSwitcher.astro';
 ---
 
-<Container as="header">
-  <a href="/" data-themable>
+<Container
+  as="header"
+  class="flex flex-wrap justify-between items-center h-20 md:h-28 lg:h-40"
+>
+  <a
+    id="logo-link"
+    href="/"
+    class:list={[
+      'hidden sm:block js:block',
+      'p-3 -m-3 lg:p-unset lg:m-unset',
+      'color-orange-500 hover:color-orange-600 d:color-orange-300 d:hover:color-orange-300/90',
+      'transition-colors',
+    ]}
+  >
     <span class="sr-only">José Manuel Lucas</span>
-    <Sprite name="jmlweb" aria-hidden="true" />
+    <Sprite
+      class:list={['aspect-square', 'w-9 md:w-12 lg:w-16']}
+      name="jmlweb"
+      aria-hidden="true"
+    />
   </a>
-  <slot />
+  <div class="flex items-center">
+    <ThemeSwitcher />
+    <slot />
+  </div>
 </Container>
-
-<style>
-  header {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    height: var(--height, 80px);
-
-    @media (width >= 720px) {
-      --height: 112px;
-    }
-
-    @media (width >= 1100px) {
-      --height: 160px;
-    }
-  }
-
-  a {
-    --padding: 12px;
-
-    display: none;
-    color: var(--color-logo);
-    transition: color 0.25s var(--ease-in);
-    padding: var(--padding);
-    margin: calc(var(--padding) * -1);
-
-    @media (width >= 720px) {
-      display: block;
-    }
-
-    @media (width >= 1100px) {
-      --padding: 0;
-    }
-
-    &:hover {
-      color: color-mix(
-        in hsl longer hue,
-        var(--color-logo),
-        var(--color-title) 93%
-      );
-    }
-  }
-
-  :global([data-js='true']) a {
-    display: block;
-  }
-
-  [astro-icon] {
-    width: 37px;
-    height: 36px;
-
-    @media (width >= 720px) {
-      width: 48px;
-      height: 47px;
-    }
-
-    @media (width >= 1100px) {
-      width: 64px;
-      height: 63px;
-    }
-  }
-</style>

@@ -1,42 +1,26 @@
-<div id="simple-tooltip" class="tooltip" role="tooltip" hidden data-themable>
-  <span class="tooltip-content" data-themable></span>
-  <span class="tooltip-arrow" data-themable></span>
+<div
+  id="simple-tooltip"
+  class:list={[
+    'absolute top-0 left-0',
+    'w-max py-1.5 px-3',
+    'text-xs font-bold rounded-1',
+    'bg-cinder-700 text-cinder-100 d:bg-cinder-100 d:text-cinder-600',
+    'shadow-xl shadow-black/15 d:shadow-black/50',
+    'transition-colors animate-fade-in animate-duration-300',
+  ]}
+  role="tooltip"
+  hidden
+>
+  <span class="block"></span>
+  <span
+    class:list={[
+      'absolute block',
+      'w-1.5 aspect-square',
+      'rotate-45',
+      'bg-cinder-700 d:bg-cinder-100',
+      'transition-colors',
+    ]}></span>
 </div>
-
-<style>
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-
-    to {
-      opacity: 1;
-    }
-  }
-
-  .tooltip {
-    width: max-content;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: var(--color-text);
-    color: var(--color-bg);
-    padding-block: 6px;
-    padding-inline: 12px;
-    border-radius: 4px;
-    font-size: 13px;
-    font-weight: 600;
-    animation: fade-in 0.25s var(--ease-in);
-  }
-
-  .tooltip-arrow {
-    position: absolute;
-    background-color: var(--color-text);
-    width: 6px;
-    aspect-ratio: 1;
-    transform: rotate(45deg);
-  }
-</style>
 
 <script>
   import {
@@ -47,24 +31,30 @@
     shift,
   } from '@floating-ui/dom';
 
-  const triggers = document.querySelectorAll<HTMLElement>('[data-tooltip]');
-  const tooltip = document.querySelector<HTMLDivElement>('#simple-tooltip');
-  const tooltipContent =
-    tooltip?.querySelector<HTMLDivElement>('.tooltip-content');
-  const tooltipArrow = tooltip?.querySelector<HTMLDivElement>('.tooltip-arrow');
+  import { querySelector } from '@/pods/dom';
 
-  if (!tooltip || !tooltipArrow || !tooltipContent) {
-    throw new Error('Tooltip elements not found');
-  }
+  const triggers = document.querySelectorAll<HTMLElement>('[data-tooltip]');
+  const tooltip = querySelector<HTMLDivElement>('#simple-tooltip');
+  const tooltipContent = querySelector<HTMLSpanElement>(
+    'span:first-child',
+    tooltip
+  );
+  const tooltipArrow = querySelector<HTMLSpanElement>(
+    'span:last-child',
+    tooltip
+  );
+
+  let timeout: number;
 
   triggers.forEach((trigger) => {
     const showTooltip = () => {
+      clearTimeout(timeout);
       const tooltipText =
         trigger.dataset.tooltip ||
         trigger.querySelector('.sr-only')?.textContent;
       const config = {
         offset: Number(trigger.dataset.offset || 8),
-        shiftPadding: Number(trigger.dataset.shiftPadding || 8),
+        shiftPadding: Number(trigger.dataset.shiftPadding || 16),
       };
       if (!tooltipText) {
         throw new Error('Tooltip text not found');
@@ -111,7 +101,9 @@
     };
 
     const hideTooltip = () => {
-      tooltip.hidden = true;
+      timeout = setTimeout(() => {
+        tooltip.hidden = true;
+      }, 150);
     };
 
     const LISTENERS = [

@@ -1,17 +1,14 @@
 ---
-import 'node_modules/modern-normalize/modern-normalize.css';
-import '@/styles/global.css';
 import '@fontsource-variable/inter';
 
 import { Sprite } from 'astro-icon';
 
 import Footer from './Footer.astro';
 import Header from './Header.astro';
-import Menu from './Menu.astro';
-import MobileMenu from './MobileMenu.astro';
-import PageLinks from '@/components/PageLinks.astro';
 import SimpleTooltip from './SimpleTooltip.astro';
 import SkipToContent from './SkipToContent.astro';
+import MainNavigation from '@/components/Navigation/MainNavigation.astro';
+import MobileDrawer from '@/components/Navigation/MobileDrawer.astro';
 
 interface Props {
   title: string;
@@ -21,7 +18,7 @@ interface Props {
 const { title, currentPath } = Astro.props;
 ---
 
-<html lang="es" data-theme="dark">
+<html lang="es" data-theme="auto">
   <head>
     <meta charset="utf-8" />
     <meta
@@ -33,35 +30,55 @@ const { title, currentPath } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body>
+  <body
+    class:list={[
+      'group',
+      'transition-colors bg-cinder-50 text-cinder-500 d:bg-cinder-950 d:text-cinder-300/85',
+      'text-base lg:text-[17px] lg:leading-[1.6]',
+      'antialiased',
+    ]}
+  >
     <SkipToContent />
     <Sprite.Provider>
-      <div id="root">
+      <div
+        id="root"
+        class:list={['flex flex-col', 'min-h-screen', 'font-sans']}
+      >
         <Header>
-          <Menu>
-            <PageLinks currentPath={currentPath} />
-          </Menu>
+          <MainNavigation currentPath={currentPath} />
         </Header>
         <main id="main">
           <slot />
         </main>
         <Footer />
       </div>
-      <MobileMenu>
-        <PageLinks currentPath={currentPath} />
-      </MobileMenu>
+      <MobileDrawer currentPath={currentPath} />
     </Sprite.Provider>
     <SimpleTooltip />
   </body>
 </html>
-<style>
-  div {
-    display: flex;
-    flex-direction: column;
-    min-height: 100dvh;
-    min-height: 100vh;
-  }
-</style>
+
 <script is:inline>
-  document.documentElement.setAttribute('data-js', 'true');
+  document.body.setAttribute('data-js', 'true');
+</script>
+
+<script>
+  import { theme } from '@/store';
+
+  theme.subscribe((value) => {
+    document.documentElement.setAttribute('data-theme', value);
+  });
+
+  const getInitialTheme = () => {
+    const storedTheme = localStorage.getItem('theme');
+    if (storedTheme && ['light', 'dark'].includes(storedTheme)) {
+      return storedTheme as 'light' | 'dark';
+    }
+    const prefersLight = window.matchMedia(
+      '(prefers-color-scheme: light)'
+    ).matches;
+    return prefersLight ? 'light' : 'dark';
+  };
+
+  theme.set(getInitialTheme());
 </script>

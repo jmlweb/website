@@ -6,25 +6,14 @@ type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }>;
 const { as: Tag = 'div', class: className, ...rest } = Astro.props;
 ---
 
-<Tag data-container class:list={['container', className]} {...rest}>
+<Tag
+  class:list={[
+    'max-w-full w-6xl',
+    'mx-auto',
+    'px-5 md:px-8 lg:px-12',
+    className,
+  ]}
+  {...rest}
+>
   <slot />
 </Tag>
-
-<style>
-  .container {
-    --x-space: 20px;
-
-    width: 100%;
-    max-width: 1196px;
-    margin-inline: auto;
-    padding-inline: var(--x-space);
-
-    @media (width >= 720px) {
-      --x-space: 32px;
-    }
-
-    @media (width >= 1100px) {
-      --x-space: 48px;
-    }
-  }
-</style>

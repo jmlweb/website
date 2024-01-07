@@ -7,4 +7,4 @@ export type PostItem = {
   subTitle: Post['data']['subTitle'];
   href: string;
   date: Post['data']['date'];
-}
+};

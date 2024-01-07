@@ -11,6 +11,7 @@ const MONTHS = [
   'octubre',
   'noviembre',
   'diciembre',
-]
+];
 
-export const beautifyDate = (date: Date) => `${date.getDate()} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
+export const beautifyDate = (date: Date) =>
+  `${date.getDate()} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`;

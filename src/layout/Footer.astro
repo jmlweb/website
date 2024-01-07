@@ -1,121 +1,50 @@
 ---
 import Container from '@/components/Container.astro';
+import { SOCIAL_NETWORKS } from '@/config/socialNetworks';
 ---
 
-<Container as="footer">
-  <ul class="aux-links">
-    <li class="name">José Manuel Lucas</li>
-    <li>
-      <a href="/condiciones-legales">Términos de uso</a>
-    </li>
-    <li>
-      <a href="/politica-privacidad">Política de privacidad</a>
-    </li>
+<Container
+  as="footer"
+  class:list={[
+    'flex flex-col',
+    'lg:flex-row lg:justify-between',
+    'gap-4',
+    'mt-auto',
+    'pt-24 pb-8 lg:pt-40',
+    'text-[15px] md:text-base lg:text-[17px]',
+  ]}
+>
+  <ul class="flex flex-wrap justify-center font-medium lg:-ml-3">
+    {
+      SOCIAL_NETWORKS.map(({ href, title }) => (
+        <li>
+          <a
+            class="block py-2 px-3 text-indigo-600 d:text-orange-200 @hover:underline"
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {title}
+          </a>
+        </li>
+      ))
+    }
   </ul>
-  <ul class="social-links">
-    <li>
-      <a
-        href="https://github.com/jmlweb"
-        target="_blank"
-        rel="noopener noreferrer"
-        data-theme-link
-      >
-        Github
-      </a>
+  <ul class="flex flex-wrap justify-center items-center gap-y-2 gap-x-5">
+    <li class="font-semibold w-full text-center md:w-auto md:text-left">
+      José Manuel Lucas
     </li>
     <li>
       <a
-        href="https://twitter.com/jmlweb"
-        target="_blank"
-        rel="noopener noreferrer"
+        class="block py-2 mt-1 md:text-[15px] lg:text-base md:mt-0 text-cinder-500 d:text-cinder-300 @hover:underline"
+        href="/condiciones-legales">Términos de uso</a
       >
-        Twitter
-      </a>
     </li>
     <li>
       <a
-        href="https://www.linkedin.com/in/josemanuellucas"
-        target="_blank"
-        rel="noopener noreferrer"
+        class="block py-2 mt-1 md:text-[15px] lg:text-base md:mt-0 text-cinder-500 d:text-cinder-300 @hover:underline"
+        href="/politica-privacidad">Política de privacidad</a
       >
-        LinkedIn
-      </a>
     </li>
   </ul>
 </Container>
-
-<style>
-  footer {
-    --font-size: 15px;
-
-    margin-top: auto;
-    padding-block: 96px 32px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    font-size: var(--font-size);
-
-    @media (width >= 720px) {
-      --font-size: 16px;
-
-      gap: 16px;
-    }
-
-    @media (width >= 1100px) {
-      --font-size: 17px;
-
-      padding-block: 160px 32px;
-      flex-direction: row;
-      justify-content: space-between;
-    }
-  }
-
-  .social-links {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    font-weight: 500;
-  }
-
-  .social-links a {
-    display: block;
-    padding: 8px 12px;
-  }
-
-  .aux-links {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 8px 20px;
-  }
-
-  .aux-links a {
-    display: block;
-    color: var(--color-subtitle);
-    padding: 8px 0;
-    margin-block-start: 4px;
-
-    @media (width >= 720px) {
-      font-size: 15px;
-      margin-block-start: unset;
-    }
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-
-  .name {
-    font-size: 16px;
-    font-weight: 600;
-    width: 100%;
-    text-align: center;
-
-    @media (width >= 720px) {
-      font-size: var(--font-size);
-      width: unset;
-      text-align: unset;
-    }
-  }
-</style>

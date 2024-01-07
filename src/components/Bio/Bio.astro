@@ -5,20 +5,39 @@ import Container from '../Container.astro';
 import SocialLinks from './SocialLinks.astro';
 ---
 
-<div>
-  <Container as="section">
-    <h1 data-themable>¡Hola! Soy <br aria-hidden="true" />José Manuel Lucas</h1>
-    <p data-lead data-themable>
+<div
+  class:list={[
+    'transition-colors',
+    'bg-gradient-to-rb from-15% to-55% from-indigo-200/13 to-indigo-200/7 d:from-orange-200/4 d:to-indigo-900/7',
+    'border-y border-cinder-400/10 d:border-cinder-200/10',
+  ]}
+>
+  <Container as="section" class="flex flex-col">
+    <h1
+      class:list={[
+        'text-3xl md:text-4xl font-semibold',
+        'text-cinder-800/90 d:text-cinder-100/90',
+        'tracking-tight',
+        'transition-colors',
+      ]}
+    >
+      ¡Hola! Soy <br class="sm:hidden" aria-hidden="true" />José Manuel Lucas
+    </h1>
+    <p
+      class:list={[
+        'text-xl lg:text-2xl font-medium',
+        'mt-2',
+        'text-cinder-500/80 d:text-cinder-100/80',
+        'transition-colors',
+      ]}
+    >
       Construyo sitios web escalables y eficientes basados en buenas prácticas y
       estándares
     </p>
-    <p>
-      Estoy especializado en desarrollo con <strong>TypeScript</strong>, pero
-      también me siento cómodo <strong>maquetando</strong>, <strong
-        >configurando</strong
-      > un balanceador de carga o preparando los pipelines para <strong
-        >desplegar</strong
-      > el código de mi próximo proyecto.
+    <p class="mt-3 lg:text-lg">
+      Estoy especializado en desarrollo con <strong class="font-semibold"
+        >TypeScript</strong
+      >, pero también maqueto y preparo la infraestructura de mis proyectos.
     </p>
     <SocialLinks />
     <Image
@@ -27,127 +46,14 @@ import SocialLinks from './SocialLinks.astro';
       alt="José Manuel Lucas mirando hacia abajo"
       densities={[1.5, 2]}
       loading="eager"
+      class:list={[
+        'block',
+        'w-20 md:w-24 lg:w-32',
+        'mt-6 lg:mt-8 mb-3 md:mb-4',
+        'aspect-square',
+        'rounded-full overflow-hidden',
+        'order-first',
+      ]}
     />
   </Container>
 </div>
-
-<style>
-  :global([data-theme='dark']) div {
-    --color: 46 43 54;
-
-    background-image: linear-gradient(
-      133.4deg,
-      rgba(var(--color) / 47%) 0%,
-      rgba(var(--color) / 0%) 100%
-    );
-  }
-
-  :global([data-theme='light']) div {
-    --color: 226 218 241;
-
-    background-image: linear-gradient(
-      133.4deg,
-      rgba(var(--color) / 42%) 0%,
-      rgba(var(--color) / 0%) 75%
-    );
-  }
-
-  section {
-    display: flex;
-    flex-direction: column;
-  }
-
-  img {
-    --size: 80px;
-    --top: 24px;
-    --end: 12px;
-
-    display: block;
-    width: var(--size);
-    height: var(--size);
-    border-radius: 50%;
-    overflow: hidden;
-    margin-block: var(--top) var(--end);
-    order: -1;
-
-    @media (width >= 720px) {
-      --size: 96px;
-      --top: 24px;
-      --end: 16px;
-    }
-
-    @media (width >= 1100px) {
-      --size: 128px;
-      --top: 32px;
-    }
-  }
-
-  h1 {
-    --font-size: 32px;
-
-    font-size: var(--font-size);
-    line-height: 120%;
-    font-weight: 650;
-    color: var(--color-title);
-    letter-spacing: -0.02em;
-
-    @media (width >= 720px) {
-      --font-size: 36px;
-
-      line-height: 110%;
-    }
-
-    @media (width >= 1100px) {
-      --font-size: 40px;
-    }
-  }
-
-  h1 br {
-    @media (width >= 520px) {
-      display: none;
-    }
-  }
-
-  [data-lead] {
-    --font-size: 20px;
-
-    font-size: var(--font-size);
-    line-height: 140%;
-    font-weight: 550;
-    color: var(--color-subtitle);
-    margin-top: 8px;
-    letter-spacing: -0.02em;
-
-    @media (width >= 720px) {
-      --font-size: 22px;
-
-      line-height: 135%;
-    }
-
-    @media (width >= 1100px) {
-      --font-size: 26px;
-
-      line-height: 130%;
-    }
-  }
-
-  p:not([data-lead]) {
-    --font-size: 17px;
-
-    font-size: var(--font-size);
-    line-height: 165%;
-    margin-block-start: 12px;
-    letter-spacing: 0.005em;
-
-    @media (width >= 1100px) {
-      --font-size: 19px;
-
-      line-height: 155%;
-      letter-spacing: -0.005em;
-    }
-  }
-
-  strong {
-    font-weight: 600;
-  }
-</style>
