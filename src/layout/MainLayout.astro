@@ -18,7 +18,7 @@ interface Props {
 const { title, currentPath } = Astro.props;
 ---
 
-<html lang="es" data-theme="auto">
+<html lang="es" class="group" data-theme="auto">
   <head>
     <meta charset="utf-8" />
     <meta
@@ -32,7 +32,6 @@ const { title, currentPath } = Astro.props;
   </head>
   <body
     class:list={[
-      'group',
       'transition-colors bg-cinder-50 text-cinder-500 d:bg-cinder-950 d:text-cinder-300/85',
       'text-base lg:text-[17px] lg:leading-[1.6]',
       'antialiased',
