@@ -1,6 +1,5 @@
 ---
-import '@fontsource-variable/inter';
-
+import { AstroFont } from 'astro-font';
 import { Sprite } from 'astro-icon';
 
 import Footer from './Footer.astro';
@@ -28,6 +27,21 @@ const { title, currentPath } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <AstroFont
+      config={[
+        {
+          src: [],
+          name: 'Inter',
+          googleFontsURL:
+            'https://fonts.googleapis.com/css2?family=Inter:slnt,wght@-10..0,100..900&display=swap',
+          preload: true,
+          display: 'swap',
+          selector: 'body',
+          fallback: 'sans-serif',
+          cssVariable: 'font-sans',
+        },
+      ]}
+    />
     <title>{title}</title>
   </head>
   <body
@@ -54,30 +68,29 @@ const { title, currentPath } = Astro.props;
       <MobileDrawer currentPath={currentPath} />
     </Sprite.Provider>
     <SimpleTooltip />
+    <script is:inline>
+      document.documentElement.setAttribute('data-js', 'true');
+    </script>
+
+    <script>
+      import { theme } from '@/store';
+
+      theme.subscribe((value) => {
+        document.documentElement.setAttribute('data-theme', value);
+      });
+
+      const getInitialTheme = () => {
+        const storedTheme = localStorage.getItem('theme');
+        if (storedTheme && ['light', 'dark'].includes(storedTheme)) {
+          return storedTheme as 'light' | 'dark';
+        }
+        const prefersLight = window.matchMedia(
+          '(prefers-color-scheme: light)',
+        ).matches;
+        return prefersLight ? 'light' : 'dark';
+      };
+
+      theme.set(getInitialTheme());
+    </script>
   </body>
 </html>
-
-<script is:inline>
-  document.documentElement.setAttribute('data-js', 'true');
-</script>
-
-<script>
-  import { theme } from '@/store';
-
-  theme.subscribe((value) => {
-    document.documentElement.setAttribute('data-theme', value);
-  });
-
-  const getInitialTheme = () => {
-    const storedTheme = localStorage.getItem('theme');
-    if (storedTheme && ['light', 'dark'].includes(storedTheme)) {
-      return storedTheme as 'light' | 'dark';
-    }
-    const prefersLight = window.matchMedia(
-      '(prefers-color-scheme: light)',
-    ).matches;
-    return prefersLight ? 'light' : 'dark';
-  };
-
-  theme.set(getInitialTheme());
-</script>

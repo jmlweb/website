@@ -1,6 +1,6 @@
 // uno.config.ts
-import { defineConfig } from 'unocss';
 import presetUno from '@unocss/preset-uno';
+import { defineConfig } from 'unocss';
 
 export default defineConfig({
   presets: [
@@ -61,7 +61,7 @@ export default defineConfig({
       close: 'open=false',
     },
     fontFamily: {
-      sans: '"Inter variable", sans-serif',
+      sans: 'var(--font-sans)',
     },
     maxWidth: {
       '6xl': '1280px',
