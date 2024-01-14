@@ -1,0 +1,38 @@
+---
+import Container from '../Container.astro';
+import Strong from '../Strong.astro';
+import Subtitle from '../Subtitle.astro';
+import Title from '../Title.astro';
+import BioBg from './BioBg.astro';
+import BioImage from './BioImage.astro';
+import SocialLinks from './SocialLinks.astro';
+---
+
+<BioBg>
+  <Container class="pt-10 pb-8 md:pt-14 md:pb-10 lg:pt-18 lg:pb-12">
+    <div
+      class="grid md:grid-cols-[auto_1fr] gap-4 md:gap-6 lg:gap-10 md:items-center"
+    >
+      <section>
+        <Title class="leading-[110%]">
+          ¡Hola! Soy <br class="sm:hidden" aria-hidden="true" />José Manuel
+          Lucas
+        </Title>
+        <Subtitle class="mt-2 leading-tight">
+          Construyo sitios web escalables y eficientes basados en buenas
+          prácticas y estándares
+        </Subtitle>
+        <p class="mt-2 lg:text-lg transition-colors">
+          Aunque estoy especializado en desarrollo Frontend con
+          <Strong>TypeScript</Strong>, también maqueto con <Strong>HTML</Strong>
+          y <Strong>CSS</Strong>, me siento cómodo en el lado servidor y en
+          ocasiones hasta mantengo los pipelines de <Strong>CI/CD</Strong>.
+        </p>
+      </section>
+      <BioImage class="order-first" />
+    </div>
+    <footer role="group" class="flex justify-end gap-3 mt-6 md:mt-8">
+      <SocialLinks />
+    </footer>
+  </Container>
+</BioBg>

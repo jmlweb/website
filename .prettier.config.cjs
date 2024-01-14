@@ -1,18 +1,18 @@
 module.exports = {
-  endOfLine: 'lf',
+  endOfLine: "lf",
   overrides: [
     {
-      files: '*.astro',
+      files: "*.astro",
       options: {
-        parser: 'astro',
+        parser: "astro",
       },
     },
   ],
-  plugins: [require.resolve('prettier-plugin-astro')],
+  plugins: [require.resolve("prettier-plugin-astro")],
   pluginSearchDirs: [__dirname],
   semi: true,
   singleQuote: true,
   tabWidth: 2,
-  trailingComma: 'all',
+  trailingComma: "all",
   useTabs: false,
 };

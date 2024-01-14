@@ -1,2 +1,2 @@
-export { querySelectorAll } from './querySelectorAll';
 export { querySelector } from './querySelector';
+export { querySelectorAll } from './querySelectorAll';

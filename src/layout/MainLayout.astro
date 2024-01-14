@@ -5,10 +5,10 @@ import { Sprite } from 'astro-icon';
 
 import Footer from './Footer.astro';
 import Header from './Header.astro';
+import MainNavigation from './Navigation/MainNavigation.astro';
+import MobileDrawer from './Navigation/MobileDrawer.astro';
 import SimpleTooltip from './SimpleTooltip.astro';
 import SkipToContent from './SkipToContent.astro';
-import MainNavigation from '@/components/Navigation/MainNavigation.astro';
-import MobileDrawer from '@/components/Navigation/MobileDrawer.astro';
 
 interface Props {
   title: string;
@@ -32,7 +32,7 @@ const { title, currentPath } = Astro.props;
   </head>
   <body
     class:list={[
-      'transition-colors bg-cinder-50 text-cinder-500 d:bg-cinder-950 d:text-cinder-300/85',
+      'transition-colors bg-cinder-50 text-cinder-600 d:bg-cinder-950 d:text-cinder-200',
       'text-base lg:text-[17px] lg:leading-[1.6]',
       'antialiased',
     ]}
@@ -58,7 +58,7 @@ const { title, currentPath } = Astro.props;
 </html>
 
 <script is:inline>
-  document.body.setAttribute('data-js', 'true');
+  document.documentElement.setAttribute('data-js', 'true');
 </script>
 
 <script>
@@ -74,7 +74,7 @@ const { title, currentPath } = Astro.props;
       return storedTheme as 'light' | 'dark';
     }
     const prefersLight = window.matchMedia(
-      '(prefers-color-scheme: light)'
+      '(prefers-color-scheme: light)',
     ).matches;
     return prefersLight ? 'light' : 'dark';
   };

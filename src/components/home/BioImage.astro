@@ -1,0 +1,27 @@
+---
+import { Image } from 'astro:assets';
+import { twMerge } from 'tailwind-merge';
+
+import pictureSrc from '@/images/jmlweb.jpg';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<Image
+  src={pictureSrc}
+  width={pictureSrc.width / 2}
+  alt="Fotografía de José Manuel Lucas"
+  densities={[1.5, 2]}
+  loading="eager"
+  class={twMerge(
+    'block',
+    'w-20 md:w-24 lg:w-32',
+    'aspect-square',
+    'rounded-full overflow-hidden',
+    className,
+  )}
+/>

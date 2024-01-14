@@ -39,7 +39,7 @@ export default defineConfig({
     breakpoints: {
       sm: '520px',
       md: '720px',
-      lg: '1100px',
+      lg: '980px',
     },
     colors: {
       cinder: {
@@ -64,10 +64,10 @@ export default defineConfig({
       sans: '"Inter variable", sans-serif',
     },
     maxWidth: {
-      '6xl': '1196px',
+      '6xl': '1280px',
     },
     width: {
-      '6xl': '1196px',
+      '6xl': '1280px',
     },
   },
 });

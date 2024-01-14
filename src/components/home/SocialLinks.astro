@@ -1,0 +1,36 @@
+---
+import { Sprite } from 'astro-icon';
+
+import { SOCIAL_NETWORKS } from '@/config/socialNetworks';
+---
+
+{
+  SOCIAL_NETWORKS.map(({ href, title, icon }) => (
+    <a
+      class:list={[
+        'flex justify-center items-center',
+        'aspect-square w-10 lg:w-11',
+        'rounded-1',
+        'text-cinder-400 @hover:text-cinder-600 d:text-cinder-300/90 d:@hover:text-cinder-200',
+        'border border-transparent @hover:border-cinder-400/15 d:@hover:border-cinder-300/15',
+        'bg-transparent @hover:bg-cinder-400/7 d:@hover:bg-cinder-200/7',
+        'transition-colors',
+      ]}
+      href={href}
+      data-tooltip
+      target="_blank"
+      rel="noopener"
+    >
+      <span class="sr-only">{title}</span>
+      <Sprite
+        aria-hidden="true"
+        name={icon}
+        class:list={[
+          'aspect-square',
+          icon.includes('twitter') ? 'w-5.5 lg:w-6' : 'w-6 lg:w-7',
+          icon.includes('linkedin') && '-mt-0.5',
+        ]}
+      />
+    </a>
+  ))
+}

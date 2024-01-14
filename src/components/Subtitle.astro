@@ -4,14 +4,13 @@ import { twMerge } from 'tailwind-merge';
 
 type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }>;
 
-const { as: Tag = 'div', class: className, ...rest } = Astro.props;
+const { as: Tag = 'h2', class: className, ...rest } = Astro.props;
 ---
 
 <Tag
   class={twMerge(
-    'max-w-full w-6xl',
-    'mx-auto',
-    'px-5 md:px-8 lg:px-12',
+    'text-xl lg:text-2xl font-medium',
+    'text-cinder-500/80 d:text-cinder-300/80 transition-colors',
     className,
   )}
   {...rest}
