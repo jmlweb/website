@@ -1,24 +1,10 @@
-<a href="#main">Saltar al contenido</a>
-
-<style>
-  a {
-    display: block;
-    background: var(--color-text);
-    color: var(--color-bg);
-    min-width: 160px;
-    margin-left: -80px;
-    text-align: center;
-    font-size: 15px;
-    font-weight: 500;
-    top: 16px;
-    left: 50%;
-    padding: 8px;
-    position: absolute;
-    transform: translateY(calc(-100% - 16px));
-    transition: transform 0.3s;
-  }
-
-  a:focus {
-    transform: translateY(0%);
-  }
-</style>
+<a
+  href="#main"
+  class:list={[
+    'block absolute top-4 left-1/2',
+    'min-w-40 -ml-20 p-2',
+    'text-center text-sm font-medium',
+    'translate-y-[calc(-100%-16px)] focus:translate-y-0',
+    'bg-cinder-900 text-cinder-50 d:bg-cinder-50/90 d:text-cinder-900',
+  ]}>Saltar al contenido</a
+>

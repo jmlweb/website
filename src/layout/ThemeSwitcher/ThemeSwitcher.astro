@@ -27,8 +27,11 @@ import ThemeSwitcherIcon from './ThemeSwitcherIcon.astro';
   import { querySelector, querySelectorAll } from '@/pods/dom';
   import { theme } from '@/store';
 
-  const initialize = () => {
-    const toggler = querySelector<HTMLButtonElement>('#theme-switcher');
+  const initialize = (targetDocument: Document) => {
+    const toggler = querySelector<HTMLButtonElement>(
+      '#theme-switcher',
+      targetDocument,
+    );
     const helper = querySelector<HTMLSpanElement>('span:first-child', toggler);
     const icons = querySelectorAll<SVGElement>('svg', toggler);
     const blurred = querySelector<HTMLSpanElement>('span:last-child', toggler);
@@ -92,9 +95,9 @@ import ThemeSwitcherIcon from './ThemeSwitcherIcon.astro';
     });
   };
 
-  document.addEventListener('astro:after-swap', (ev) => {
-    initialize();
+  document.addEventListener('astro:before-swap', (ev) => {
+    initialize((ev as any).newDocument);
   });
 
-  initialize();
+  initialize(document);
 </script>

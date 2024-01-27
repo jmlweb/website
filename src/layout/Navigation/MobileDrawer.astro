@@ -87,10 +87,13 @@ const { currentPath } = Astro.props;
   import { isMenuOpen } from '@/store';
   import { querySelector, querySelectorAll } from '@/pods/dom';
 
-  const initialize = () => {
-    const root = querySelector<HTMLDivElement>('#root');
-    const menu = querySelector<HTMLDivElement>('#mobile-menu');
-    const trigger = querySelector<HTMLButtonElement>('#mobile-menu-trigger');
+  const initialize = (targetDocument: Document) => {
+    const root = querySelector<HTMLDivElement>('#root', targetDocument);
+    const menu = querySelector<HTMLDivElement>('#mobile-menu', targetDocument);
+    const trigger = querySelector<HTMLButtonElement>(
+      '#mobile-menu-trigger',
+      targetDocument,
+    );
     const closer = querySelector('button', menu);
     const overlay = querySelector('div', menu);
     const focusableElements = querySelectorAll<
@@ -167,10 +170,9 @@ const { currentPath } = Astro.props;
     });
   };
 
-  document.addEventListener('astro:after-swap', (ev) => {
-    console.log('initialize');
-    initialize();
+  document.addEventListener('astro:before-swap', (ev) => {
+    initialize((ev as any).newDocument);
   });
 
-  initialize();
+  initialize(document);
 </script>

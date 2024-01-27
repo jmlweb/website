@@ -26,7 +26,7 @@ export const getStaticPaths = (async ({ paginate }) => {
   return paginate(posts, { pageSize: POSTS_PER_PAGE });
 }) satisfies GetStaticPaths;
 
-const tags = await getCollection('tags');
+// const tags = await getCollection('tags');
 
 export type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 

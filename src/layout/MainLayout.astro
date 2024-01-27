@@ -88,41 +88,23 @@ const { title, currentPath } = Astro.props;
         return prefersLight ? 'light' : 'dark';
       };
 
-      document.addEventListener('astro:before-swap', (ev) => {
-        // Pass the incoming document to set the theme on it
-        const targetDocument = ev.newDocument || document;
+      const initialize = (targetDocument) => {
         targetDocument.documentElement.dataset.js = 'true';
         targetDocument.documentElement.dataset.theme = getInitialTheme();
+      };
+
+      document.addEventListener('astro:before-swap', (ev) => {
+        // Pass the incoming document to set the theme on it
+        initialize(ev.newDocument);
       });
 
-      document.dispatchEvent(new Event('astro:before-swap'));
+      initialize(document);
     </script>
 
     <script>
-      import { theme } from '@/store';
+      import { initializeTheme } from './theme';
 
-      theme.set(document.documentElement.dataset.theme as 'light' | 'dark');
-
-      theme.subscribe((value) => {
-        const css = document.createElement('style');
-        css.appendChild(
-          document.createTextNode(
-            `* {
-              -webkit-transition: none !important;
-              -moz-transition: none !important;
-              -o-transition: none !important;
-              -ms-transition: none !important;
-              transition: none !important;
-            }`,
-          ),
-        );
-        document.head.appendChild(css);
-
-        document.documentElement.setAttribute('data-theme', value);
-
-        const _ = window.getComputedStyle(css).opacity;
-        document.head.removeChild(css);
-      });
+      initializeTheme();
     </script>
   </body>
 </html>
