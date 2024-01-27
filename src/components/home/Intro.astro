@@ -1,0 +1,56 @@
+---
+import IntroGrid from './IntroGrid.astro';
+import IntroGridItem from './IntroGridItem.astro';
+
+const ITEMS = [
+  {
+    title: 'Localización',
+    content: 'Murcia, España',
+  },
+  {
+    title: 'Experiencia',
+    content: '> 15 años',
+  },
+  {
+    title: 'Lenguajes',
+    content: 'TypeScript, HTML, CSS',
+    contentLang: 'en',
+  },
+  {
+    title: 'Me gusta trabajar con',
+    content: 'Next.js, Astro, Node',
+    contentLang: 'en',
+  },
+  {
+    title: 'Posición',
+    content: 'Frontend Solutions Architect',
+    contentLang: 'en',
+  },
+  {
+    title: 'Compañía',
+    content: 'Freepik',
+    contentLang: 'en',
+  },
+  {
+    title: 'Idiomas',
+    content: 'Español (nativo), Inglés',
+  },
+  {
+    title: 'Aficiones',
+    content: 'Trail running, mountain bike',
+    contentLang: 'en',
+  },
+];
+---
+
+<IntroGrid>
+  {
+    ITEMS.map(({ title, content, contentLang }) => (
+      <IntroGridItem title={title}>
+        <p class="text-pretty leading-tight mt-0.5" lang={contentLang}>
+          {content}
+        </p>
+      </IntroGridItem>
+    ))
+  }
+</IntroGrid>

@@ -1,14 +1,16 @@
 ---
+import Experience from '@/components/about-me/Experience.astro';
+import Intro from '@/components/about-me/Intro.astro';
 import Container from '@/components/Container.astro';
-import Title from '@/components/Title.astro';
 import MainLayout from '@/layout/MainLayout.astro';
 ---
 
 <MainLayout
-  title="José Manuel Lucas / Desarrollador Frontend"
+  title="José Manuel Lucas / Desarrollador Web"
   currentPath="/sobre-mi"
 >
-  <Container class="mt-8">
-    <Title>Sobre mí</Title>
+  <Container class="py-8 md:pt-12 md:pb-10 lg:pt-14 lg:pb-12">
+    <Intro />
+    <Experience />
   </Container>
 </MainLayout>

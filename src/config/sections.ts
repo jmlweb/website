@@ -9,7 +9,7 @@ export const SECTIONS = [
   },
   {
     name: 'Posts',
-    link: '/posts',
+    link: '/posts/1',
   },
   {
     name: 'Charlas',

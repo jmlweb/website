@@ -9,8 +9,8 @@ const { as: Tag = 'h2', class: className, ...rest } = Astro.props;
 
 <Tag
   class={twMerge(
-    'text-xl lg:text-2xl font-medium',
-    'text-cinder-500/80 d:text-cinder-300/80 transition-colors',
+    'text-2xl lg:text-3xl font-medium leading-tight tracking-tight',
+    'text-cinder-500/80 d:text-cinder-300/80 ',
     className,
   )}
   {...rest}

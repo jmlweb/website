@@ -6,7 +6,7 @@
     'text-xs font-bold rounded-1',
     'bg-cinder-700 text-cinder-100 d:bg-cinder-100 d:text-cinder-600',
     'shadow-xl shadow-black/15 d:shadow-black/50',
-    'transition-colors animate-fade-in animate-duration-300',
+    'animate-fade-in animate-duration-300',
   ]}
   role="tooltip"
   hidden
@@ -18,7 +18,6 @@
       'w-1.5 aspect-square',
       'rotate-45',
       'bg-cinder-700 d:bg-cinder-100',
-      'transition-colors',
     ]}></span>
 </div>
 
@@ -33,100 +32,108 @@
 
   import { querySelector } from '@/pods/dom';
 
-  const triggers = document.querySelectorAll<HTMLElement>('[data-tooltip]');
-  const tooltip = querySelector<HTMLDivElement>('#simple-tooltip');
-  const tooltipContent = querySelector<HTMLSpanElement>(
-    'span:first-child',
-    tooltip,
-  );
-  const tooltipArrow = querySelector<HTMLSpanElement>(
-    'span:last-child',
-    tooltip,
-  );
+  const initialize = () => {
+    const triggers = document.querySelectorAll<HTMLElement>('[data-tooltip]');
+    const tooltip = querySelector<HTMLDivElement>('#simple-tooltip');
+    const tooltipContent = querySelector<HTMLSpanElement>(
+      'span:first-child',
+      tooltip,
+    );
+    const tooltipArrow = querySelector<HTMLSpanElement>(
+      'span:last-child',
+      tooltip,
+    );
 
-  let timeout: number;
+    let timeout: number;
 
-  triggers.forEach((trigger) => {
-    const showTooltip = () => {
-      clearTimeout(timeout);
-      const tooltipText =
-        trigger.dataset.tooltip ||
-        trigger.querySelector('.sr-only')?.textContent;
-      const config = {
-        offset: Number(trigger.dataset.offset || 8),
-        shiftPadding: Number(trigger.dataset.shiftPadding || 16),
+    triggers.forEach((trigger) => {
+      const showTooltip = () => {
+        clearTimeout(timeout);
+        const tooltipText =
+          trigger.dataset.tooltip ||
+          trigger.querySelector('.sr-only')?.textContent;
+        const config = {
+          offset: Number(trigger.dataset.offset || 8),
+          shiftPadding: Number(trigger.dataset.shiftPadding || 16),
+        };
+        if (!tooltipText) {
+          throw new Error('Tooltip text not found');
+        }
+
+        tooltipContent.textContent = tooltipText;
+
+        computePosition(trigger, tooltip, {
+          middleware: [
+            offset(config.offset),
+            flip(),
+            shift({
+              padding: config.shiftPadding,
+            }),
+            arrow({ element: tooltipArrow }),
+          ],
+        }).then(({ x, y, placement, middlewareData }) => {
+          Object.assign(tooltip.style, {
+            top: `${y}px`,
+            left: `${x}px`,
+          });
+
+          const { arrow } = middlewareData;
+          if (arrow == null) {
+            return;
+          }
+
+          const staticSide = {
+            top: 'bottom',
+            right: 'left',
+            bottom: 'top',
+            left: 'right',
+          }[placement.split('-')[0]]!;
+
+          Object.assign(tooltipArrow.style, {
+            left: arrow.x != null ? `${arrow.x}px` : '',
+            top: arrow.y != null ? `${arrow.y}px` : '',
+            right: '',
+            bottom: '',
+            [staticSide]: '-3px',
+          });
+        });
+        tooltip.hidden = false;
       };
-      if (!tooltipText) {
-        throw new Error('Tooltip text not found');
-      }
 
-      tooltipContent.textContent = tooltipText;
+      const hideTooltip = () => {
+        timeout = setTimeout(() => {
+          tooltip.hidden = true;
+        }, 150);
+      };
 
-      computePosition(trigger, tooltip, {
-        middleware: [
-          offset(config.offset),
-          flip(),
-          shift({
-            padding: config.shiftPadding,
-          }),
-          arrow({ element: tooltipArrow }),
-        ],
-      }).then(({ x, y, placement, middlewareData }) => {
-        Object.assign(tooltip.style, {
-          top: `${y}px`,
-          left: `${x}px`,
+      const LISTENERS = [
+        ['mouseenter', showTooltip],
+        ['mouseleave', hideTooltip],
+        ['focus', showTooltip],
+        ['blur', hideTooltip],
+      ] as const;
+
+      const switchListeners = (supportsHover: boolean) => {
+        LISTENERS.forEach(([event, listener]) => {
+          if (supportsHover) {
+            trigger.addEventListener(event, listener);
+          } else {
+            trigger.removeEventListener(event, listener);
+          }
         });
+      };
 
-        const { arrow } = middlewareData;
-        if (arrow == null) {
-          return;
-        }
-
-        const staticSide = {
-          top: 'bottom',
-          right: 'left',
-          bottom: 'top',
-          left: 'right',
-        }[placement.split('-')[0]]!;
-
-        Object.assign(tooltipArrow.style, {
-          left: arrow.x != null ? `${arrow.x}px` : '',
-          top: arrow.y != null ? `${arrow.y}px` : '',
-          right: '',
-          bottom: '',
-          [staticSide]: '-3px',
-        });
+      window.matchMedia('(hover: hover)').addEventListener('change', (e) => {
+        switchListeners(e.matches);
       });
-      tooltip.hidden = false;
-    };
 
-    const hideTooltip = () => {
-      timeout = setTimeout(() => {
-        tooltip.hidden = true;
-      }, 150);
-    };
-
-    const LISTENERS = [
-      ['mouseenter', showTooltip],
-      ['mouseleave', hideTooltip],
-      ['focus', showTooltip],
-      ['blur', hideTooltip],
-    ] as const;
-
-    const switchListeners = (supportsHover: boolean) => {
-      LISTENERS.forEach(([event, listener]) => {
-        if (supportsHover) {
-          trigger.addEventListener(event, listener);
-        } else {
-          trigger.removeEventListener(event, listener);
-        }
-      });
-    };
-
-    window.matchMedia('(hover: hover)').addEventListener('change', (e) => {
-      switchListeners(e.matches);
+      switchListeners(window.matchMedia('(hover: hover)').matches);
     });
+  };
 
-    switchListeners(window.matchMedia('(hover: hover)').matches);
+  document.addEventListener('astro:after-swap', (ev) => {
+    initialize();
   });
+
+  initialize();
 </script>

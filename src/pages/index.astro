@@ -2,9 +2,13 @@
 import { getCollection } from 'astro:content';
 import { map, pipe, slice, sortWith } from 'mochila-ts';
 
+import Container from '@/components/Container.astro';
 import Bio from '@/components/home/Bio.astro';
-import FeaturedPosts from '@/components/home/FeaturedPosts.astro';
+import Intro from '@/components/home/Intro.astro';
+import SocialLinks from '@/components/home/SocialLinks.astro';
 import PostEntry from '@/components/PostEntry.astro';
+// import FeaturedPosts from '@/components/home/FeaturedPosts.astro';
+// import PostEntry from '@/components/PostEntry.astro';
 import MainLayout from '@/layout/MainLayout.astro';
 import { toPostItem } from '@/pods/posts/toPostItem';
 import type { Post } from '@/pods/posts/types';
@@ -22,8 +26,17 @@ const featuredPosts = pipe(
 ---
 
 <MainLayout title="José Manuel Lucas / Desarrollador Frontend" currentPath="/">
-  <Bio />
-  <FeaturedPosts>
-    {featuredPosts.map((props) => <PostEntry {...props} />)}
-  </FeaturedPosts>
+  <Container as="section" class="py-8 md:pt-12 md:pb-10 lg:pt-14 lg:pb-12">
+    <Bio />
+    <Intro />
+    <SocialLinks />
+  </Container>
+  <Container as="section" class="mt-8">
+    <p class="text-xl font-medium text-cinder-500 d:text-cinder-300">
+      Últimos posts
+    </p>
+    <div class="grid md:grid-cols-2 gap-10 gap-12 mt-6 items-start">
+      {featuredPosts.map((props) => <PostEntry {...props} />)}
+    </div>
+  </Container>
 </MainLayout>

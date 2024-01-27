@@ -6,6 +6,15 @@ export default defineConfig({
   integrations: [
     UnoCSS({
       injectReset: true, // or a path to the reset file
+      preflights: [
+        {
+          getCSS: () => `
+            abbr {
+              cursor: help;
+            }
+          `,
+        },
+      ]
     }),
   ],
 });

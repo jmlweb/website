@@ -1,0 +1,43 @@
+---
+import Subtitle from '../Subtitle.astro';
+import Title from '../Title.astro';
+import DownloadButton from './DownloadButton.astro';
+---
+
+<Title>José Manuel Lucas</Title>
+<Subtitle>Desarrollador Web</Subtitle>
+<div class="mt-6 flex flex-col lg:flex-row gap-y-8 gap-x-8">
+  <div class="text-lg space-y-4 w-full text-pretty leading-[1.75]">
+    <p>
+      Poseo una <strong>experiencia de más de 15 años</strong> haciendo realidad
+      todo tipo de proyectos, lo que me permite tener una <strong
+        >visión completa del ciclo de desarrollo</strong
+      >.<br />Estoy acostumbrado a <strong>liderar</strong> equipos, a <strong
+        >mentorizar</strong
+      > a otros desarrolladores, así como a trabajar codo con codo con RRHH realizando
+      labores de <strong>selección de candidatos</strong>.
+    </p><p>
+      Aunque estoy <strong>especializado en el lado Frontend</strong>,
+      habitualmente <strong>trabajo en el lado servidor</strong> con Node, y tengo
+      conocimientos de otros lenguajes como PHP o Python.<br />Además,
+      habitualmente colaboro en el <strong
+        >desarrollo y mantenimiento de la infraestructura</strong
+      >, por lo que palabras como <em>pipeline</em>, <em>Docker</em>
+      o <em>K8s</em>
+      no son desconocidas para mí.
+    </p>
+  </div>
+  <footer class="flex-1 flex flex-col sm:flex-row lg:flex-col gap-x-4 gap-y-2">
+    <DownloadButton
+      href="#"
+      title="descargar currículum"
+      subtitle="versión en español"
+    />
+    <DownloadButton
+      href="#"
+      title="download resume"
+      subtitle="english version"
+      lang="en"
+    />
+  </footer>
+</div>

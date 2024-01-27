@@ -14,7 +14,7 @@ import ThemeSwitcherIcon from './ThemeSwitcherIcon.astro';
     'hidden js:block relative',
     'p-0 w-11 aspect-square -m-2.5',
     'transition-colors',
-    'text-cinder-400 d:text-cinder-300 hover:text-indigo-500 d:hover:text-orange-200',
+    'text-cinder-400 d:text-cinder-300 @hover:text-indigo-500 d:@hover:text-orange-200',
   ]}
 >
   <span class="sr-only"></span>
@@ -27,53 +27,53 @@ import ThemeSwitcherIcon from './ThemeSwitcherIcon.astro';
   import { querySelector, querySelectorAll } from '@/pods/dom';
   import { theme } from '@/store';
 
-  const toggler = querySelector<HTMLButtonElement>('#theme-switcher');
-  const helper = querySelector<HTMLSpanElement>('span:first-child', toggler);
-  const icons = querySelectorAll<SVGElement>('svg', toggler);
-  const blurred = querySelector<HTMLSpanElement>('span:last-child', toggler);
-
-  const updateToggler = (isDark: boolean) => {
-    toggler.setAttribute('aria-pressed', `${isDark}`);
-  };
-
-  const updateHelper = (isDark: boolean) => {
-    helper.textContent = `Activar tema ${isDark ? 'claro' : 'oscuro'}`;
-  };
-
-  const updateIcons = (isDark: boolean) => {
-    const activeTheme = isDark ? 'dark' : 'light';
-    const classes = {
-      off: ['opacity-0', 'scale-0'],
-      on: ['opacity-100', 'scale-100'],
-    };
-    icons.forEach((icon) => {
-      if (icon.dataset.theme === activeTheme) {
-        icon.classList.remove(...classes.on);
-        icon.classList.add(...classes.off);
-      } else {
-        icon.classList.remove(...classes.off);
-        icon.classList.add(...classes.on);
-      }
-    });
-  };
-
-  const updateBlurred = (isDark: boolean) => {
-    const classes = ['bg-orange-200/75', 'bg-indigo-600'];
-    if (!isDark) {
-      classes.reverse();
-    }
-    blurred.classList.remove(classes[1]);
-    blurred.classList.add(classes[0]);
-  };
-
-  const forzeTogglerFocus = () => {
-    setTimeout(() => {
-      toggler.blur();
-      toggler.focus();
-    }, 50);
-  };
-
   const initialize = () => {
+    const toggler = querySelector<HTMLButtonElement>('#theme-switcher');
+    const helper = querySelector<HTMLSpanElement>('span:first-child', toggler);
+    const icons = querySelectorAll<SVGElement>('svg', toggler);
+    const blurred = querySelector<HTMLSpanElement>('span:last-child', toggler);
+
+    const updateToggler = (isDark: boolean) => {
+      toggler.setAttribute('aria-pressed', `${isDark}`);
+    };
+
+    const updateHelper = (isDark: boolean) => {
+      helper.textContent = `Activar tema ${isDark ? 'claro' : 'oscuro'}`;
+    };
+
+    const updateIcons = (isDark: boolean) => {
+      const activeTheme = isDark ? 'dark' : 'light';
+      const classes = {
+        off: ['opacity-0', 'scale-0'],
+        on: ['opacity-100', 'scale-100'],
+      };
+      icons.forEach((icon) => {
+        if (icon.dataset.theme === activeTheme) {
+          icon.classList.remove(...classes.on);
+          icon.classList.add(...classes.off);
+        } else {
+          icon.classList.remove(...classes.off);
+          icon.classList.add(...classes.on);
+        }
+      });
+    };
+
+    const updateBlurred = (isDark: boolean) => {
+      const classes = ['bg-orange-200/75', 'bg-indigo-600'];
+      if (!isDark) {
+        classes.reverse();
+      }
+      blurred.classList.remove(classes[1]);
+      blurred.classList.add(classes[0]);
+    };
+
+    const forzeTogglerFocus = () => {
+      setTimeout(() => {
+        toggler.blur();
+        toggler.focus();
+      }, 50);
+    };
+
     toggler.removeAttribute('hidden');
 
     theme.subscribe((value) => {
@@ -85,15 +85,16 @@ import ThemeSwitcherIcon from './ThemeSwitcherIcon.astro';
     });
 
     toggler.addEventListener('click', () => {
-      // Don't animate until the theme is changed by the user
-      document.body.classList.add('transition-colors');
-      document.body.classList.add('duration-400');
       const newTheme = theme.get() === 'dark' ? 'light' : 'dark';
       theme.set(newTheme);
       localStorage.setItem('theme', newTheme);
       forzeTogglerFocus();
     });
   };
+
+  document.addEventListener('astro:after-swap', (ev) => {
+    initialize();
+  });
 
   initialize();
 </script>

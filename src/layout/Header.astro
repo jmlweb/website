@@ -6,29 +6,31 @@ import Container from '@/components/Container.astro';
 import ThemeSwitcher from './ThemeSwitcher/ThemeSwitcher.astro';
 ---
 
-<Container
-  as="header"
-  class="flex flex-wrap justify-between items-center h-20 md:h-28 lg:h-40"
->
-  <a
-    id="logo-link"
-    href="/"
-    class:list={[
-      'hidden sm:block js:block',
-      'p-3 -m-3 lg:p-unset lg:m-unset',
-      'color-orange-500 hover:color-orange-600 d:color-orange-300 d:hover:color-orange-300/90',
-      'transition-colors',
-    ]}
+<div class="border-b border-cinder-400/20 d:border-cinder-200/10">
+  <Container
+    as="header"
+    class="flex flex-wrap justify-between items-center h-20 md:h-28 lg:h-40"
   >
-    <span class="sr-only">José Manuel Lucas</span>
-    <Sprite
-      class:list={['aspect-square', 'w-9 md:w-12 lg:w-16']}
-      name="jmlweb"
-      aria-hidden="true"
-    />
-  </a>
-  <div class="flex items-center">
-    <ThemeSwitcher />
-    <slot />
-  </div>
-</Container>
+    <a
+      id="logo-link"
+      href="/"
+      class:list={[
+        'hidden sm:block js:block',
+        'p-3 -m-3 lg:p-unset lg:m-unset',
+        'color-orange-500 @hover:color-orange-600 d:color-orange-300 d:@hover:color-orange-300/90',
+        'transition-colors',
+      ]}
+    >
+      <span class="sr-only">José Manuel Lucas</span>
+      <Sprite
+        class:list={['aspect-square', 'w-9 md:w-12 lg:w-16']}
+        name="jmlweb"
+        aria-hidden="true"
+      />
+    </a>
+    <div class="flex items-center">
+      <ThemeSwitcher />
+      <slot />
+    </div>
+  </Container>
+</div>

@@ -10,27 +10,31 @@ const { title, subTitle, href, date } = Astro.props;
 ---
 
 <article>
-  <header>
-    <h2 class="text-2xl font-semibold">
-      <a
-        class="text-cinder-800 @hover:text-indigo-800 d:text-cinder-100 d:@hover:text-orange-100 transition-colors"
-        href={href}>{title}</a
-      >
-    </h2>
+  <h2 class="text-2xl font-semibold">
+    <a
+      class="text-cinder-800 @hover:text-indigo-600 d:text-cinder-100 d:@hover:text-indigo-300 transition-colors inline-block text-pretty"
+      href={href}>{title}</a
+    >
+  </h2>
+  <p class="mt-2 leading-relaxed baseline text-pretty" set:html={subTitle} />
+  <footer class="mt-4 flex gap-3 items-center">
     <time
-      class="text-cinder-500/80 d:text-cinder-300 font-medium transition-colors text-sm"
+      class="text-cinder-500 d:text-cinder-400 font-medium text-sm block"
       datetime={date.toISOString()}>{beautifyDate(date)}</time
     >
-  </header>
-  <p class="mt-3" set:html={subTitle} />
-  <footer class="mt-5 text-sm">
+    <Sprite
+      name="ri:circle-fill"
+      class="w-2 h-2 text-cinder-200 d:text-cinder-700"
+      aria-hidden
+    />
     <a
-      class="font-semibold text-indigo-600 @hover:text-indigo-800 d:text-orange-200/90 d:@hover:text-orange-100 transition-colors group/link"
+      class="group/link block font-semibold text-indigo-600 @hover:text-indigo-600/90 d:text-indigo-400 d:@hover:text-indigo-300 transition-colors py-2 text-pretty"
       href={href}
       aria-label={`Leer más sobre '${title}''`}
-      >Leer más<Sprite
-        class="w-6 aspect-square inline-block transition-transform group-hover/link:translate-x-0.5"
-        name="ri:arrow-right-double-line"
+      >Seguir leyendo<Sprite
+        name="ri:arrow-right-line"
+        class="w-5 h-5 ml-1 inline-flex transition-transform group-hover/link:translate-x-0.5"
+        aria-hidden
       /></a
     >
   </footer>

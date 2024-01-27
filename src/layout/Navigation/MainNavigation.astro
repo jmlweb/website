@@ -12,17 +12,13 @@ interface Props {
 const { currentPath } = Astro.props;
 ---
 
-<nav
-  role="navigation"
-  aria-label="Menú principal"
-  class="ml-8 lg:ml-20 text-base lg:text-lg"
->
+<nav aria-label="Menú principal" class="ml-8 lg:ml-20 text-base lg:text-lg">
   <button
     id="mobile-menu-trigger"
     class:list={[
       'bg-transparent color-cinder-500 d:color-cinder-300',
       'w-11 p-2 -mx-2',
-      'hidden js:block js:md:hidden',
+      'hidden js:block js:sm:hidden',
     ]}
     type="button"
     aria-controls="mobile-drawer"
@@ -30,11 +26,15 @@ const { currentPath } = Astro.props;
     data-tooltip
   >
     <span class="sr-only">Abrir menú</span>
-    <Sprite name="ri:menu-4-line" class="aspect-square w-6.5 md:w-8" />
+    <Sprite
+      name="ri:menu-4-line"
+      class="aspect-square w-6.5 md:w-8"
+      aria-hidden
+    />
   </button>
   <ul
     class:list={[
-      'flex js:hidden js:md:flex flex-wrap gap-4 @md:gap-8 @lg:gap-10',
+      'flex js:hidden js:sm:flex flex-wrap gap-4',
       'text-base font-medium lg:text-lg',
       'd:text-orange-200',
     ]}
@@ -51,16 +51,3 @@ const { currentPath } = Astro.props;
     }
   </ul>
 </nav>
-
-<script>
-  import { querySelector } from '@/pods/dom';
-  import { isMenuOpen } from '@/store';
-
-  const trigger = querySelector<HTMLButtonElement>('#mobile-menu-trigger');
-
-  isMenuOpen.subscribe((state) => {
-    trigger.setAttribute('aria-expanded', `${state}`);
-  });
-
-  trigger.addEventListener('click', () => isMenuOpen.set(true));
-</script>

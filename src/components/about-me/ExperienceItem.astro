@@ -1,0 +1,69 @@
+---
+import { Sprite } from 'astro-icon';
+
+interface Props {
+  period: string;
+  position: string;
+  company: {
+    title: string;
+    href: string;
+  };
+}
+
+const { period, position, company } = Astro.props;
+---
+
+<article
+  class="flex-1 border border-base px-4 lg:px-6 rounded-sm gradient-base mb-8 lg:mb-18 last:mb-0 relative group/article last:mb-0"
+>
+  <header class="pt-4 lg:pt-6">
+    <p class="text-sm font-medium flex items-center text-cinder-400">
+      <Sprite
+        name="ri:calendar-2-line"
+        class="w-4 h-4 mr-1 text-cinder-300 d:text-cinder-500"
+        aria-hidden
+      />
+      {period}
+    </p>
+    <h3 class="font-semibold mt-3 flex items-center">
+      <span lang="en">{position}</span>
+      <Sprite
+        name="ri:at-line"
+        class="w-4 h-4 mx-1 text-cinder-300 d:text-cinder-500"
+        aria-label="@"
+      />
+      <a
+        href={company.href}
+        class="text-indigo-500 d:text-indigo-400 @hover:text-indigo-600 d:@hover:text-indigo-300 transition-colors"
+        target="_blank"
+        rel="noopener noreferrer">{company.title}</a
+      >
+    </h3>
+  </header>
+  <div class="pb-4 lg:pb-6">
+    <slot />
+  </div>
+  <Sprite
+    name="ri:circle-fill"
+    class="hidden lg:block w-3 h-3 absolute top-50% group-odd/article:-right-6 group-even/article:-left-6 text-teal-300 d:text-teal-600"
+    aria-hidden
+  />
+</article>
+
+<style>
+  article {
+    grid-row: span 2;
+  }
+
+  article:nth-child(odd) {
+    grid-column: 1;
+  }
+
+  article:nth-child(even) {
+    grid-column: 3;
+  }
+
+  article:nth-child(2) {
+    grid-row: 2 / 4;
+  }
+</style>

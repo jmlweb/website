@@ -1,4 +1,6 @@
 ---
+import { ViewTransitions } from 'astro:transitions';
+import { fade } from 'astro:transitions';
 import { AstroFont } from 'astro-font';
 import { Sprite } from 'astro-icon';
 
@@ -17,7 +19,12 @@ interface Props {
 const { title, currentPath } = Astro.props;
 ---
 
-<html lang="es" class="group" data-theme="auto">
+<html
+  lang="es"
+  class="group"
+  data-theme="auto"
+  transition:animate={fade({ duration: '0.1s' })}
+>
   <head>
     <meta charset="utf-8" />
     <meta
@@ -27,13 +34,15 @@ const { title, currentPath } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <ViewTransitions />
     <AstroFont
       config={[
         {
           src: [],
           name: 'Inter',
           googleFontsURL:
-            'https://fonts.googleapis.com/css2?family=Inter:slnt,wght@-10..0,100..900&display=swap',
+            'https://fonts.googleapis.com/css2?family=Inter:slnt,wght@-10..0,400..700&display=swap',
           preload: true,
           display: 'swap',
           selector: 'body',
@@ -42,13 +51,12 @@ const { title, currentPath } = Astro.props;
         },
       ]}
     />
-    <title>{title}</title>
   </head>
   <body
     class:list={[
-      'transition-colors bg-cinder-50 text-cinder-600 d:bg-cinder-950 d:text-cinder-200',
+      'bg-cinder-50/75 text-cinder-600 d:bg-cinder-950 d:text-cinder-200',
       'text-base lg:text-[17px] lg:leading-[1.6]',
-      'antialiased',
+      'antialiased optimize-legibility',
     ]}
   >
     <SkipToContent />
@@ -57,7 +65,7 @@ const { title, currentPath } = Astro.props;
         id="root"
         class:list={['flex flex-col', 'min-h-screen', 'font-sans']}
       >
-        <Header>
+        <Header transition:persist>
           <MainNavigation currentPath={currentPath} />
         </Header>
         <main id="main">
@@ -69,20 +77,10 @@ const { title, currentPath } = Astro.props;
     </Sprite.Provider>
     <SimpleTooltip />
     <script is:inline>
-      document.documentElement.setAttribute('data-js', 'true');
-    </script>
-
-    <script>
-      import { theme } from '@/store';
-
-      theme.subscribe((value) => {
-        document.documentElement.setAttribute('data-theme', value);
-      });
-
       const getInitialTheme = () => {
         const storedTheme = localStorage.getItem('theme');
         if (storedTheme && ['light', 'dark'].includes(storedTheme)) {
-          return storedTheme as 'light' | 'dark';
+          return storedTheme;
         }
         const prefersLight = window.matchMedia(
           '(prefers-color-scheme: light)',
@@ -90,7 +88,41 @@ const { title, currentPath } = Astro.props;
         return prefersLight ? 'light' : 'dark';
       };
 
-      theme.set(getInitialTheme());
+      document.addEventListener('astro:before-swap', (ev) => {
+        // Pass the incoming document to set the theme on it
+        const targetDocument = ev.newDocument || document;
+        targetDocument.documentElement.dataset.js = 'true';
+        targetDocument.documentElement.dataset.theme = getInitialTheme();
+      });
+
+      document.dispatchEvent(new Event('astro:before-swap'));
+    </script>
+
+    <script>
+      import { theme } from '@/store';
+
+      theme.set(document.documentElement.dataset.theme as 'light' | 'dark');
+
+      theme.subscribe((value) => {
+        const css = document.createElement('style');
+        css.appendChild(
+          document.createTextNode(
+            `* {
+              -webkit-transition: none !important;
+              -moz-transition: none !important;
+              -o-transition: none !important;
+              -ms-transition: none !important;
+              transition: none !important;
+            }`,
+          ),
+        );
+        document.head.appendChild(css);
+
+        document.documentElement.setAttribute('data-theme', value);
+
+        const _ = window.getComputedStyle(css).opacity;
+        document.head.removeChild(css);
+      });
     </script>
   </body>
 </html>

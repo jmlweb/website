@@ -16,7 +16,7 @@ const { currentPath } = Astro.props;
   class:list={[
     'group',
     'pointer-events-none data-open:pointer-events-auto',
-    'md:hidden',
+    'sm:hidden',
   ]}
   id="mobile-menu"
   data-open="false"
@@ -87,66 +87,90 @@ const { currentPath } = Astro.props;
   import { isMenuOpen } from '@/store';
   import { querySelector, querySelectorAll } from '@/pods/dom';
 
-  const root = querySelector<HTMLDivElement>('#root');
-  const menu = querySelector<HTMLDivElement>('#mobile-menu');
-  const trigger = querySelector<HTMLButtonElement>('#mobile-menu-trigger');
-  const closer = querySelector('button', menu);
-  const overlay = querySelector('div', menu);
-  const focusableElements = querySelectorAll<
-    HTMLAnchorElement | HTMLButtonElement
-  >('a[href]:not([disabled]), button:not([disabled])', menu);
-  const firstFocusableElement = focusableElements[0];
-  const lastFocusableElement = focusableElements[focusableElements.length - 1];
+  const initialize = () => {
+    const root = querySelector<HTMLDivElement>('#root');
+    const menu = querySelector<HTMLDivElement>('#mobile-menu');
+    const trigger = querySelector<HTMLButtonElement>('#mobile-menu-trigger');
+    const closer = querySelector('button', menu);
+    const overlay = querySelector('div', menu);
+    const focusableElements = querySelectorAll<
+      HTMLAnchorElement | HTMLButtonElement
+    >('a[href]:not([disabled]), button:not([disabled])', menu);
+    const firstFocusableElement = focusableElements[0];
+    const lastFocusableElement =
+      focusableElements[focusableElements.length - 1];
 
-  const onKeydown = (event: KeyboardEvent) => {
-    if (window.matchMedia('(width >= 720px)').matches) {
-      return;
-    }
-    if (event.key === 'Escape') {
-      isMenuOpen.set(false);
-      trigger.focus();
-    }
-
-    if (event.key === 'Tab') {
-      const mustBlock =
-        document.activeElement ===
-        (event.shiftKey ? firstFocusableElement : lastFocusableElement);
-      if (mustBlock) {
-        (event.shiftKey ? lastFocusableElement : firstFocusableElement).focus();
-        event.preventDefault();
+    const onKeydown = (event: KeyboardEvent) => {
+      if (window.matchMedia('(width >= 720px)').matches) {
+        return;
       }
-    }
+      if (event.key === 'Escape') {
+        isMenuOpen.set(false);
+        trigger.focus();
+      }
+
+      if (event.key === 'Tab') {
+        const mustBlock =
+          document.activeElement ===
+          (event.shiftKey ? firstFocusableElement : lastFocusableElement);
+        if (mustBlock) {
+          (event.shiftKey
+            ? lastFocusableElement
+            : firstFocusableElement
+          ).focus();
+          event.preventDefault();
+        }
+      }
+    };
+
+    isMenuOpen.subscribe((state) => {
+      menu.setAttribute('aria-busy', 'true');
+      document.body.style.overflowY = state ? 'hidden' : '';
+      trigger.setAttribute('aria-expanded', `${state}`);
+      if (state) {
+        menu.hidden = false;
+        menu.ontransitionend = () => {
+          document.addEventListener('keydown', onKeydown);
+          root.inert = true;
+          menu.setAttribute('aria-busy', 'false');
+        };
+        setTimeout(() => {
+          menu.dataset.open = 'true';
+          firstFocusableElement.focus();
+        }, 0);
+      } else {
+        menu.dataset.open = 'false';
+        document.removeEventListener('keydown', onKeydown);
+        menu.ontransitionend = () => {
+          trigger.focus();
+          menu.hidden = true;
+          root.inert = false;
+          menu.setAttribute('aria-busy', 'false');
+        };
+      }
+    });
+
+    trigger.addEventListener('click', () => isMenuOpen.set(true));
+
+    [overlay, closer].forEach((element) => {
+      element.addEventListener('click', () => {
+        isMenuOpen.set(false);
+      });
+    });
+
+    focusableElements.forEach((element) => {
+      if (element !== closer) {
+        element.addEventListener('click', () => {
+          isMenuOpen.set(false);
+        });
+      }
+    });
   };
 
-  isMenuOpen.subscribe((state) => {
-    menu.setAttribute('aria-busy', 'true');
-    document.body.style.overflowY = state ? 'hidden' : '';
-    if (state) {
-      menu.hidden = false;
-      menu.ontransitionend = () => {
-        document.addEventListener('keydown', onKeydown);
-        root.inert = true;
-        menu.setAttribute('aria-busy', 'false');
-      };
-      setTimeout(() => {
-        menu.dataset.open = 'true';
-        firstFocusableElement.focus();
-      }, 0);
-    } else {
-      menu.dataset.open = 'false';
-      document.removeEventListener('keydown', onKeydown);
-      menu.ontransitionend = () => {
-        trigger.focus();
-        menu.hidden = true;
-        root.inert = false;
-        menu.setAttribute('aria-busy', 'false');
-      };
-    }
+  document.addEventListener('astro:after-swap', (ev) => {
+    console.log('initialize');
+    initialize();
   });
 
-  [overlay, closer].forEach((element) => {
-    element.addEventListener('click', () => {
-      isMenuOpen.set(false);
-    });
-  });
+  initialize();
 </script>
