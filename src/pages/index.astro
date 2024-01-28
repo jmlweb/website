@@ -25,7 +25,10 @@ const featuredPosts = pipe(
 )(await getCollection('posts'));
 ---
 
-<MainLayout title="José Manuel Lucas / Desarrollador Frontend" currentPath="/">
+<MainLayout
+  title="José Manuel Lucas. Sitios web escalables y eficientes. Buenas prácticas. TypeScript, Next.js, Node."
+  currentPath="/"
+>
   <Container as="section" class="py-8 md:pt-12 md:pb-10 lg:pt-14 lg:pb-12">
     <Bio />
     <Intro />

@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import { Sprite } from 'astro-icon';
+
+const tags = await getCollection('tags').then((tags) =>
+  tags.map(({ id, data: { title } }) => ({
+    id,
+    title,
+  })),
+);
+---
+
+<aside
+  class="gradient-base border border-base min-w-70 w-full lg:w-auto lg:sticky lg:flex-1 lg:top-4 rounded-sm"
+>
+  <p
+    class="d:text-cinder-400 d:bg-cinder-300/8 p-x-6 text-base font-semibold border-b border-white/20 rounded-t-sm p-y-3"
+  >
+    Categorías:
+  </p>
+  <ul class="p-4 shadow-inset shadow-lg shadow-cinder-950/25 flex">
+    {
+      tags.map(({ id, title }) => (
+        <li>
+          <a
+            href={`/tags/${id}`}
+            class:list={[
+              'flex items-center p-y-1 p-x-2',
+              'font-base',
+              'd:text-teal-200 d:hover:text-teal-100 d:hover:bg-black/15',
+              'transition-all',
+              'group/link',
+              'rounded-md',
+            ]}
+          >
+            <Sprite
+              name="ri:hashtag"
+              class:list={[
+                'inline-block w-4 h-4 mr-0.5 -mt-0.15',
+                'group-hover/link:opacity-50',
+                'transition-all',
+              ]}
+              aria-hidden
+            />
+            {title}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</aside>

@@ -6,6 +6,8 @@ import { map, pipe, sortWith } from 'mochila-ts';
 
 import Container from '@/components/Container.astro';
 import PostEntry from '@/components/PostEntry.astro';
+import Aside from '@/components/posts/Aside.astro';
+import Subtitle from '@/components/Subtitle.astro';
 import Title from '@/components/Title.astro';
 import { POSTS_PER_PAGE } from '@/config/posts';
 import MainLayout from '@/layout/MainLayout.astro';
@@ -26,8 +28,6 @@ export const getStaticPaths = (async ({ paginate }) => {
   return paginate(posts, { pageSize: POSTS_PER_PAGE });
 }) satisfies GetStaticPaths;
 
-// const tags = await getCollection('tags');
-
 export type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 const { page } = Astro.props;
@@ -37,26 +37,29 @@ const { page } = Astro.props;
   title={`Posts. Página ${page.currentPage} | José Manuel Lucas`}
   currentPath="/posts/1"
 >
-  <Container class="p-8 md:pt-12 md:pb-10 lg:pt-14 lg:pb-12 flex">
-    <main>
-      <Title class="flex justify-start items-baseline">
-        Posts {
-          page.currentPage > 1 && (
-            <>
-              <Sprite
-                name="ri:separator"
-                class="w-4 h-4 ml-2 opacity-60"
-                aria-hidden
-              />
-              <small class="text-xl md:text-2xl ml-2">Página 1</small>
-            </>
-          )
-        }
-      </Title>
-      <div class="mt-4 md:mt-6 flex flex-col gap-4 md:gap-6 lg:gap-8">
+  <Container as="main" class="p-8 md:pt-12 md:pb-10 lg:pt-14 lg:pb-12">
+    <Subtitle as="h1" class="flex justify-start items-baseline">
+      Posts {
+        page.currentPage > 1 && (
+          <>
+            <Sprite
+              name="ri:separator"
+              class="w-4 h-4 ml-2 opacity-60"
+              aria-hidden
+            />
+            <small class="text-xl md:text-2xl ml-2">Página 1</small>
+          </>
+        )
+      }
+    </Subtitle>
+    <div
+      class="flex flex-col lg:flex-row items-start mt-4 md:mt-6 gap-8 lg:gap-12"
+    >
+      <div class="flex flex-col w-full max-w-3xl gap-4 md:gap-6 lg:gap-8">
         <!--List the array of astronaut info-->
         {page.data.map((props) => <PostEntry {...props} />)}
       </div>
-    </main>
+      <Aside />
+    </div>
   </Container>
 </MainLayout>
