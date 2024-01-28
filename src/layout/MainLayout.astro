@@ -1,7 +1,8 @@
 ---
+import '@fontsource-variable/inter';
+
 import { ViewTransitions } from 'astro:transitions';
 import { fade } from 'astro:transitions';
-import { AstroFont } from 'astro-font';
 import { Sprite } from 'astro-icon';
 
 import Footer from './Footer.astro';
@@ -36,21 +37,6 @@ const { title, currentPath } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <ViewTransitions />
-    <AstroFont
-      config={[
-        {
-          src: [],
-          name: 'Inter',
-          googleFontsURL:
-            'https://fonts.googleapis.com/css2?family=Inter:slnt,wght@-10..0,400..700&display=swap',
-          preload: true,
-          display: 'swap',
-          selector: 'body',
-          fallback: 'sans-serif',
-          cssVariable: 'font-sans',
-        },
-      ]}
-    />
   </head>
   <body
     class:list={[

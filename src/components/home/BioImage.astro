@@ -16,6 +16,7 @@ const { class: className } = Astro.props;
   width={pictureSrc.width / 2}
   alt="Fotografía de José Manuel Lucas"
   densities={[1.5, 2]}
+  loading="eager"
   class={twMerge(
     'block',
     'w-20 md:w-24 lg:w-32',

@@ -67,7 +67,7 @@ export default defineConfig({
       close: 'open=false',
     },
     fontFamily: {
-      sans: 'var(--font-sans)',
+      sans: 'Inter Variable, Inter, system-ui, sans-serif',
     },
     maxWidth: {
       '6xl': '1280px',

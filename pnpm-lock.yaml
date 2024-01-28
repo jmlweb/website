@@ -11,12 +11,12 @@ dependencies:
   '@floating-ui/dom':
     specifier: ^1.5.3
     version: 1.5.4(react@18.2.0)
+  '@fontsource-variable/inter':
+    specifier: ^5.0.16
+    version: 5.0.16
   astro:
     specifier: ^4.0.7
     version: 4.1.1(typescript@5.3.3)
-  astro-font:
-    specifier: ^0.0.72
-    version: 0.0.72
   astro-icon:
     specifier: ^0.8.2
     version: 0.8.2
@@ -836,6 +836,10 @@ packages:
       react: '>=16.8.0'
     dependencies:
       react: 18.2.0
+    dev: false
+
+  /@fontsource-variable/inter@5.0.16:
+    resolution: {integrity: sha512-k+BUNqksTL+AN+o+OV7ILeiE9B5M5X+/jA7LWvCwjbV9ovXTqZyKRhA/x7uYv/ml8WQ0XNLBM7cRFIx4jW0/hg==}
     dev: false
 
   /@humanwhocodes/config-array@0.11.13:
@@ -1922,10 +1926,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
-
-  /astro-font@0.0.72:
-    resolution: {integrity: sha512-FUjIerovSg2lsfJfvvqY23hgvc++gHi69ikFkxm0mqO3MPFykK5ppeUuROUjhNbE6vwdD8MpiJOy1CR5S0g/lQ==}
-    dev: false
 
   /astro-icon@0.8.2:
     resolution: {integrity: sha512-+LgbDM6ku760pwoRwc7UfkVKy9V+QiRfZory4KzdMqVOYKyKSM1rmJ3CXcR7mezTd4pKJnH+guxR4ySpcn8fGg==}
