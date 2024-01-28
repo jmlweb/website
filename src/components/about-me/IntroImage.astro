@@ -13,15 +13,12 @@ const { class: className } = Astro.props;
 
 <Image
   src={pictureSrc}
-  width={pictureSrc.width / 2}
-  alt="Fotografía de José Manuel Lucas"
-  densities={[1.5, 2]}
+  widths={[180, 240, 320]}
+  sizes="(max-width: 520px) 180px, (max-width: 980px) 240px, 320px"
+  alt=""
+  loading="eager"
   class={twMerge(
-    'block',
-    'w-20 md:w-24 lg:w-32',
-    'aspect-square',
-    'rounded-full overflow-hidden',
-    'transition-all',
+    'inline-block max-w-xs object-cover object-center max-w-[180px] sm:max-w-[240px] lg:max-w-[320px] transition-all',
     className,
   )}
 />

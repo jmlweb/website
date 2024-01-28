@@ -38,7 +38,11 @@ const { page } = Astro.props;
   currentPath="/posts/1"
 >
   <Container as="main" class="p-8 md:pt-12 md:pb-10 lg:pt-14 lg:pb-12">
-    <Subtitle as="h1" class="flex justify-start items-baseline">
+    <Subtitle
+      as="h1"
+      class="flex justify-start items-baseline"
+      transition:name="title"
+    >
       Posts {
         page.currentPage > 1 && (
           <>

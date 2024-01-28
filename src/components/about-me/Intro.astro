@@ -2,14 +2,15 @@
 import Subtitle from '../Subtitle.astro';
 import Title from '../Title.astro';
 import DownloadButton from './DownloadButton.astro';
+import IntroImage from './IntroImage.astro';
 ---
 
-<Title>Me llamo José Manuel Lucas</Title>
+<Title transition:name="title">Me llamo José&nbsp;Manuel&nbsp;Lucas</Title>
 <Subtitle>Soy desarrollador web</Subtitle>
 <div
-  class="mt-6 flex flex-col lg:flex-row lg:items-start gap-y-8 gap-x-8 lg:gap-x-12"
+  class="mt-6 flex flex-col-reverse lg:flex-row lg:items-start gap-y-8 gap-x-8 lg:gap-x-12"
 >
-  <div class="text-lg space-y-4 w-full max-w-3xl text-pretty leading-[1.75]">
+  <div class="text-lg space-y-4 w-full text-pretty leading-[1.75]">
     <p>
       Poseo una <strong>experiencia de más de 15 años</strong> haciendo realidad
       todo tipo de proyectos, lo que me permite tener una <strong
@@ -28,20 +29,21 @@ import DownloadButton from './DownloadButton.astro';
       o <em>K8s</em>
       no son desconocidas para mí.
     </p>
+    <footer
+      class="flex-1 flex flex-col sm:flex-row sm:justify-start gap-x-4 gap-y-2 pt-6 leading-normal"
+    >
+      <DownloadButton
+        href="#"
+        title="descargar currículum"
+        subtitle="versión en español"
+      />
+      <DownloadButton
+        href="#"
+        title="download resume"
+        subtitle="english version"
+        lang="en"
+      />
+    </footer>
   </div>
-  <footer
-    class="flex-1 flex flex-col sm:flex-row lg:flex-col gap-x-4 gap-y-2 lg:sticky lg:top-4"
-  >
-    <DownloadButton
-      href="#"
-      title="descargar currículum"
-      subtitle="versión en español"
-    />
-    <DownloadButton
-      href="#"
-      title="download resume"
-      subtitle="english version"
-      lang="en"
-    />
-  </footer>
+  <IntroImage />
 </div>

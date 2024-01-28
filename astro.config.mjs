@@ -12,6 +12,10 @@ export default defineConfig({
             abbr {
               cursor: help;
             }
+
+            strong {
+              font-weight: 600;
+            }
           `,
         },
       ]
