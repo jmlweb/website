@@ -1,4 +1,7 @@
 ---
+import '@fontsource/domine';
+import '@fontsource-variable/dm-sans';
+
 interface Props {
   title: string;
   description: string;
@@ -18,7 +21,7 @@ const { title, description } = Astro.props;
     <title>{title}</title>
     <slot name="head" />
   </head>
-  <body>
+  <body class="font-sans">
     <slot />
   </body>
 </html>
