@@ -2,8 +2,11 @@
 export default {
   endOfLine: 'lf',
   printWidth: 100,
+  semi: true,
   singleQuote: true,
-  trailingComma: 'all',
+  tabWidth: 2,
+  trailingComma: "all",
+  useTabs: false,
   plugins: ['prettier-plugin-astro'],
   overrides: [
     {

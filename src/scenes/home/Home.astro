@@ -1,0 +1,19 @@
+---
+import type { ComponentProps } from 'astro/types';
+
+import RootLayout from '../../layouts/RootLayout.astro';
+
+type Props = ComponentProps<typeof RootLayout>;
+
+const { title, description } = Astro.props;
+---
+
+<RootLayout title={title} description={description}>
+  <Fragment slot="head">
+    <link rel="alternate" hreflang="en" href={`${import.meta.env.SITE}/en`} />
+    <link rel="alternate" hreflang="x-default" href={import.meta.env.SITE} />
+  </Fragment>
+  <main>
+    <slot />
+  </main>
+</RootLayout>
