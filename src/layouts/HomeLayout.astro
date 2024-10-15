@@ -1,0 +1,19 @@
+---
+import Layout from './Layout.astro';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<Layout title={title}>
+  <Fragment slot="alternates">
+    <link rel="alternate" hreflang="en" href={`${import.meta.env.SITE}/en`} />
+    <link rel="alternate" hreflang="x-default" href={import.meta.env.SITE} />
+  </Fragment>
+  <main>
+    <slot />
+  </main>
+</Layout>
