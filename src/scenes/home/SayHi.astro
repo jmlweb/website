@@ -1,0 +1,45 @@
+---
+const labels =
+  Astro.currentLocale === 'en'
+    ? {
+        enable: 'Enable animation',
+        disable: 'Disable animation',
+      }
+    : {
+        enable: 'Activar animación',
+        disable: 'Desactivar animación',
+      };
+---
+
+<say-hi>
+  <label class="inline-block relative transition-opacity has-[:focus]:focused">
+    <input type="checkbox" class="peer sr-only" />
+    <span class="sr-only peer-checked:hidden">{labels.enable}</span>
+    <span class="sr-only hidden peer-checked:inline-block">{labels.disable}</span>
+    <span
+      aria-hidden
+      class="inline-block grayscale peer-checked:grayscale-0 motion-safe:peer-checked:say-hi"
+      >👋</span
+    >
+  </label>
+</say-hi>
+
+<script>
+  class SayHi extends HTMLElement {
+    connectedCallback() {
+      const input = this.querySelector<HTMLInputElement>('input');
+      if (!input) {
+        return;
+      }
+
+      input.checked = localStorage.getItem('sayHi') !== 'false';
+
+      // Each time the button is clicked, update the count.
+      input.addEventListener('change', (e) => {
+        const newState = (e.currentTarget as any).checked;
+        localStorage.setItem('sayHi', String(newState));
+      });
+    }
+  }
+  customElements.define('say-hi', SayHi);
+</script>

@@ -1,12 +1,31 @@
 ---
-import HomeScene from '../scenes/home/Home.astro';
+import HomeScene from '@/scenes/home/Home.astro';
 ---
 
 <HomeScene
   title="Bienvenido a Astro."
-  description="José Manuel Lucas | Frontend, TypeScript, CSS, Next.js"
+  heading="¡Hola! Soy José Manuel Lucas"
+  subheading="Construyo sitios web escalables y eficientes basados en buenas prácticas."
 >
-  <main>
-    <h1 class="font-serif font-semibold text-2xl">Página en español</h1>
-  </main>
+  <Fragment slot="intro">
+    <p class="~mt-3/4 ~text-base/lg">
+      Poseo una dilatada experiencia <strong
+        >desarrollando, manteniendo y optimizando proyectos web</strong
+      > de todo tipo, lo que me permite tener una <strong
+        >visión completa del ciclo de desarrollo</strong
+      >.
+    </p>
+    <p class="mt-2 ~text-base/lg">
+      En los últimos años, he alternado mi trabajo como <strong>desarrollador</strong> con el de
+      <strong>líder técnico</strong>, gracias a lo que he podido adquirir habilidades de <strong
+        >gestión</strong
+      > y <strong>mentorización</strong> de equipos.
+    </p>
+    <p class="mt-2 ~text-base/lg">
+      Considero que el trabajo no está acabado hasta que la aplicación está en producción, por lo
+      que colaboro activamente en el <strong
+        >despliegue y el mantenimiento de la infraestructura</strong
+      >.
+    </p>
+  </Fragment>
 </HomeScene>

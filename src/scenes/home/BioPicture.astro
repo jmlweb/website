@@ -1,0 +1,87 @@
+---
+import { Image } from 'astro:assets';
+import pictureSrc from '@/images/jmlweb.jpg';
+---
+
+<bio-picture class="bio-picture relative flex-1 lg:mt-14" aria-hidden>
+  <Image
+    src={pictureSrc}
+    widths={[80, 120, 200]}
+    sizes="(max-width: 767px) 80px (max-width: 1023px) 120px, 200px"
+    alt=""
+    loading="eager"
+    class="inline-block object-cover object-center max-w-[80px] md:max-w-[120px] lg:max-w-[200px] rounded-full overflow-hidden"
+  />
+</bio-picture>
+
+<style>
+  .bio-picture {
+    animation-name: picture-animation; /* Refers to the name of your @keyframes element below */
+    animation-duration: 30s; /* Change to speed up or slow down */
+    animation-iteration-count: infinite; /* Never stop waving :) */
+    animation-direction: alternate;
+    @media (min-width: 64rem) {
+      transform: scaleX(-1);
+    }
+  }
+
+  @keyframes picture-animation {
+    0% {
+      filter: hue-rotate(0deg) brightness(120%);
+    }
+    25% {
+      filter: hue-rotate(90deg) brightness(140%);
+    }
+    50% {
+      filter: hue-rotate(180deg) brightness(170%);
+    }
+    75% {
+      filter: hue-rotate(270deg) brightness(140%);
+    }
+    100% {
+      filter: hue-rotate(360deg) brightness(120%);
+    }
+  }
+
+  .inner {
+    animation-name: inner-animation; /* Refers to the name of your @keyframes element below */
+    animation-duration: 12s; /* Change to speed up or slow down */
+    animation-iteration-count: infinite; /* Never stop waving :) */
+    animation-direction: alternate;
+  }
+
+  @keyframes inner-animation {
+    0% {
+      transform: translateX(-24px) translateY(26px) scale(0.8);
+    }
+    25% {
+      transform: translateX(-12px) translateY(3px) scale(0.9);
+    }
+    50% {
+      transform: translateX(24px) translateY(-6px) scale(0.7);
+    }
+    75% {
+      transform: translateX(12px) translateY(-3px) scale(0.9);
+    }
+    100% {
+      transform: translateX(0px) translateY(0px) scale(0.8);
+    }
+  }
+</style>
+
+<script>
+  class BioPicture extends HTMLElement {
+    connectedCallback() {
+      const originalImage = this.querySelector<HTMLImageElement>('img');
+      if (!originalImage) {
+        return;
+      }
+      const clonedImage = originalImage.cloneNode(true) as HTMLImageElement;
+      clonedImage.classList.add('absolute', 'inset-0', 'border', 'border-white');
+      this.appendChild(clonedImage);
+      originalImage.classList.add('blur-2xl', 'inner');
+    }
+  }
+
+  customElements.define('bio-picture', BioPicture);
+</script>

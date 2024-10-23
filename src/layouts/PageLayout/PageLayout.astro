@@ -1,0 +1,85 @@
+---
+import { Icon } from 'astro-icon/components';
+
+import type { ComponentProps } from 'astro/types';
+
+import RootLayout from '../RootLayout/RootLayout.astro';
+import Container from '../../components/Container.astro';
+import DarkModeToggler from './DarkModeToggler.astro';
+
+type Props = ComponentProps<typeof RootLayout>;
+
+const { title } = Astro.props;
+const languageLink =
+  Astro.currentLocale === 'es'
+    ? {
+        href: '/en',
+        label: 'English',
+        lang: 'en',
+      }
+    : {
+        href: '/',
+        label: 'Español',
+        lang: 'es',
+      };
+---
+
+<RootLayout title={title}>
+  <Fragment slot="head">
+    <link rel="alternate" hreflang="en" href={`${import.meta.env.SITE}/en`} />
+    <link rel="alternate" hreflang="x-default" href={import.meta.env.SITE} />
+  </Fragment>
+  <div class="min-h-screen text-slate-900 dark:text-slate-300 dark:bg-slate-900">
+    <div class="border-b dark:border-b-slate-800">
+      <Container as="header" class="flex justify-between items-center ~py-2/3">
+        <a href="/" class="text-orange-600 dark:text-amber-500">
+          <span class="sr-only">José Manuel Lucas</span>
+          <Icon class="aspect-square h-auto ~w-9/11" name="logo" aria-hidden="true" />
+        </a>
+        <span class="flex justify-between items-center gap-3">
+          <a
+            class="font-medium text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-slate-100 h-10 inline-flex justify-center items-center px-3 transition-colors"
+            href={languageLink.href}
+            lang={languageLink.lang}
+            hreflang={languageLink.lang}>{languageLink.label}</a
+          >
+          <DarkModeToggler />
+        </span>
+      </Container>
+    </div>
+    <Container as="main" class="~mt-3/8">
+      <slot />
+    </Container>
+  </div>
+</RootLayout>
+<script is:inline>
+  window.AnimationBlocker = () => {
+    const css = document.createElement('style');
+    css.appendChild(
+      document.createTextNode(
+        `* {
+          -webkit-transition: none !important;
+          -moz-transition: none !important;
+          -o-transition: none !important;
+          -ms-transition: none !important;
+          transition: none !important;
+        }`,
+      ),
+    );
+    document.head.appendChild(css);
+    window.getComputedStyle(css).opacity;
+    return () => document.head.removeChild(css);
+  };
+
+  const isDarkMode =
+    localStorage.getItem('theme') === 'dark' ||
+    (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  const unblock = window.AnimationBlocker();
+  document.documentElement.classList.toggle('dark', isDarkMode);
+  unblock();
+</script>
+<script>
+  import { initializeTheme } from './theme';
+
+  initializeTheme();
+</script>

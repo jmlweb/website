@@ -1,19 +1,30 @@
 ---
 import type { ComponentProps } from 'astro/types';
 
-import RootLayout from '../../layouts/RootLayout.astro';
+import PageLayout from '@/layouts/PageLayout/PageLayout.astro';
+import BioPicture from './BioPicture.astro';
+import Heading from '@/components/Heading.astro';
+import SayHi from './SayHi.astro';
 
-type Props = ComponentProps<typeof RootLayout>;
+type Props = ComponentProps<typeof PageLayout> & {
+  heading: string;
+  subheading: string;
+};
 
-const { title, description } = Astro.props;
+const { title, heading, subheading } = Astro.props;
 ---
 
-<RootLayout title={title} description={description}>
-  <Fragment slot="head">
-    <link rel="alternate" hreflang="en" href={`${import.meta.env.SITE}/en`} />
-    <link rel="alternate" hreflang="x-default" href={import.meta.env.SITE} />
-  </Fragment>
-  <main>
-    <slot />
-  </main>
-</RootLayout>
+<PageLayout title={title}>
+  <div
+    class="flex flex-col-reverse lg:flex-row lg:justify-between max-w-screen-md lg:max-w-screen-lg mx-auto ~py-3/5 lg:items-start gap-4"
+  >
+    <div class="max-w-screen-md mx-auto">
+      <Heading class="text-slate-800 dark:text-slate-300"><SayHi /> {heading}</Heading>
+      <Heading as="h2" class="~text-xl/3xl ~mt-1/2 text-slate-600 dark:text-slate-400">
+        {subheading}
+      </Heading>
+      <slot name="intro" />
+    </div>
+    <BioPicture />
+  </div>
+</PageLayout>
