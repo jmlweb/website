@@ -2,8 +2,8 @@ import type { Config } from 'tailwindcss'
 
 import defaultTheme from 'tailwindcss/defaultTheme';
 import fluid, { extract, screens, type FluidThemeConfig } from 'fluid-tailwind';
-import sayHiPlugin from './say-hi-plugin';
-import globalFocusPlugin from './global-focus-plugin';
+import customAnimations from './custom-animations';
+import globalFocus from './global-focus-plugin';
 
 export default {
 	content: {
@@ -23,7 +23,7 @@ export default {
 			},
 		},
 	},
-	plugins: [fluid, sayHiPlugin, globalFocusPlugin],
+	plugins: [fluid, customAnimations, globalFocus],
 } satisfies Config & {
 	theme: Config['theme'] & {
 		fluid: FluidThemeConfig;

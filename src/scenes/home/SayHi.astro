@@ -12,13 +12,13 @@ const labels =
 ---
 
 <say-hi>
-  <label class="inline-block relative transition-opacity has-[:focus]:focused">
+  <label class="relative inline-block cursor-pointer has-[:focus-visible]:focused">
     <input type="checkbox" class="peer sr-only" />
     <span class="sr-only peer-checked:hidden">{labels.enable}</span>
     <span class="sr-only hidden peer-checked:inline-block">{labels.disable}</span>
     <span
       aria-hidden
-      class="inline-block grayscale peer-checked:grayscale-0 motion-safe:peer-checked:say-hi"
+      class="inline-block grayscale motion-safe:peer-checked:say-hi peer-checked:grayscale-0"
       >👋</span
     >
   </label>

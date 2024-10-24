@@ -5,6 +5,7 @@ import PageLayout from '@/layouts/PageLayout/PageLayout.astro';
 import BioPicture from './BioPicture.astro';
 import Heading from '@/components/Heading.astro';
 import SayHi from './SayHi.astro';
+import SocialLinks from './SocialLinks.astro';
 
 type Props = ComponentProps<typeof PageLayout> & {
   heading: string;
@@ -16,14 +17,20 @@ const { title, heading, subheading } = Astro.props;
 
 <PageLayout title={title}>
   <div
-    class="flex flex-col-reverse lg:flex-row lg:justify-between max-w-screen-md lg:max-w-screen-lg mx-auto ~py-3/5 lg:items-start gap-4"
+    class="mx-auto flex max-w-screen-md flex-col-reverse gap-4 ~mt-6/10 ~py-3/5 lg:max-w-screen-lg lg:flex-row lg:items-start lg:justify-between"
   >
-    <div class="max-w-screen-md mx-auto">
-      <Heading class="text-slate-800 dark:text-slate-300"><SayHi /> {heading}</Heading>
-      <Heading as="h2" class="~text-xl/3xl ~mt-1/2 text-slate-600 dark:text-slate-400">
+    <div class="mx-auto max-w-screen-md">
+      <Heading class="text-slate-700 dark:text-slate-300"
+        ><SayHi /> <span class="tracking-tight">{heading}</span></Heading
+      >
+      <Heading as="h2" class="text-slate-600 ~text-xl/3xl ~mt-2/3 dark:text-slate-400">
         {subheading}
       </Heading>
       <slot name="intro" />
+      <div class="flex flex-col gap-3 ~mt-6/9">
+        <Heading as="p" class="~text-lg/2xl">¿Contactamos?</Heading>
+        <SocialLinks />
+      </div>
     </div>
     <BioPicture />
   </div>

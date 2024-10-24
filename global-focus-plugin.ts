@@ -13,8 +13,8 @@ export default plugin(function ({ addBase, addComponents, theme }) {
   }
 
   addBase({
-    '*:focus': styles.default,
-    '.dark *:focus': styles.dark
+    '*:focus-visible': styles.default,
+    '.dark *:focus-visible': styles.dark
   });
 
   addComponents({
