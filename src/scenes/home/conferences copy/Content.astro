@@ -1,0 +1,19 @@
+---
+import { contentWithVideo } from './styles';
+
+interface Props {
+  hasVideo: boolean;
+}
+
+const { hasVideo } = Astro.props;
+---
+
+{
+  hasVideo ? (
+    <div class={contentWithVideo}>
+      <slot />
+    </div>
+  ) : (
+    <slot />
+  )
+}

@@ -4,7 +4,7 @@ import pictureSrc from '@/images/jmlweb.jpg';
 ---
 
 <bio-picture
-  class="bio-picture relative max-w-[80px] flex-1 rounded-full bg-slate-400 md:max-w-[120px] lg:mt-14 lg:max-w-[200px] lg:scale-x-[-1] dark:bg-slate-700"
+  class="bio-picture relative max-w-[80px] flex-1 rounded-full bg-gray-400 md:max-w-[120px] lg:mt-14 lg:max-w-[200px] lg:scale-x-[-1] dark:bg-gray-700"
   aria-hidden
 >
   <Image
@@ -15,7 +15,7 @@ import pictureSrc from '@/images/jmlweb.jpg';
     sizes="(max-width: 767px) 80px (max-width: 1023px) 120px, 200px"
     alt=""
     loading="eager"
-    class="inline-block w-full overflow-hidden rounded-full border border-slate-500/20 object-cover object-center dark:border-slate-500/10"
+    class="inline-block w-full overflow-hidden rounded-full border border-gray-500/20 object-cover object-center dark:border-gray-500/10"
   />
 </bio-picture>
 
@@ -27,11 +27,7 @@ import pictureSrc from '@/images/jmlweb.jpg';
         return;
       }
       const duplicatedPicture = picture.cloneNode(true) as HTMLImageElement;
-      duplicatedPicture.classList.remove(
-        'border',
-        'border-slate-500/20',
-        'dark:border-slate-500/10',
-      );
+      duplicatedPicture.classList.remove('border', 'border-gray-500/20', 'dark:border-gray-500/10');
       duplicatedPicture.classList.add(
         'blur-2xl',
         'absolute',

@@ -1,0 +1,63 @@
+---
+import { YouTube } from 'astro-embed';
+import { Icon } from 'astro-icon/components';
+
+import { CONFERENCES } from './config';
+import Content from './Content.astro';
+import Wrapper from './Wrapper.astro';
+
+const languageStrings: Record<string, string> =
+  Astro.currentLocale === 'en'
+    ? {
+        EN: 'English',
+        ES: 'Spanish',
+      }
+    : {
+        EN: 'Inglés',
+        ES: 'Castellano',
+      };
+---
+
+<div class="grid ~gap-4/6 sm:grid-cols-2 lg:grid-cols-3">
+  {
+    CONFERENCES.map((conference) => (
+      <Wrapper hasVideo={Boolean(conference.youtube)}>
+        {conference.youtube && (
+          <YouTube id={conference.youtube} title={conference.title} posterQuality="high" />
+        )}
+        <Content hasVideo={Boolean(conference.youtube)}>
+          <h3 class="text-pretty font-semibold leading-tight ~text-base/lg">{conference.title}</h3>
+          <footer class="mt-auto text-gray-600 dark:text-gray-400">
+            <p class="pt-2 font-semibold leading-tight text-gray-500 dark:text-gray-400">
+              {conference.for}
+            </p>
+            <p class="mt-2 flex items-center gap-4">
+              <strong class="flex items-center gap-1.5 font-semibold">
+                <Icon name="ri:calendar-line" class="size-5" /> {conference.year}
+              </strong>
+              <span class="flex items-center gap-1.5">
+                <Icon name="ri:speak-line" class="size-5" />
+                {languageStrings[conference.language]}
+              </span>
+            </p>
+            <p class="mt-2 flex items-center gap-1.5">
+              <Icon name="ri:compass-line" class="size-5" />
+              {conference.place.toLowerCase() === 'online' ? (
+                conference.place
+              ) : (
+                <a
+                  class="underline underline-offset-4"
+                  href={`https://www.google.com/maps/place/${conference.place}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {conference.place}
+                </a>
+              )}
+            </p>
+          </footer>
+        </Content>
+      </Wrapper>
+    ))
+  }
+</div>

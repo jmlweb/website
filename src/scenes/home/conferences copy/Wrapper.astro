@@ -1,0 +1,13 @@
+---
+import { articleWithVideo, articleWithoutVideo } from './styles';
+
+interface Props {
+  hasVideo: boolean;
+}
+
+const { hasVideo } = Astro.props;
+---
+
+<article class={hasVideo ? articleWithVideo : articleWithoutVideo}>
+  <slot />
+</article>
