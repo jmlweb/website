@@ -1,6 +1,5 @@
 import type { Config } from 'tailwindcss'
 
-import defaultTheme from 'tailwindcss/defaultTheme';
 import fluid, { extract, screens, type FluidThemeConfig } from 'fluid-tailwind';
 import customAnimations from './custom-animations';
 import globalFocus from './global-focus-plugin';
@@ -13,15 +12,9 @@ export default {
 	darkMode: 'selector',
 	theme: {
     fluid: ({ theme }) => ({
-      defaultScreens: ['20rem', theme('screens.lg')]
+      defaultScreens: ['20rem', theme('screens.xl')]
     }),
 		screens,
-		extend: {
-			fontFamily: {
-				sans: ['DM Sans Variable', 'DM Sans Variable fallback', ...defaultTheme.fontFamily.sans],
-				serif: ['Domine', 'Domine fallback', ...defaultTheme.fontFamily.serif],
-			},
-		},
 	},
 	plugins: [fluid, customAnimations, globalFocus],
 } satisfies Config & {
