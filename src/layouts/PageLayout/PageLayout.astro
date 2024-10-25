@@ -1,5 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
 import type { ComponentProps } from 'astro/types';
 
@@ -32,7 +33,10 @@ const languageLink =
   <div class="min-h-screen text-gray-700 dark:bg-gray-900 dark:text-gray-300">
     <div class="border-b dark:border-b-gray-800">
       <Container as="header" class="flex items-center justify-between ~py-2/3">
-        <a href="/" class="text-orange-500 dark:text-amber-400">
+        <a
+          href={getRelativeLocaleUrl(Astro.currentLocale ?? 'es', '/')}
+          class="text-orange-500 dark:text-amber-400"
+        >
           <span class="sr-only">José Manuel Lucas</span>
           <Icon class="aspect-square h-auto ~w-9/11" name="logo" aria-hidden="true" />
         </a>

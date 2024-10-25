@@ -3,10 +3,7 @@ import { Image } from 'astro:assets';
 import pictureSrc from '@/images/jmlweb.jpg';
 ---
 
-<bio-picture
-  class="bio-picture relative max-w-[80px] flex-1 rounded-full bg-gray-400 md:max-w-[120px] lg:mt-14 lg:max-w-[200px] lg:scale-x-[-1] dark:bg-gray-700"
-  aria-hidden
->
+<bio-picture class="bio-picture relative flex-1 lg:mt-14 lg:scale-x-[-1]" aria-hidden>
   <Image
     src={pictureSrc}
     width="200"
@@ -15,7 +12,7 @@ import pictureSrc from '@/images/jmlweb.jpg';
     sizes="(max-width: 767px) 80px (max-width: 1023px) 120px, 200px"
     alt=""
     loading="eager"
-    class="inline-block w-full overflow-hidden rounded-full border border-gray-500/20 object-cover object-center dark:border-gray-500/10"
+    class="inline-block max-h-[200px] w-full max-w-[200px] overflow-hidden rounded-full border border-gray-500/20 bg-gray-400 dark:border-gray-500/10 dark:bg-gray-700"
   />
 </bio-picture>
 

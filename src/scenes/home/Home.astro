@@ -18,7 +18,7 @@ const { title, heading, subheading } = Astro.props;
 ---
 
 <PageLayout title={title}>
-  <Container>
+  <Container class="lg:max-w-screen-lg">
     <section
       class="flex flex-col-reverse gap-4 ~mt-6/10 ~pt-3/8 ~pb-8/14 lg:flex-row lg:items-start lg:justify-between"
     >
@@ -39,7 +39,7 @@ const { title, heading, subheading } = Astro.props;
     </section>
   </Container>
   <div class="bg-gray-200/50 ~pt-10/12 ~pb-10/16 dark:bg-gray-800/40">
-    <Container as="section" class="flex flex-col ~gap-4/6">
+    <Container as="section" class="~gap-4/ flex flex-col">
       <Heading level="2" as="h2">Charlas y conferencias</Heading>
       <Conferences />
     </Container>
