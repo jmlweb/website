@@ -1,0 +1,72 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<theme-toggler>
+  <button
+    aria-pressed="false"
+    class="group relative inline-flex h-9 items-center rounded-full bg-gray-950 before:absolute before:left-0 before:top-0 before:size-9 before:rounded-full before:border-2 before:border-orange-400/50 before:bg-orange-100 before:transition before:content-[''] aria-pressed:before:translate-x-full aria-pressed:before:border-indigo-500/50 aria-pressed:before:bg-indigo-600"
+  >
+    <span class="sr-only">{Astro.currentLocale === 'en' ? 'Dark theme' : 'Tema oscuro'}</span>
+    <span aria-hidden="true" class="inline-flex size-9 items-center justify-center">
+      <Icon
+        name="ri:sun-line"
+        class="relative inline-block size-5 text-orange-900 group-aria-pressed:text-orange-200/70"
+      />
+    </span>
+    <span aria-hidden="true" class="inline-flex size-9 items-center justify-center">
+      <Icon
+        name="ri:moon-line"
+        class="relative inline-block size-5 text-indigo-500 group-aria-pressed:text-indigo-200"
+      />
+    </span>
+  </button>
+</theme-toggler>
+
+<script>
+  import { atom } from 'nanostores';
+
+  const AnimationBlocker = () => {
+    const css = document.createElement('style');
+    css.appendChild(
+      document.createTextNode(
+        `* {
+          -webkit-transition: none !important;
+          -moz-transition: none !important;
+          -o-transition: none !important;
+          -ms-transition: none !important;
+          transition: none !important;
+        }`,
+      ),
+    );
+    document.head.appendChild(css);
+    window.getComputedStyle(css).opacity;
+    return () => document.head.removeChild(css);
+  };
+
+  const isDarkAtom = atom(document.documentElement.classList.contains('dark'));
+
+  class ThemeToggler extends HTMLElement {
+    connectedCallback() {
+      const button = this.querySelector<HTMLButtonElement>('button');
+      if (!button) {
+        return;
+      }
+
+      isDarkAtom.subscribe((isDark) => {
+        button.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+        const unblock = AnimationBlocker();
+        document.documentElement.classList.toggle('dark', isDark);
+        unblock();
+      });
+
+      button.addEventListener('click', () => {
+        const newValue = !isDarkAtom.get();
+        localStorage.setItem('theme', newValue ? 'dark' : 'light');
+        isDarkAtom.set(newValue);
+      });
+    }
+  }
+
+  customElements.define('theme-toggler', ThemeToggler);
+</script>

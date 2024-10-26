@@ -18,7 +18,7 @@ const { title } = Astro.props;
     <slot name="head" />
   </head>
   <body
-    class="optimize-legibility min-h-screen scroll-smooth bg-gray-50 font-sans antialiased dark:bg-gray-950"
+    class="optimize-legibility min-h-screen scroll-smooth bg-gradient-to-b from-gray-50 to-gray-100 font-sans antialiased dark:from-gray-900 dark:to-gray-950"
   >
     <slot />
   </body>
@@ -28,5 +28,5 @@ const { title } = Astro.props;
   const isDarkMode =
     localStorage.getItem('theme') === 'dark' ||
     (!('theme' in localStorage) && !window.matchMedia('(prefers-color-scheme: light)').matches);
-  // document.documentElement.classList.toggle('dark', isDarkMode);
+  document.documentElement.classList.toggle('dark', isDarkMode);
 </script>

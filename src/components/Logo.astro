@@ -1,0 +1,27 @@
+---
+import { Icon } from 'astro-icon/components';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { cva } from '@/utils/cva';
+
+const logo = cva({
+  base: 'transition-colors',
+  variants: {
+    color: {
+      light: 'text-amber-400 hover:text-amber-300',
+      reactive:
+        'text-amber-400 hover:text-amber-300 dark:text-indigo-400 dark:hover:text-indigo-300',
+    },
+  },
+});
+
+interface Props {
+  color: 'light' | 'reactive';
+}
+
+const { color } = Astro.props;
+---
+
+<a href={getRelativeLocaleUrl(Astro.currentLocale ?? 'es', '/')} class={logo({ color })}>
+  <span class="sr-only">José Manuel Lucas</span>
+  <Icon class="aspect-square h-auto ~w-9/11" name="logo" aria-hidden="true" />
+</a>
