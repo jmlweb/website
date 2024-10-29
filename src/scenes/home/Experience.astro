@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+import { pipe, sortWith } from 'mochila-ts';
+
+import ExperienceItem from './ExperienceItem.astro';
+
+const rawJobs = pipe(sortWith<CollectionEntry<'jobs'>>((a, b) => b.data.order - a.data.order))(
+  await getCollection('jobs'),
+);
+
+const jobs = await Promise.all(
+  rawJobs.map(async ({ data, render }) => ({
+    ...data,
+    rendered: await render(),
+  })),
+);
+---
+
+<div class="wrapper mt-4 grid-rows-2 gap-x-3 lg:grid lg:gap-x-4">
+  {
+    jobs.map(({ period, position, company, rendered: { Content } }) => (
+      <ExperienceItem period={period} position={position} company={company}>
+        <Content />
+      </ExperienceItem>
+    ))
+  }
+</div>
+
+<style>
+  .wrapper {
+    grid-template-columns: 1fr 1px 1fr;
+  }
+
+  .wrapper::before {
+    content: '';
+    grid-column: 2;
+    background: rgb(210 212 228 / 0.3);
+    grid-row: 1 / span 20;
+    height: 100%;
+    border-radius: 8px;
+  }
+
+  :global(.dark) .wrapper::before {
+    background: rgb(210 212 228 / 0.1);
+  }
+</style>

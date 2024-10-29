@@ -1,0 +1,56 @@
+---
+import pictureSrc from '@/images/looking-down.png';
+import { Image } from 'astro:assets';
+---
+
+<bio-picture>
+  <Image
+    widths={[288, 440]}
+    sizes="(max-width: 767px) 288px, 440px"
+    src={pictureSrc}
+    alt=""
+    class="relative w-72 min-w-60 -scale-x-100 brightness-125 min-[58rem]:w-full"
+    loading="eager"
+  />
+</bio-picture>
+
+<script>
+  class BioPicture extends HTMLElement {
+    connectedCallback() {
+      const originalImg = this.querySelector<HTMLImageElement>('img');
+      if (!originalImg) {
+        return;
+      }
+
+      const clonedImg = originalImg.cloneNode(true) as HTMLImageElement;
+      clonedImg.className =
+        'bio-picture absolute bottom-0 w-72 min-w-60 -scale-x-100 opacity-90 min-[58rem]:w-full dark:opacity-75';
+      clonedImg.setAttribute('aria-hidden', 'true');
+      this.prepend(clonedImg);
+    }
+  }
+
+  customElements.define('bio-picture', BioPicture);
+</script>
+
+<style>
+  bio-picture {
+    position: relative;
+  }
+
+  bio-picture::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    opacity: 1;
+    background-image: radial-gradient(#4e46e5 1px, #fff 1px);
+    background-size: 10px 10px;
+    border-radius: 9999px;
+  }
+
+  :global(.dark) bio-picture::before {
+    opacity: 0.7;
+    background-image: radial-gradient(#4e46e584 1px, transparent 1px);
+  }
+</style>

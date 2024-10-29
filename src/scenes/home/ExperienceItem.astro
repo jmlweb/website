@@ -1,0 +1,69 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  period: string;
+  position: string;
+  company: {
+    title: string;
+    href: string;
+  };
+}
+
+const { period, position, company } = Astro.props;
+---
+
+<article
+  class="lg:mb-18 group/article relative mb-4 flex-1 rounded border border-slate-200 bg-slate-50 px-4 last:mb-0 lg:px-6 dark:border-slate-800 dark:bg-slate-900"
+>
+  <header class="pt-4 lg:pt-6">
+    <p class="flex items-center text-sm font-medium text-slate-500">
+      <Icon
+        name="ri:calendar-2-line"
+        class="mr-1 size-4 text-slate-400 dark:text-slate-500"
+        aria-hidden
+      />
+      {period}
+    </p>
+    <h3 class="mt-3 flex items-center font-semibold">
+      <span lang="en">{position}</span>
+      <Icon
+        name="ri:at-line"
+        class="mx-1 size-4 text-slate-300 dark:text-slate-500"
+        aria-label="@"
+      />
+      <a
+        href={company.href}
+        class="text-indigo-500 transition-colors hover:text-indigo-600 dark:text-indigo-400 dark:hover:text-indigo-300"
+        target="_blank"
+        rel="noopener noreferrer">{company.title}</a
+      >
+    </h3>
+  </header>
+  <div class="pb-4 lg:pb-6">
+    <slot />
+  </div>
+  <Icon
+    name="ri:circle-fill"
+    class="absolute top-1/2 hidden size-3 text-teal-300 group-odd/article:-right-6 group-even/article:-left-6 lg:block dark:text-teal-600"
+    aria-hidden
+  />
+</article>
+
+<style>
+  article {
+    grid-row: span 2;
+  }
+
+  article:nth-child(odd) {
+    grid-column: 1;
+  }
+
+  article:nth-child(even) {
+    grid-column: 3;
+  }
+
+  article:nth-child(2) {
+    grid-row: 2 / 4;
+  }
+</style>

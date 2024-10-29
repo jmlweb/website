@@ -1,0 +1,132 @@
+---
+import { Icon } from 'astro-icon/components';
+
+const ITEMS = [
+  {
+    icon: 'file-type-html',
+    label: 'HTML',
+  },
+  {
+    icon: 'file-type-css',
+    label: 'CSS',
+  },
+  {
+    icon: 'file-type-js-official',
+    label: 'JavaScript',
+  },
+  {
+    icon: 'file-type-typescript-official',
+    label: 'TypeScript',
+  },
+  {
+    icon: 'file-type-node',
+    label: 'Node',
+  },
+  {
+    icon: 'file-type-reactjs',
+    label: 'React',
+  },
+  {
+    icon: {
+      dark: 'file-type-light-next',
+      light: 'file-type-next',
+    },
+    label: 'Next.js',
+  },
+  {
+    icon: {
+      dark: 'file-type-light-astro',
+      light: 'file-type-astro',
+    },
+    label: 'Astro',
+  },
+  {
+    icon: 'file-type-storybook',
+    label: 'Storybook',
+  },
+  {
+    icon: 'file-type-tailwind',
+    label: 'Tailwind',
+  },
+  {
+    icon: 'file-type-sass',
+    label: 'Sass',
+  },
+  {
+    icon: 'file-type-svelte',
+    label: 'Svelte',
+  },
+  {
+    icon: 'file-type-vue',
+    label: 'Vue',
+  },
+  {
+    icon: 'file-type-jest',
+    label: 'Jest',
+  },
+  {
+    icon: 'file-type-cypress',
+    label: 'Cypress',
+  },
+  {
+    icon: 'file-type-eslint',
+    label: 'Eslint',
+  },
+  {
+    icon: 'file-type-docker',
+    label: 'Docker',
+  },
+  {
+    icon: 'file-type-turbo',
+    label: 'Turbo',
+  },
+  {
+    icon: {
+      light: 'file-type-vercel',
+      dark: 'file-type-light-vercel',
+    },
+    label: 'Vercel',
+  },
+  {
+    icon: {
+      dark: 'file-type-light-netlify',
+      light: 'file-type-netlify',
+    },
+    label: 'Netlify',
+  },
+  {
+    icon: 'file-type-aws',
+    label: 'AWS',
+  },
+  {
+    icon: 'file-type-python',
+    label: 'Python',
+  },
+  {
+    icon: 'file-type-php',
+    label: 'PHP',
+  },
+  {
+    icon: 'file-type-arduino',
+    label: 'Arduino',
+  },
+];
+---
+
+<ul class="grid grid-cols-[repeat(auto-fill,minmax(82px,1fr))] gap-3 min-[58rem]:col-span-2 ~mt-4/6">
+  {
+    ITEMS.map((item) => (
+      <li class="flex flex-col items-center rounded border bg-slate-50 border-slate-200 dark:border-slate-800 dark:bg-slate-900">
+        <span class="grid flex-1 place-items-center p-2 pb-1">
+          {typeof item.icon === 'string' ? (
+            <Icon name={`vscode-icons:${item.icon}`} class="inline-block size-8" />
+          ) : (
+            <Icon name={`vscode-icons:${item.icon.dark}`} class="size-8 inline-block dark:hidden" />
+            <Icon name={`vscode-icons:${item.icon.light}`} class="size-8 hidden dark:inline-block" />
+          )}
+        </span>
+        <span class="inline-block w-20 p-2 pt-0 text-center text-sm font-medium">{item.label}</span>
+      </li>
+    ))
+  }
+</ul>

@@ -1,6 +1,5 @@
 import type { Config } from 'tailwindcss'
 
-import defaultTheme from 'tailwindcss/defaultTheme';
 import fluid, { extract, screens, type FluidThemeConfig } from 'fluid-tailwind';
 import customAnimations from './custom-animations';
 import globalFocus from './global-focus-plugin';
@@ -17,9 +16,9 @@ export default {
     }),
 		screens,
 		extend: {
-			fontFamily: {
-				//sans: ['DM Sans Variable', ...defaultTheme.fontFamily.sans],
-			},
+			space: {
+				'110': '27.5rem',
+			}
 		},
 	},
 	plugins: [fluid, customAnimations, globalFocus],

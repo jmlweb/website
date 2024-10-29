@@ -22,7 +22,7 @@ const languageStrings: Record<string, string> =
   {
     CONFERENCES.map((conference) => (
       <article
-        class="flex flex-col border bg-gray-50 dark:border-gray-700/50 dark:bg-gray-700/30"
+        class="flex flex-col border bg-slate-50 dark:border-slate-700/50 dark:bg-slate-700/30"
         lang={conference.language === 'EN' ? 'en' : 'es'}
       >
         {conference.youtube && (
@@ -30,10 +30,10 @@ const languageStrings: Record<string, string> =
         )}
         <div class="flex flex-1 flex-col p-4 pb-6">
           <h3 class="text-pretty font-semibold leading-tight ~text-base/lg">{conference.title}</h3>
-          <p class="pt-1 font-semibold leading-tight text-gray-500 dark:text-gray-400">
+          <p class="pt-1 font-semibold leading-tight text-slate-500 dark:text-slate-400">
             {conference.for}
           </p>
-          <footer class="mt-auto text-gray-600 dark:text-gray-400">
+          <footer class="mt-auto text-slate-600 dark:text-slate-400">
             <p class="flex items-center gap-2.5 pt-3">
               <strong class="flex items-center gap-1 font-semibold">
                 <Icon name="ri:calendar-line" class="size-5" /> {conference.year}
@@ -49,7 +49,7 @@ const languageStrings: Record<string, string> =
                 conference.place
               ) : (
                 <a
-                  class="underline decoration-gray-300 underline-offset-4 transition-colors hover:text-cyan-600 dark:decoration-gray-600 dark:hover:text-cyan-300"
+                  class="underline decoration-slate-300 underline-offset-4 transition-colors hover:text-cyan-600 dark:decoration-slate-600 dark:hover:text-cyan-300"
                   href={`https://www.google.com/maps/place/${conference.place}`}
                   target="_blank"
                   rel="noopener noreferrer"

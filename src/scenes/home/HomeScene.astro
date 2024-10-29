@@ -1,64 +1,79 @@
 ---
+import Container from '@/components/Container.astro';
 import RootLayout from '@/layouts/RootLayout/RootLayout.astro';
-import { Image } from 'astro:assets';
-import pictureSrc from '@/images/bici_raw.jpg';
-import SocialLinks from './SocialLinks.astro';
-import Logo from '@/components/Logo.astro';
-import ThemeToggler from '@/components/ThemeToggler.astro';
+import BioPicture from './BioPicture.astro';
 import SayHi from './SayHi.astro';
+import SocialLinks from './SocialLinks.astro';
+import Technologies from './Technologies.astro';
+import Experience from './Experience.astro';
 ---
 
 <RootLayout title="José Manuel Lucas, Desarrollador Frontend">
-  <div class="relative min-h-96 overflow-hidden border-b border-gray-200 dark:border-gray-700">
-    <Image
-      src={pictureSrc}
-      class="-z-1 bio-picture-img absolute left-0 top-0 h-full w-full object-cover object-right-top"
-      alt=""
-    />
-    <div class="-z-1 bio-picture absolute inset-0 bg-slate-950 opacity-70"></div>
-    <div
-      class="-z-1 absolute inset-0 bg-gradient-to-br from-slate-950 to-slate-950/30 md:to-slate-950/20 lg:to-slate-950/10"
+  <div
+    class="pattern border-b border-slate-300 bg-gradient-to-br from-slate-50/70 to-slate-200 dark:border-slate-800 dark:from-slate-800/30 dark:to-slate-800/10"
+  >
+    <Container
+      as="section"
+      class="flex flex-col gap-x-8 min-[58rem]:flex-row min-[58rem]:items-end min-[58rem]:justify-between"
     >
-    </div>
-    <div class="relative mx-auto grid max-w-screen-xl grid-rows-[auto_1fr] ~px-4/5 ~pt-2/4">
-      <header class="flex items-center justify-between ~py-6/8">
-        <Logo color="light" />
-        <ThemeToggler />
-      </header>
-      <div class="max-w-screen-md text-gray-100 ~pb-6/10">
-        <h1 class="font-semibold tracking-tight ~text-3xl/4xl">
+      <div class="~py-12/16 min-[58rem]:max-w-screen-md">
+        <h1 class="font-semibold tracking-tight text-slate-800 ~text-3xl/4xl dark:text-slate-100">
           <SayHi />¡Hola! Soy José Manuel Lucas
         </h1>
-        <h2 class="mt-2 font-light text-gray-400 ~text-2xl/3xl">
+        <h2 class="mt-2 font-light text-slate-500 ~text-2xl/3xl dark:text-slate-300">
           Construyo sitios web escalables y eficientes basados en buenas prácticas
         </h2>
-        <div class="text-gray-300 ~text-base/lg">
+        <div class="text-pretty ~text-base/lg">
           <p class="~mt-5/6">
-            Poseo una amplia experiencia <strong
+            Poseo una amplia experiencia <strong class="font-semibold"
               >desarrollando, manteniendo y optimizando proyectos web</strong
-            > de todo tipo, lo que me permite tener una <strong
-              >visión completa del ciclo de desarrollo</strong
-            >.
+            > para empresas y clientes como <em class="font-italic">Freepik</em>, <em
+              class="font-italic">PcComponentes</em
+            >, <em class="font-italic">Series Yonkis</em>
+            o <em class="font-italic">Albert y Ferrán Adriá</em>.
           </p>
           <p class="~mt-3/4">
-            En los últimos años, he alternado mi trabajo como <strong
-              >desarrollador frontend senior</strong
-            > con el de
-            <strong>líder técnico</strong>, gracias a lo que he podido adquirir habilidades de <strong
-              >gestión</strong
-            > y <strong>mentorización</strong> de equipos.
-          </p>
-          <p class="~mt-3/4">
-            Considero que el trabajo no está acabado hasta que la aplicación está en producción, por
-            lo que colaboro activamente en el <strong
-              >despliegue y el mantenimiento de la infraestructura</strong
+            En los últimos años he ejercido como <strong class="font-semibold">líder técnico</strong
+            >, gracias a lo que he podido adquirir habilidades de <strong class="font-semibold"
+              >comunicación, gestión y mentorización de equipos</strong
             >.
           </p>
         </div>
-        <div class="~mt-8/10">
+        <div class="flex justify-center ~mt-8/10 min-[58rem]:justify-start">
           <SocialLinks />
         </div>
       </div>
-    </div>
+      <div class="relative flex flex-1 justify-center min-[58rem]:items-end">
+        <BioPicture />
+      </div>
+    </Container>
   </div>
+  <Container as="section" class="grid gap-y-4 ~gap-x-6/8 ~pt-12/16 min-[58rem]:grid-cols-2">
+    <h2
+      class="font-semibold tracking-tight text-slate-800 ~text-2xl/3xl min-[58rem]:col-span-2 dark:text-slate-100"
+    >
+      Tecnologías
+    </h2>
+    <p class="~text-base/lg dark:text-slate-400">
+      Soy un apasionado de la <strong class="font-semibold"
+        >programación funcional y reactiva</strong
+      >, del <strong class="font-semibold">testing</strong> y de los <strong class="font-semibold"
+        >sistemas de diseño</strong
+      >. Me preocupo por mantener actualizados mis conocimientos y por aplicar las mejores
+      prácticas.
+    </p>
+    <p class="~text-base/lg dark:text-slate-400">
+      Aunque suelo trabajar con tecnologías <strong class="font-semibold">frontend</strong>, me
+      considero un profesional versátil, lo que me permite tener una <strong class="font-semibold"
+        >visión completa del ciclo de desarrollo</strong
+      >.
+    </p>
+    <Technologies />
+  </Container>
+  <Container as="section" class="~pt-12/16">
+    <h2 class="font-semibold tracking-tight text-slate-800 ~text-2xl/3xl dark:text-slate-100">
+      Experiencia
+    </h2>
+    <Experience />
+  </Container>
 </RootLayout>

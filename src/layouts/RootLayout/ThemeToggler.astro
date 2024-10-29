@@ -1,0 +1,94 @@
+---
+import { Icon } from 'astro-icon/components';
+import { cva } from '@/utils/cva';
+
+const iconWrapper = cva({
+  base: 'inline-flex size-8 items-center justify-center',
+});
+
+const icon = cva({
+  base: 'relative inline-block size-5',
+  variants: {
+    theme: {
+      light: 'text-orange-700 group-aria-pressed:text-orange-200',
+      dark: 'text-indigo-500 group-aria-pressed:text-indigo-200',
+    },
+  },
+});
+
+const MESSAGES =
+  Astro.currentLocale === 'en'
+    ? {
+        enable: 'Activate dark theme',
+        disable: 'Activate light theme',
+      }
+    : {
+        enable: 'Activar tema oscuro',
+        disable: 'Activar tema claro',
+      };
+---
+
+<theme-toggler data-message-enable={MESSAGES.enable} data-message-disable={MESSAGES.disable}>
+  <button
+    aria-pressed="false"
+    aria-label={MESSAGES.enable}
+    aria-live="polite"
+    class="group relative inline-flex h-8 items-center rounded-full bg-slate-100 opacity-20 shadow-md ring-1 ring-inset ring-slate-300 aria-pressed:bg-slate-950 aria-pressed:ring-slate-700"
+  >
+    <span aria-hidden="true" class={iconWrapper()}>
+      <Icon name="ri:sun-line" class={icon({ theme: 'light' })} />
+    </span>
+    <span aria-hidden="true" class={iconWrapper()}>
+      <Icon name="ri:moon-line" class={icon({ theme: 'dark' })} />
+    </span>
+  </button>
+</theme-toggler>
+
+<noscript>
+  <style>
+    theme-toggler {
+      display: none;
+    }
+  </style>
+</noscript>
+
+<script>
+  import { isDarkAtom } from '@/store';
+
+  class ThemeToggler extends HTMLElement {
+    connectedCallback() {
+      const button = this.querySelector<HTMLButtonElement>('button');
+      if (!button) {
+        return;
+      }
+
+      const decorationClasses =
+        "before:absolute before:left-0 before:top-0 before:size-8 before:rounded-full before:border before:border-amber-400/50 before:bg-amber-300 before:transition before:content-[''] aria-pressed:before:translate-x-full aria-pressed:before:border-indigo-500/50 aria-pressed:before:bg-indigo-600";
+
+      const handleChange = (newValue: boolean) => {
+        button.setAttribute('aria-pressed', newValue ? 'true' : 'false');
+        button.setAttribute(
+          'aria-label',
+          newValue ? this.dataset.messageDisable! : this.dataset.messageEnable!,
+        );
+      };
+
+      handleChange(isDarkAtom.get());
+
+      button.classList.remove('opacity-20');
+      button.classList.add(...decorationClasses.split(' '));
+
+      isDarkAtom.listen((isDark) => {
+        handleChange(isDark);
+      });
+
+      button.addEventListener('click', () => {
+        const newValue = !isDarkAtom.get();
+        localStorage.setItem('theme', newValue ? 'dark' : 'light');
+        isDarkAtom.set(newValue);
+      });
+    }
+  }
+
+  customElements.define('theme-toggler', ThemeToggler);
+</script>

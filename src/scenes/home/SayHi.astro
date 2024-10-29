@@ -1,13 +1,35 @@
+---
+const MESSAGES =
+  Astro.currentLocale === 'en'
+    ? {
+        enable: 'Enable greeting',
+        disable: 'Disable greeting',
+      }
+    : {
+        enable: 'Activar saludo',
+        disable: 'Desactivar saludo',
+      };
+---
+
 <say-hi>
   <button
     aria-pressed="true"
-    class="relative inline-block cursor-pointer motion-safe:aria-pressed:before:say-hi before:inline-block before:grayscale before:content-['👋🏻'] aria-pressed:before:grayscale-0"
+    aria-label={MESSAGES.disable}
+    aria-live="polite"
+    data-message-enable={MESSAGES.enable}
+    data-message-disable={MESSAGES.disable}
+    class="relative inline-block cursor-pointer motion-safe:aria-pressed:before:say-hi before:inline-block before:grayscale before:content-['👋🏻'] hover:opacity-80 aria-pressed:before:grayscale-0"
   >
-    <span class="sr-only"
-      >{Astro.currentLocale === 'en' ? 'Toggle animation' : 'Alternar animación'}</span
-    >
   </button>
 </say-hi>
+
+<noscript>
+  <style>
+    say-hi {
+      display: none;
+    }
+  </style>
+</noscript>
 
 <script>
   class SayHi extends HTMLElement {
@@ -17,13 +39,20 @@
         return;
       }
 
-      button.ariaPressed = localStorage.getItem('sayHi') ?? 'true';
+      const handleChange = (isEnabled: boolean) => {
+        button.ariaPressed = String(isEnabled);
+        button.ariaLabel = isEnabled
+          ? button.dataset.messageDisable!
+          : button.dataset.messageEnable!;
+      };
+
+      handleChange(localStorage.getItem('sayHi') === 'true');
 
       // Each time the button is clicked, update the count.
       button.addEventListener('click', (e) => {
-        const newState = (e.currentTarget as any).ariaPressed === 'true' ? 'false' : 'true';
+        const newState = (e.currentTarget as any).ariaPressed === 'true' ? false : true;
         localStorage.setItem('sayHi', String(newState));
-        button.ariaPressed = newState;
+        handleChange(newState);
       });
     }
   }
