@@ -18,7 +18,7 @@ const jobs = await Promise.all(
 );
 ---
 
-<div class="wrapper mt-4 grid-rows-2 gap-x-3 lg:grid lg:gap-x-4">
+<div class="wrapper mt-4 grid-rows-2 gap-x-3 min-[58rem]:grid min-[58rem]:gap-x-5">
   {
     jobs.map(({ period, position, company, rendered: { Content } }) => (
       <ExperienceItem period={period} position={position} company={company}>

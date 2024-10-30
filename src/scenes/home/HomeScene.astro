@@ -1,22 +1,25 @@
 ---
-import Container from '@/components/Container.astro';
 import RootLayout from '@/layouts/RootLayout/RootLayout.astro';
 import BioPicture from './BioPicture.astro';
 import SayHi from './SayHi.astro';
 import SocialLinks from './SocialLinks.astro';
 import Technologies from './Technologies.astro';
 import Experience from './Experience.astro';
+
+import { container } from '@/styles';
 ---
 
 <RootLayout title="José Manuel Lucas, Desarrollador Frontend">
   <div
     class="pattern border-b border-slate-300 bg-gradient-to-br from-slate-50/70 to-slate-200 dark:border-slate-800 dark:from-slate-800/30 dark:to-slate-800/10"
   >
-    <Container
-      as="section"
-      class="flex flex-col gap-x-8 min-[58rem]:flex-row min-[58rem]:items-end min-[58rem]:justify-between"
+    <section
+      class={container({
+        class:
+          'flex flex-col gap-x-8 min-[58rem]:flex-row min-[58rem]:items-end min-[58rem]:justify-between',
+      })}
     >
-      <div class="~py-12/16 min-[58rem]:max-w-screen-md">
+      <div class="~py-12/20 min-[58rem]:max-w-screen-md">
         <h1 class="font-semibold tracking-tight text-slate-800 ~text-3xl/4xl dark:text-slate-100">
           <SayHi />¡Hola! Soy José Manuel Lucas
         </h1>
@@ -46,9 +49,13 @@ import Experience from './Experience.astro';
       <div class="relative flex flex-1 justify-center min-[58rem]:items-end">
         <BioPicture />
       </div>
-    </Container>
+    </section>
   </div>
-  <Container as="section" class="grid gap-y-4 ~gap-x-6/8 ~pt-12/16 min-[58rem]:grid-cols-2">
+  <section
+    class={container({
+      class: 'grid gap-y-4 ~gap-x-6/8 ~pt-12/20 min-[58rem]:grid-cols-2',
+    })}
+  >
     <h2
       class="font-semibold tracking-tight text-slate-800 ~text-2xl/3xl min-[58rem]:col-span-2 dark:text-slate-100"
     >
@@ -69,11 +76,15 @@ import Experience from './Experience.astro';
       >.
     </p>
     <Technologies />
-  </Container>
-  <Container as="section" class="~pt-12/16">
+  </section>
+  <section
+    class={container({
+      class: '~pt-12/20',
+    })}
+  >
     <h2 class="font-semibold tracking-tight text-slate-800 ~text-2xl/3xl dark:text-slate-100">
       Experiencia
     </h2>
     <Experience />
-  </Container>
+  </section>
 </RootLayout>
