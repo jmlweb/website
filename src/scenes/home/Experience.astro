@@ -18,7 +18,9 @@ const jobs = await Promise.all(
 );
 ---
 
-<div class="wrapper mt-4 grid-rows-2 gap-x-3 min-[58rem]:grid min-[58rem]:gap-x-5">
+<div
+  class="wrapper mt-4 grid-cols-[1fr_1px_1fr] grid-rows-2 items-start gap-x-3 before:col-start-2 before:col-end-2 before:row-start-1 before:row-end-[span_20] before:h-full before:rounded-lg before:bg-slate-200 before:content-[''] min-[58rem]:grid min-[58rem]:gap-x-5 dark:before:bg-slate-800"
+>
   {
     jobs.map(({ period, position, company, rendered: { Content } }) => (
       <ExperienceItem period={period} position={position} company={company}>
@@ -27,22 +29,3 @@ const jobs = await Promise.all(
     ))
   }
 </div>
-
-<style>
-  .wrapper {
-    grid-template-columns: 1fr 1px 1fr;
-  }
-
-  .wrapper::before {
-    content: '';
-    grid-column: 2;
-    background: rgb(210 212 228 / 0.3);
-    grid-row: 1 / span 20;
-    height: 100%;
-    border-radius: 8px;
-  }
-
-  :global(.dark) .wrapper::before {
-    background: rgb(210 212 228 / 0.1);
-  }
-</style>

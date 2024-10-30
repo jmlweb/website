@@ -14,7 +14,7 @@ const { period, position, company } = Astro.props;
 ---
 
 <article
-  class="group/article relative flex-1 rounded border border-slate-200 bg-slate-50 px-4 ~mb-4/8 last:mb-0 min-[58rem]:px-6 dark:border-slate-800 dark:bg-slate-900"
+  class="group/article grid-row-span-2 relative row-span-2 flex-1 rounded border border-slate-200 bg-slate-50 px-4 ~mb-4/8 last:mb-0 odd:col-start-1 odd:col-end-1 even:col-start-3 even:col-end-3 min-[58rem]:px-6 dark:border-slate-800 dark:bg-slate-900 [&:nth-child(2)]:row-start-2 [&:nth-child(2)]:row-end-4"
 >
   <header class="pt-4 min-[58rem]:pt-6">
     <p class="flex items-center font-medium text-slate-500 ~text-sm/base">
@@ -42,7 +42,7 @@ const { period, position, company } = Astro.props;
       >
     </h3>
   </header>
-  <div class="mt-1 pb-4 ~text-base/lg min-[58rem]:pb-6">
+  <div class="content mt-1 list-decimal pb-4 min-[58rem]:pb-6">
     <slot />
   </div>
   <Icon
@@ -53,19 +53,7 @@ const { period, position, company } = Astro.props;
 </article>
 
 <style>
-  article {
-    grid-row: span 2;
-  }
-
-  article:nth-child(odd) {
-    grid-column: 1;
-  }
-
-  article:nth-child(even) {
-    grid-column: 3;
-  }
-
-  article:nth-child(2) {
-    grid-row: 2 / 4;
+  .content :global(ul) {
+    @apply flex flex-col ~mt-2/3 ~gap-2/3;
   }
 </style>

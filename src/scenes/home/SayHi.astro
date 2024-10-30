@@ -54,6 +54,12 @@ const MESSAGES =
         localStorage.setItem('sayHi', String(newState));
         handleChange(newState);
       });
+
+      window.addEventListener('storage', (e) => {
+        if (e.key === 'sayHi') {
+          handleChange(e.newValue === 'true');
+        }
+      });
     }
   }
   customElements.define('say-hi', SayHi);
