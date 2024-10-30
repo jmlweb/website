@@ -8,5 +8,6 @@ company:
     https://bob.io/
 order: 4
 ---
-React, Styled Components, Redux, Express, Mongo, Stripe
+- Desarrollé un catálogo de componentes centralizado sirviendo a diferentes portales y aplicaciones.
+- Integré la pasarela de pago, basada en Stripe.
 

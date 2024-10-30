@@ -8,4 +8,6 @@ company:
     https://jmlweb.es
 order: 1
 ---
-HTML5, CSS3, AngularJS, Underscore, SoundManager2, WordPress, Node.js, Laravel, Socket.io
+- Participé en el desarrollo y mantenimiento de Series Yonkis, una de las webs con más tráfico de España. Desarrollé un sistema de chat en vivo usando Socket.io y optimizado para una alta carga.
+- Desarrollé la web para una batalla de raperos, para una bebida con un toro rojo como logo.
+- Maqueté y participé en la programación de la web de Altert y Ferrán Adriá.
