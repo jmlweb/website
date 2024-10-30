@@ -16,6 +16,9 @@ export default {
     }),
 		screens,
 		extend: {
+			letterSpacing: {
+				'almost-wide': '0.01rem',
+			},
 			space: {
 				'110': '27.5rem',
 			}

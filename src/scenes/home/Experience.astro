@@ -19,7 +19,7 @@ const jobs = await Promise.all(
 ---
 
 <div
-  class="wrapper mt-4 grid-cols-[1fr_1px_1fr] grid-rows-2 items-start gap-x-3 before:col-start-2 before:col-end-2 before:row-start-1 before:row-end-[span_20] before:h-full before:rounded-lg before:bg-slate-200 before:content-[''] min-[58rem]:grid min-[58rem]:gap-x-5 dark:before:bg-slate-800"
+  class="wrapper grid-cols-[1fr_1px_1fr] grid-rows-2 items-start gap-x-3 ~mt-4/6 before:col-start-2 before:col-end-2 before:row-start-1 before:row-end-[span_20] before:h-full before:rounded-lg before:bg-slate-200 before:content-[''] min-[58rem]:grid min-[58rem]:gap-x-5 dark:before:bg-slate-800"
 >
   {
     jobs.map(({ period, position, company, rendered: { Content } }) => (

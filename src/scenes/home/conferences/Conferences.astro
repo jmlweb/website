@@ -3,8 +3,6 @@ import { YouTube } from 'astro-embed';
 import { Icon } from 'astro-icon/components';
 
 import { CONFERENCES } from './config';
-import Content from './Content.astro';
-import Wrapper from './Wrapper.astro';
 
 const languageStrings: Record<string, string> =
   Astro.currentLocale === 'en'
@@ -18,23 +16,27 @@ const languageStrings: Record<string, string> =
       };
 ---
 
-<div class="grid ~gap-4/6 sm:grid-cols-2 lg:grid-cols-2">
+<div class="grid grid-rows-2 ~gap-4/6 sm:grid-cols-2 lg:grid-cols-3">
   {
     CONFERENCES.map((conference) => (
       <article
-        class="flex flex-col border bg-slate-50 dark:border-slate-700/50 dark:bg-slate-700/30"
+        class={`bg-slate- flex flex-col border border-slate-200 dark:border-slate-800 dark:bg-slate-900 ${conference.youtube ? 'row-span-2' : 'row-span-1'}`}
         lang={conference.language === 'EN' ? 'en' : 'es'}
       >
         {conference.youtube && (
-          <YouTube id={conference.youtube} title={conference.title} posterQuality="high" />
+          <div>
+            <YouTube id={conference.youtube} title={conference.title} posterQuality="high" />
+          </div>
         )}
         <div class="flex flex-1 flex-col p-4 pb-6">
-          <h3 class="text-pretty font-semibold leading-tight ~text-base/lg">{conference.title}</h3>
-          <p class="pt-1 font-semibold leading-tight text-slate-500 dark:text-slate-400">
+          <h3 class="text-pretty font-semibold !leading-tight ~text-base/lg dark:text-slate-200">
+            {conference.title}
+          </h3>
+          <p class="pt-2 font-semibold !leading-tight text-indigo-600 ~text-base/lg dark:text-indigo-400">
             {conference.for}
           </p>
-          <footer class="mt-auto text-slate-600 dark:text-slate-400">
-            <p class="flex items-center gap-2.5 pt-3">
+          <footer class="text-slate-600 dark:text-slate-400">
+            <p class="flex items-center gap-2.5 pt-4">
               <strong class="flex items-center gap-1 font-semibold">
                 <Icon name="ri:calendar-line" class="size-5" /> {conference.year}
               </strong>
@@ -49,7 +51,7 @@ const languageStrings: Record<string, string> =
                 conference.place
               ) : (
                 <a
-                  class="underline decoration-slate-300 underline-offset-4 transition-colors hover:text-cyan-600 dark:decoration-slate-600 dark:hover:text-cyan-300"
+                  class="underline decoration-slate-300 underline-offset-4 transition-colors hover:text-cyan-600 dark:text-slate-300 dark:decoration-slate-600 dark:hover:text-cyan-300"
                   href={`https://www.google.com/maps/place/${conference.place}`}
                   target="_blank"
                   rel="noopener noreferrer"

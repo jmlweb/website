@@ -7,6 +7,7 @@ import Technologies from './Technologies.astro';
 import Experience from './Experience.astro';
 
 import { container } from '@/styles';
+import Conferences from './conferences/Conferences.astro';
 ---
 
 <RootLayout title="José Manuel Lucas, Desarrollador Frontend">
@@ -20,13 +21,14 @@ import { container } from '@/styles';
       })}
     >
       <div class="~py-12/20 min-[58rem]:max-w-screen-md">
-        <h1 class="font-semibold tracking-tight text-slate-800 ~text-3xl/4xl dark:text-slate-100">
-          <SayHi />¡Hola! Soy José Manuel Lucas
-        </h1>
+        <div class="font-semibold tracking-tight text-slate-800 ~text-3xl/4xl dark:text-slate-100">
+          <SayHi />
+          <h1 class="inline">¡Hola! Soy José Manuel Lucas</h1>
+        </div>
         <h2 class="mt-2 font-light text-slate-500 ~text-2xl/3xl dark:text-slate-300">
           Construyo sitios web escalables y eficientes basados en buenas prácticas
         </h2>
-        <div class="text-pretty ~text-base/lg">
+        <div class="~text-base/lg">
           <p class="~mt-5/6">
             Poseo una amplia experiencia <strong class="font-semibold"
               >desarrollando, manteniendo y optimizando proyectos web</strong
@@ -61,7 +63,7 @@ import { container } from '@/styles';
     >
       Tecnologías
     </h2>
-    <p class="leading-relaxed ~text-base/lg dark:text-slate-400">
+    <p class="text-pretty leading-relaxed ~text-base/lg dark:text-slate-400">
       Soy un apasionado de la <strong class="font-semibold"
         >programación funcional y reactiva</strong
       >, del <strong class="font-semibold">testing</strong> y de los <strong class="font-semibold"
@@ -69,7 +71,7 @@ import { container } from '@/styles';
       >. Me preocupo por mantener actualizados mis conocimientos y por aplicar las mejores
       prácticas.
     </p>
-    <p class="leading-relaxed ~text-base/lg dark:text-slate-400">
+    <p class="text-pretty leading-relaxed ~text-base/lg dark:text-slate-400">
       Aunque suelo trabajar con tecnologías <strong class="font-semibold">frontend</strong>, me
       considero un profesional versátil, lo que me permite tener una <strong class="font-semibold"
         >visión completa del ciclo de desarrollo</strong
@@ -86,5 +88,38 @@ import { container } from '@/styles';
       Experiencia
     </h2>
     <Experience />
+  </section>
+  <section
+    class={container({
+      class: 'grid gap-y-4 ~gap-x-6/8 ~pt-12/20 min-[58rem]:grid-cols-2',
+    })}
+  >
+    <h2
+      class="font-semibold tracking-tight text-slate-800 ~text-2xl/3xl min-[58rem]:col-span-2 dark:text-slate-100"
+    >
+      Conferencias y publicaciones
+    </h2>
+    <div class="space-y-2 text-pretty leading-relaxed ~text-base/lg dark:text-slate-400">
+      <p>
+        Una de mis pasiones es compartir conocimiento y experiencias con la comunidad. Creo que
+        aprender y enseñar a los demás es una de las mejores formas de crecer.
+      </p>
+    </div>
+    <div class="space-y-2 text-pretty leading-relaxed ~text-base/lg dark:text-slate-400">
+      <p>
+        Es por esto que participo activamente en eventos, y publico artículos como invitado en
+        algunos medios.
+      </p>
+      <p>
+        <a
+          href="mailto:josemanuel@jmlweb.es?subject=Quiero invitarte a mi evento&body=Confirmo que cubriré los gastos de desplazamiento, alojamiento y manutención."
+          class="font-medium text-slate-500 underline underline-offset-4 hover:text-slate-700 dark:text-slate-300 dark:hover:text-slate-100"
+          >¡Invítame a tu evento!</a
+        >
+      </p>
+    </div>
+    <div class="~mt-4/6 min-[58rem]:col-span-2">
+      <Conferences />
+    </div>
   </section>
 </RootLayout>
