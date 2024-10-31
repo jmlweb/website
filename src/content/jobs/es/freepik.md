@@ -6,7 +6,7 @@ company:
     Freepik
   href:
     https://www.freepik.com
-order: 6
+weight: 6
 ---
 - He liderado la migración de Freepik a un stack moderno, con un monorepo que sirve múltiples apps basadas en Next.js y desplegadas en Google Cloud.
 - Soy el responsable del gremio de Frontend (20 personas), ejerciendo labores de mentor y líder técnico.

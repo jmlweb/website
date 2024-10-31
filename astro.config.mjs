@@ -16,8 +16,13 @@ const { SITE_URL = 'https://jmlweb.es' } = loadEnv(
 export default defineConfig({
   i18n: { defaultLocale: 'es', locales: ['es', 'en'] },
   site: SITE_URL,
-  integrations: [tailwind(), icon()],
+  integrations: [
+    tailwind({
+      applyBaseStyles: false,
+    }),
+    icon(),
+  ],
   devToolbar: {
     enabled: false,
-  }
+  },
 });

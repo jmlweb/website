@@ -3,6 +3,7 @@ import type { Config } from 'tailwindcss'
 import fluid, { extract, screens, type FluidThemeConfig } from 'fluid-tailwind';
 import customAnimations from './custom-animations';
 import globalFocus from './global-focus-plugin';
+import printHidden from './print-hidden-plugin';
 
 export default {
 	content: {
@@ -24,7 +25,7 @@ export default {
 			}
 		},
 	},
-	plugins: [fluid, customAnimations, globalFocus],
+	plugins: [fluid, customAnimations, globalFocus, printHidden],
 } satisfies Config & {
 	theme: Config['theme'] & {
 		fluid: FluidThemeConfig;

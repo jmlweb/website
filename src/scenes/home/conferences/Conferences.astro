@@ -24,17 +24,17 @@ const languageStrings: Record<string, string> =
         lang={conference.language === 'EN' ? 'en' : 'es'}
       >
         {conference.youtube && (
-          <div>
+          <div class="print-hidden">
             <YouTube id={conference.youtube} title={conference.title} posterQuality="high" />
           </div>
         )}
         <div class="flex flex-1 flex-col p-4 pb-6">
-          <h3 class="text-pretty font-semibold !leading-tight ~text-base/lg dark:text-slate-200">
-            {conference.title}
-          </h3>
-          <p class="pt-2 font-semibold !leading-tight text-indigo-600 ~text-base/lg dark:text-indigo-400">
+          <p class="font-semibold !leading-tight text-indigo-600 ~text-base/lg dark:text-indigo-400">
             {conference.for}
           </p>
+          <h3 class="text-pretty pt-2 text-base font-semibold dark:text-slate-200">
+            {conference.title}
+          </h3>
           <footer class="text-slate-600 dark:text-slate-400">
             <p class="flex items-center gap-2.5 pt-4">
               <strong class="flex items-center gap-1 font-semibold">

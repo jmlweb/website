@@ -1,0 +1,57 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+import { pipe, sortWith } from 'mochila-ts';
+
+import ExperienceItem from './ExperienceItem.astro';
+
+const rawJobs = pipe(sortWith<CollectionEntry<'jobs'>>((a, b) => b.data.weight - a.data.weight))(
+  await getCollection('jobs', ({ slug }) => slug.startsWith(Astro.currentLocale ?? 'es')),
+);
+
+const jobs = await Promise.all(
+  rawJobs.map(async ({ data, render }) => ({
+    ...data,
+    rendered: await render(),
+  })),
+);
+---
+
+<div
+  id="experience"
+  class="wrapper grid-cols-[1fr_1px_1fr] grid-rows-2 items-start gap-x-3 ~mt-4/6 before:col-start-2 before:col-end-2 before:row-start-1 before:row-end-[span_20] before:h-full before:rounded-lg before:bg-slate-200 before:content-[''] min-[58rem]:grid min-[58rem]:gap-x-5 dark:before:bg-slate-800"
+>
+  {
+    jobs.map(({ period, position, company, rendered: { Content } }) => (
+      <ExperienceItem period={period} position={position} company={company}>
+        <Content />
+      </ExperienceItem>
+    ))
+  }
+</div>
+
+<script>
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const hiddenClasses = ['opacity-0', 'odd:-translate-x-10', 'even:translate-x-10'];
+    const articles = document.querySelectorAll<HTMLElement>('#experience article');
+    const appearingObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting && entry.boundingClientRect.top > 0) {
+            entry.target.classList.add(...hiddenClasses);
+          } else {
+            entry.target.classList.remove(...hiddenClasses);
+          }
+        });
+      },
+      {
+        threshold: 0.25,
+      },
+    );
+    articles.forEach((article) => {
+      article.classList.add(...hiddenClasses);
+      appearingObserver.observe(article);
+    });
+  }
+</script>

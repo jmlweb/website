@@ -6,7 +6,7 @@ company:
     Freelance
   href:
     https://jmlweb.es
-order: 1
+weight: 1
 ---
 - Participé en el desarrollo y mantenimiento de Series Yonkis, una de las webs con más tráfico de España. Desarrollé un sistema de chat en vivo usando Socket.io y optimizado para una alta carga.
 - Desarrollé la web para una batalla de raperos, para una bebida con un toro rojo como logo.

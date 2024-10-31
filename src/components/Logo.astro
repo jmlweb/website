@@ -1,7 +1,9 @@
 ---
+import { cva } from '@/utils/cva';
 import { Icon } from 'astro-icon/components';
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import { cva } from '@/utils/cva';
+
+import { getLangFromUrl } from '@/utils/i18n';
 
 const logo = cva({
   base: 'transition-colors',
@@ -19,9 +21,11 @@ interface Props {
 }
 
 const { color } = Astro.props;
+
+const language = getLangFromUrl(Astro.url);
 ---
 
-<a href={getRelativeLocaleUrl(Astro.currentLocale ?? 'es', '/')} class={logo({ color })}>
+<a href={getRelativeLocaleUrl(language, '/')} class={logo({ color })}>
   <span class="sr-only">José Manuel Lucas</span>
   <Icon class="aspect-square h-auto ~w-9/11" name="logo" aria-hidden="true" />
 </a>

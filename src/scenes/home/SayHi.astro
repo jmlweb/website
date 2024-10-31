@@ -1,24 +1,18 @@
 ---
-const MESSAGES =
-  Astro.currentLocale === 'en'
-    ? {
-        enable: 'Enable greeting',
-        disable: 'Disable greeting',
-      }
-    : {
-        enable: 'Activar saludo',
-        disable: 'Desactivar saludo',
-      };
+import { useTranslations, getLangFromUrl } from '@/utils/i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <say-hi>
   <button
     aria-pressed="true"
-    aria-label={MESSAGES.disable}
+    aria-label={t('sayHi:disable')}
     aria-live="polite"
-    data-message-enable={MESSAGES.enable}
-    data-message-disable={MESSAGES.disable}
-    class="relative inline-block cursor-pointer motion-safe:aria-pressed:before:say-hi before:inline-block before:grayscale before:content-['👋🏻'] hover:opacity-80 aria-pressed:before:grayscale-0"
+    data-message-enable={t('sayHi:enable')}
+    data-message-disable={t('sayHi:disable')}
+    class="print-hidden relative inline-block cursor-pointer motion-safe:aria-pressed:before:say-hi before:inline-block before:grayscale before:content-['👋🏻'] hover:opacity-80 aria-pressed:before:grayscale-0"
   >
   </button>
 </say-hi>

@@ -113,7 +113,7 @@ const ITEMS = [
 ];
 ---
 
-<ul class="grid grid-cols-[repeat(auto-fill,minmax(88px,1fr))] gap-3 min-[58rem]:col-span-2 ~mt-4/8">
+<ul id="technologies" class="grid grid-cols-[repeat(auto-fill,minmax(88px,1fr))] gap-3 min-[58rem]:col-span-2 ~mt-4/8 opacity-20 transition-opacity duration-1000">
   {
     ITEMS.map((item) => (
       <li class="flex flex-col items-center rounded border bg-slate-50 border-slate-200 dark:border-slate-800 dark:bg-slate-900">
@@ -130,3 +130,16 @@ const ITEMS = [
     ))
   }
 </ul>
+
+<noscript>
+  <style>
+    #technologies {
+      opacity: 1;
+    }
+  </style>
+</noscript>
+
+<script>
+  const technologies = document.querySelector<HTMLUListElement>('#technologies');
+  technologies?.classList.remove('opacity-20');
+</script>

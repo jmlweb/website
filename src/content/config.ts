@@ -9,7 +9,7 @@ const jobs = defineCollection({
       title: z.string(),
       href: z.string().url(),
     }),
-    order: z.number(),
+    weight: z.number(),
   }),
 });
 
