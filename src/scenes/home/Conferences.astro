@@ -57,7 +57,10 @@ const infoLink = cva({
         >
           {t(`conferences:${conference.type === 'workshop' ? 'workshop' : 'talk'}`)}
         </p>
-        <h3 class="inline font-semibold text-slate-900 dark:text-slate-200" lang={conference.lang}>
+        <h3
+          class="inline font-semibold text-slate-900 dark:text-slate-200"
+          lang={conference.language}
+        >
           {conference.title}
         </h3>
       </div>
