@@ -6,8 +6,6 @@ language: es
 for:
   title:
     ADWE
-place:
-  title: Murcia
-  country: es
-order: 1
+place: Murcia
+weight: 1
 ---

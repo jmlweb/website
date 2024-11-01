@@ -15,7 +15,10 @@ export default {
     fluid: ({ theme }) => ({
       defaultScreens: ['20rem', theme('screens.xl')]
     }),
-		screens,
+		screens: {
+			...screens,
+			lg: '58rem'
+		},
 		extend: {
 			letterSpacing: {
 				'almost-wide': '0.01rem',

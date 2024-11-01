@@ -9,6 +9,8 @@ export const ui = {
     'darkMode:enable': 'Activar modo oscuro',
     'sayHi:disable': 'Desactivar saludo',
     'sayHi:enable': 'Activar saludo',
+    'conferences:talk': 'Charla',
+    'conferences:workshop': 'Taller',
   },
   en: {
     'common:en': 'English',
@@ -18,5 +20,7 @@ export const ui = {
     'darkMode:enable': 'Enable dark mode',
     'sayHi:disable': 'Disable greeting',
     'sayHi:enable': 'Enable greeting',
+    'conferences:talk': 'Talk',
+    'conferences:workshop': 'Workshop',
   },
 } as const;

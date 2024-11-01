@@ -8,8 +8,6 @@ for:
     MurciaDev
   href:
     https://murcia.dev/
-place:
-  title: Murcia
-  country: es
-order: 4
+place: Murcia
+weight: 4
 ---

@@ -9,5 +9,5 @@ for:
     Geekshub
   href:
     https://geekshubs.com/
-order: 6
+weight: 6
 ---

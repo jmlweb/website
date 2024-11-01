@@ -6,8 +6,14 @@ import SocialLinks from './SocialLinks.astro';
 import Technologies from './Technologies.astro';
 import Experience from './experience/Experience.astro';
 
-import { container, leading, sectionHeading } from '@/styles';
-import Conferences from './conferences/Conferences.astro';
+import {
+  container,
+  containerGridTwoColumns,
+  leading,
+  sectionAccentBg,
+  sectionHeading,
+} from '@/styles';
+import Conferences from './Conferences.astro';
 
 interface Props {
   title: string;
@@ -22,15 +28,16 @@ const { title, intro } = Astro.props;
 
 <RootLayout title={title}>
   <div
-    class="pattern border-b border-slate-300 bg-gradient-to-br from-slate-50/70 to-slate-200 dark:border-slate-800 dark:from-slate-800/30 dark:to-slate-800/10"
+    class={sectionAccentBg({
+      borderTop: false,
+    })}
   >
     <section
       class={container({
-        class:
-          'flex flex-col gap-x-8 min-[58rem]:flex-row min-[58rem]:items-end min-[58rem]:justify-between',
+        class: 'flex flex-col gap-x-8 lg:flex-row lg:items-end lg:justify-between',
       })}
     >
-      <div class="~py-12/20 min-[58rem]:max-w-screen-md">
+      <div class="~py-12/20 lg:max-w-screen-md">
         <div class="font-semibold tracking-tight text-slate-800 ~text-3xl/4xl dark:text-slate-100">
           <SayHi />
           <h1 class="inline">{intro.title}</h1>
@@ -38,26 +45,26 @@ const { title, intro } = Astro.props;
         <h2 class="mt-2 font-light text-slate-500 ~text-2xl/3xl dark:text-slate-300">
           {intro.subtitle}
         </h2>
-        <div class="~text-base/lg">
+        <div class="~text-base/lg ~mt-5/6 ~space-y-3/4">
           <slot name="intro-description" />
         </div>
-        <div class="print-hidden flex justify-center ~mt-8/10 min-[58rem]:justify-start">
+        <div class="print-hidden flex justify-center ~mt-8/10 lg:justify-start">
           <SocialLinks />
         </div>
       </div>
-      <div class="print-hidden relative flex flex-1 justify-center min-[58rem]:items-end">
+      <div class="print-hidden relative flex flex-1 justify-center lg:items-end">
         <BioPicture />
       </div>
     </section>
   </div>
   <section
-    class={container({
-      class: 'grid gap-y-4 ~gap-x-6/8 ~pt-12/20 min-[58rem]:grid-cols-2',
+    class={containerGridTwoColumns({
+      class: 'gap-y-4 ~pt-12/24',
     })}
   >
     <h2
       class={sectionHeading({
-        class: 'min-[58rem]:col-span-2',
+        class: 'lg:col-span-2',
       })}
     >
       Tecnologías
@@ -76,48 +83,35 @@ const { title, intro } = Astro.props;
     <Technologies />
   </section>
   <section
+    class={sectionAccentBg({
+      class: '~mt-12/24 ~py-12/20 ',
+    })}
+  >
+    <div
+      class={container({
+        class: 'space-y-4',
+      })}
+    >
+      <h2 class={sectionHeading()}>Conferencias</h2>
+      <p class={leading()}>
+        Una de mis pasiones es compartir conocimiento y experiencias con la comunidad.<br />Creo que
+        aprender y enseñar a los demás es una de las mejores formas de crecer.
+      </p>
+      <p class={leading()}>
+        Es por esto que participo activamente en eventos, y publico artículos como invitado en
+        algunos medios.
+      </p>
+      <div class="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] ~mt-6/8 ~gap-4/6">
+        <Conferences />
+      </div>
+    </div>
+  </section>
+  <section
     class={container({
-      class: '~pt-12/20',
+      class: '~pt-12/24',
     })}
   >
     <h2 class={sectionHeading()}>Experiencia</h2>
     <Experience />
-  </section>
-  <section
-    class={container({
-      class: 'grid gap-y-4 ~gap-x-6/8 ~pt-12/20 min-[58rem]:grid-cols-2',
-    })}
-  >
-    <h2
-      class={sectionHeading({
-        class: 'min-[58rem]:col-span-2',
-      })}
-    >
-      Conferencias y publicaciones
-    </h2>
-    <p class={leading()}>
-      Una de mis pasiones es compartir conocimiento y experiencias con la comunidad. Creo que
-      aprender y enseñar a los demás es una de las mejores formas de crecer.
-    </p>
-    <div
-      class={leading({
-        class: 'space-y-2',
-      })}
-    >
-      <p>
-        Es por esto que participo activamente en eventos, y publico artículos como invitado en
-        algunos medios.
-      </p>
-      <p class="print-hidden">
-        <a
-          href="mailto:josemanuel@jmlweb.es?subject=Quiero invitarte a mi evento&body=Confirmo que cubriré los gastos de desplazamiento, alojamiento y manutención."
-          class="font-medium text-slate-500 underline underline-offset-4 hover:text-slate-700 dark:text-slate-300 dark:hover:text-slate-100"
-          >¡Invítame a tu evento!</a
-        >
-      </p>
-    </div>
-    <div class="~mt-4/6 min-[58rem]:col-span-2">
-      <Conferences />
-    </div>
   </section>
 </RootLayout>

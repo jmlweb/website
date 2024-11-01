@@ -9,7 +9,7 @@ import { Image } from 'astro:assets';
     sizes="(max-width: 767px) 288px, 440px"
     src={pictureSrc}
     alt=""
-    class="relative w-72 min-w-60 -scale-x-100 brightness-125 min-[58rem]:w-full"
+    class="relative w-72 min-w-60 -scale-x-100 brightness-125 lg:w-full"
     loading="eager"
   />
 </bio-picture>
@@ -24,7 +24,7 @@ import { Image } from 'astro:assets';
 
       const clonedImg = originalImg.cloneNode(true) as HTMLImageElement;
       clonedImg.className =
-        'bio-picture absolute bottom-0 w-72 min-w-60 -scale-x-100 opacity-90 min-[58rem]:w-full dark:opacity-75';
+        'bio-picture absolute bottom-0 w-72 min-w-60 -scale-x-100 opacity-90 lg:w-full dark:opacity-75';
       clonedImg.setAttribute('aria-hidden', 'true');
       this.prepend(clonedImg);
     }

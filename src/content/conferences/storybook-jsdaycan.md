@@ -8,8 +8,6 @@ for:
     JSDay Canarias
   href:
     https://jsdaycanarias.com/
-place:
-  title: San Cristóbal de la Laguna (Tenerife)
-  country: es
-order: 3
+place: San Cristóbal de la Laguna (Tenerife)
+weight: 3
 ---

@@ -8,8 +8,6 @@ for:
     React Alicante
   href:
     https://reactalicante.es/
-place:
-  title: Alicante
-  country: es
-order: 2
+place: Alicante
+weight: 2
 ---

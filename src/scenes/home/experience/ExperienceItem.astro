@@ -14,9 +14,9 @@ const { period, position, company } = Astro.props;
 ---
 
 <article
-  class="group/article grid-row-span-2 duration-750 relative row-span-2 flex-1 rounded border border-slate-200 bg-slate-50 px-4 transition ~mb-4/8 last:mb-0 odd:col-start-1 odd:col-end-1 even:col-start-3 even:col-end-3 min-[58rem]:px-6 dark:border-slate-800 dark:bg-slate-900 [&:nth-child(2)]:row-start-2 [&:nth-child(2)]:row-end-4"
+  class="group/article grid-row-span-2 duration-750 relative row-span-2 flex-1 rounded border border-slate-200 bg-slate-50 px-4 transition ~mb-4/8 last:mb-0 odd:col-start-1 odd:col-end-1 even:col-start-3 even:col-end-3 lg:px-6 dark:border-slate-800 dark:bg-slate-900 [&:nth-child(2)]:row-start-2 [&:nth-child(2)]:row-end-4"
 >
-  <header class="pt-4 min-[58rem]:pt-6">
+  <header class="pt-4 lg:pt-6">
     <p
       class="flex items-center font-medium tracking-tight text-slate-500 ~text-sm/base dark:text-slate-400"
     >
@@ -44,12 +44,12 @@ const { period, position, company } = Astro.props;
       >
     </h3>
   </header>
-  <div class="content mt-1 list-decimal pb-4 min-[58rem]:pb-6">
+  <div class="content mt-1 list-decimal pb-4 lg:pb-6">
     <slot />
   </div>
   <Icon
     name="ri:circle-fill"
-    class="absolute top-1/2 hidden size-3 text-teal-300 group-odd/article:-right-7 group-even/article:-left-7 min-[58rem]:block dark:text-teal-600"
+    class="absolute top-1/2 hidden size-3 text-teal-300 group-odd/article:-right-7 group-even/article:-left-7 lg:block dark:text-teal-600"
     aria-hidden
   />
 </article>

@@ -9,8 +9,6 @@ for:
     Wey Wey Web
   href:
     https://www.weyweyweb.com/
-place:
-  title: Málaga
-  country: es
-order: 8
+place: Málaga
+weight: 8
 ---
