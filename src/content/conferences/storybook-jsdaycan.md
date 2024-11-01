@@ -1,5 +1,5 @@
 ---
-title: Construyendo un sistema de diseño en React con Styled Components, Styled System y Storybook
+title: Construyendo un sistema de diseño con Styled System y Storybook
 type: workshop
 year: 2019
 language: es

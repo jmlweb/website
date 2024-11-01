@@ -3,7 +3,7 @@ title: Interfaces vs wild. Building safer interfaces with TypeScript and Functio
 type: talk
 year: 2019
 language: es
-youtube: YJvTlB1-MVI
+youtube: yLgIDFeeufA
 for:
   title:
     Wey Wey Web
