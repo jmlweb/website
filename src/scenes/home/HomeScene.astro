@@ -12,6 +12,7 @@ import {
   leading,
   sectionAccentBg,
   sectionHeading,
+  sectionSpacingX,
 } from '@/styles';
 import Conferences from './Conferences.astro';
 
@@ -45,7 +46,7 @@ const { title, intro } = Astro.props;
         <h2 class="mt-2 font-light text-slate-500 ~text-2xl/3xl dark:text-slate-300">
           {intro.subtitle}
         </h2>
-        <div class="~text-base/lg ~mt-5/6 ~space-y-3/4">
+        <div class="text-pretty ~text-base/lg ~mt-5/6 ~space-y-3/4">
           <slot name="intro-description" />
         </div>
         <div class="print-hidden flex justify-center ~mt-8/10 lg:justify-start">
@@ -101,7 +102,7 @@ const { title, intro } = Astro.props;
         Es por esto que participo activamente en eventos, y publico artículos como invitado en
         algunos medios.
       </p>
-      <div class="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] ~mt-6/8 ~gap-4/6">
+      <div class="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] ~gap-4/6 ~pt-2/4">
         <Conferences />
       </div>
     </div>

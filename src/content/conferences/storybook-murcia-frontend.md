@@ -1,7 +1,7 @@
 ---
-title: Una historia de testing efectivo en JavaScript
+title: Introducción a Storybook
 type: talk
-year: 2019
+year: 2018
 language: es
 for:
   title:

@@ -11,6 +11,8 @@ export const ui = {
     'sayHi:enable': 'Activar saludo',
     'conferences:talk': 'Charla',
     'conferences:workshop': 'Taller',
+    'conferences:year': 'Año',
+    'conferences:language': 'Idioma',
   },
   en: {
     'common:en': 'English',
@@ -22,5 +24,7 @@ export const ui = {
     'sayHi:enable': 'Enable greeting',
     'conferences:talk': 'Talk',
     'conferences:workshop': 'Workshop',
+    'conferences:year': 'Year',
+    'conferences:language': 'Language',
   },
 } as const;

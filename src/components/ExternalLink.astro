@@ -1,0 +1,11 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = Omit<HTMLAttributes<'a'>, 'target' | 'rel'>;
+
+const props = Astro.props;
+---
+
+<a {...props} target="_blank" rel="noopener noreferrer">
+  <slot />
+</a>

@@ -9,6 +9,6 @@ for:
     JSDay Canarias
   href:
     https://jsdaycanarias.com/
-place: San Cristóbal de la Laguna (Tenerife)
+place: San Cristóbal de la Laguna
 weight: 7
 ---

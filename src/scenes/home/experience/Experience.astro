@@ -7,7 +7,9 @@ import { pipe, sortWith } from 'mochila-ts';
 import ExperienceItem from './ExperienceItem.astro';
 
 const rawJobs = pipe(sortWith<CollectionEntry<'jobs'>>((a, b) => b.data.weight - a.data.weight))(
-  await getCollection('jobs', ({ slug }) => slug.startsWith(Astro.currentLocale ?? 'es')),
+  await getCollection('jobs', ({ slug }: CollectionEntry<'jobs'>) =>
+    slug.startsWith(Astro.currentLocale ?? 'es'),
+  ),
 );
 
 const jobs = await Promise.all(

@@ -119,10 +119,10 @@ const ITEMS = [
       <li class="flex flex-col items-center rounded border bg-slate-50 border-slate-200 dark:border-slate-800 dark:bg-slate-900">
         <span class="grid flex-1 place-items-center p-2 pb-1">
           {typeof item.icon === 'string' ? (
-            <Icon name={`vscode-icons:${item.icon}`} class="inline-block size-8" />
+            <Icon name={`vscode-icons:${item.icon}`} class="inline-block size-8" aria-hidden="true" />
           ) : (
-            <Icon name={`vscode-icons:${item.icon.dark}`} class="size-8 inline-block dark:hidden" />
-            <Icon name={`vscode-icons:${item.icon.light}`} class="size-8 hidden dark:inline-block" />
+            <Icon name={`vscode-icons:${item.icon.dark}`} class="size-8 inline-block dark:hidden" aria-hidden="true" />
+            <Icon name={`vscode-icons:${item.icon.light}`} class="size-8 hidden dark:inline-block" aria-hidden="true" />
           )}
         </span>
         <span class="inline-block p-2 pt-0 text-center text-sm font-medium">{item.label}</span>

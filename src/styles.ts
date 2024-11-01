@@ -9,7 +9,7 @@ export const container = compose(sectionSpacingX, cva({
 }));
 
 export const leading = cva({
-  base: 'text-pretty leading-relaxed ~text-base/lg dark:text-slate-400',
+  base: 'leading-relaxed ~text-base/lg dark:text-slate-400',
 });
 
 export const sectionAccentBg = cva({

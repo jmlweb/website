@@ -32,5 +32,5 @@ const conferences = defineCollection({
 
 export const collections = {
   jobs,
-  conferences,
+  // conferences,
 };

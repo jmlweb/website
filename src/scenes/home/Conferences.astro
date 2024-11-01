@@ -8,6 +8,7 @@ import { pipe, sortWith } from 'mochila-ts';
 import { cva } from '@/utils/cva';
 
 import { useTranslations, getLangFromUrl } from '@/utils/i18n';
+import ExternalLink from '@/components/ExternalLink.astro';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -24,13 +25,17 @@ const conferences = await Promise.all(
 );
 
 const article = cva({
-  base: 'rounded-md border border-slate-200 bg-slate-50 ~p-4/6 dark:border-slate-800 dark:bg-slate-950 flex flex-col',
+  base: 'rounded-md border border-slate-200 bg-slate-50 ~p-4/6 dark:border-slate-800 dark:bg-slate-950/40 flex flex-col',
   variants: {
     large: {
       true: 'row-span-2',
       false: 'row-span-1',
     },
   },
+});
+
+const infoLink = cva({
+  base: 'underline decoration-slate-600 underline-offset-4 transition-colors  dark:decoration-slate-600 dark:hover:text-slate-200 hover:text-slate-900',
 });
 ---
 
@@ -42,7 +47,7 @@ const article = cva({
       })}
     >
       {conference.youtube && (
-        <div class="print-hidden mb-4">
+        <div class="print-hidden mb-4 ring-1 ring-slate-900/10 dark:ring-white/10">
           <YouTube id={conference.youtube} title={conference.title} posterQuality="high" />
         </div>
       )}
@@ -50,46 +55,44 @@ const article = cva({
         <p
           class={`mr-1.5 inline font-semibold after:ml-1.5 after:text-slate-500 after:content-['·'] dark:after:text-slate-400 ${conference.type === 'talk' ? 'text-cyan-600 dark:text-cyan-300' : 'text-indigo-600 dark:text-indigo-300'}`}
         >
-          {t(`conferences:${conference.type}`)}
+          {t(`conferences:${conference.type === 'workshop' ? 'workshop' : 'talk'}`)}
         </p>
-        <h3 class="inline font-semibold text-slate-900 dark:text-slate-200">{conference.title}</h3>
+        <h3 class="inline font-semibold text-slate-900 dark:text-slate-200" lang={conference.lang}>
+          {conference.title}
+        </h3>
       </div>
-      <p class="mt-1">
+      <p class="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-slate-700 dark:text-slate-300">
         {conference.for.href ? (
-          <a
-            class="text-slate-700 underline decoration-slate-600 underline-offset-4 transition-colors hover:text-slate-900 dark:text-slate-400 dark:decoration-slate-600 dark:hover:text-slate-200"
-            href={conference.for.href}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <ExternalLink class={infoLink()} href={conference.for.href}>
             {conference.for.title}
-          </a>
+          </ExternalLink>
         ) : (
           conference.for.title
         )}
+        /
+        {!conference.place ? (
+          'Online'
+        ) : (
+          <ExternalLink
+            class={infoLink()}
+            href={`https://www.google.com/maps/place/${conference.place}`}
+          >
+            {conference.place}
+          </ExternalLink>
+        )}
       </p>
-      <div class="mt-6 flex flex-wrap items-center gap-3 text-slate-500 dark:text-slate-400">
+      <div class="mt-4 flex flex-wrap items-center gap-3">
         <p class="flex items-center gap-1">
-          <Icon name="ri:calendar-line" class="size-5" /> {conference.year}
+          <Icon name="ri:calendar-line" class="size-5" aria-label={t('conferences:year')} />{' '}
+          {conference.year}
         </p>
         <p class="flex items-center gap-1">
-          <Icon name="ri:speak-line" class="-mt-0.5 size-5" /> {t(`common:${conference.language}`)}
-        </p>
-        <p>
-          {!conference.place ? (
-            <span class="flex items-center gap-1">
-              <Icon name="ri:compass-line" class="size-5" /> Online
-            </span>
-          ) : (
-            <a
-              class="flex items-center gap-1 text-slate-700 underline decoration-slate-600 underline-offset-4 transition-colors hover:text-slate-900 dark:text-slate-400 dark:decoration-slate-600 dark:hover:text-slate-200"
-              href={`https://www.google.com/maps/place/${conference.place}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Icon name="ri:compass-line" class="size-5" /> {conference.place}
-            </a>
-          )}
+          <Icon
+            name="ri:speak-line"
+            class="-mt-0.5 size-5"
+            aria-label={t('conferences:language')}
+          />{' '}
+          {t(`common:${conference.language === 'en' ? 'en' : 'es'}`)}
         </p>
       </div>
     </article>
