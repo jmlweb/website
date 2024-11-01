@@ -1,5 +1,6 @@
 ---
 import HomeScene from '@/scenes/home/HomeScene.astro';
+import { leading } from '@/styles';
 ---
 
 <HomeScene
@@ -20,6 +21,29 @@ import HomeScene from '@/scenes/home/HomeScene.astro';
       podido adquirir habilidades de <strong
         >comunicación, gestión y mentorización de equipos</strong
       >.
+    </p>
+  </Fragment>
+  <Fragment slot="technologies-description">
+    <p class={leading()}>
+      Soy un apasionado de la <strong>programación funcional y reactiva</strong>, del <strong
+        >testing</strong
+      > y de los <strong>sistemas de diseño</strong>. Me preocupo por mantener actualizados mis
+      conocimientos y por aplicar las mejores prácticas.
+    </p>
+    <p class={leading()}>
+      Aunque suelo trabajar con tecnologías <strong>frontend</strong>, me considero un profesional
+      versátil, lo que me permite tener una <strong>visión completa del ciclo de desarrollo</strong
+      >.
+    </p>
+  </Fragment>
+  <Fragment slot="conferences-description">
+    <p class={leading()}>
+      Una de mis pasiones es compartir conocimiento y experiencias con la comunidad.<br />Creo que
+      aprender y enseñar a los demás es una de las mejores formas de crecer.
+    </p>
+    <p class={leading()}>
+      Es por esto que participo activamente en eventos, y publico artículos como invitado en algunos
+      medios.
     </p>
   </Fragment>
 </HomeScene>

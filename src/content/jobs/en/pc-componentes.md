@@ -1,5 +1,5 @@
 ---
-period: oct 2016 - feb 2018
+period: Oct 2016 - Feb 2018
 position: Lead Frontend Developer
 company:
   title:

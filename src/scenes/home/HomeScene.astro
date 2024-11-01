@@ -12,9 +12,12 @@ import {
   leading,
   sectionAccentBg,
   sectionHeading,
-  sectionSpacingX,
 } from '@/styles';
+import { getLangFromUrl, useTranslations } from '@/utils/i18n';
 import Conferences from './Conferences.astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 interface Props {
   title: string;
@@ -68,19 +71,9 @@ const { title, intro } = Astro.props;
         class: 'lg:col-span-2',
       })}
     >
-      Tecnologías
+      {t('technologies:title')}
     </h2>
-    <p class={leading()}>
-      Soy un apasionado de la <strong>programación funcional y reactiva</strong>, del <strong
-        >testing</strong
-      > y de los <strong>sistemas de diseño</strong>. Me preocupo por mantener actualizados mis
-      conocimientos y por aplicar las mejores prácticas.
-    </p>
-    <p class={leading()}>
-      Aunque suelo trabajar con tecnologías <strong>frontend</strong>, me considero un profesional
-      versátil, lo que me permite tener una <strong>visión completa del ciclo de desarrollo</strong
-      >.
-    </p>
+    <slot name="technologies-description" />
     <Technologies />
   </section>
   <section
@@ -93,15 +86,8 @@ const { title, intro } = Astro.props;
         class: 'space-y-4',
       })}
     >
-      <h2 class={sectionHeading()}>Conferencias</h2>
-      <p class={leading()}>
-        Una de mis pasiones es compartir conocimiento y experiencias con la comunidad.<br />Creo que
-        aprender y enseñar a los demás es una de las mejores formas de crecer.
-      </p>
-      <p class={leading()}>
-        Es por esto que participo activamente en eventos, y publico artículos como invitado en
-        algunos medios.
-      </p>
+      <h2 class={sectionHeading()}>{t('conferences:title')}</h2>
+      <slot name="conferences-description" />
       <div class="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] ~gap-4/6 ~pt-2/4">
         <Conferences />
       </div>
@@ -112,7 +98,7 @@ const { title, intro } = Astro.props;
       class: '~pt-12/24',
     })}
   >
-    <h2 class={sectionHeading()}>Experiencia</h2>
+    <h2 class={sectionHeading()}>{t('experience:title')}</h2>
     <Experience />
   </section>
 </RootLayout>

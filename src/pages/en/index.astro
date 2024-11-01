@@ -1,24 +1,49 @@
 ---
 import HomeScene from '@/scenes/home/HomeScene.astro';
+import { leading } from '@/styles';
 ---
 
 <HomeScene
   title="José Manuel Lucas, Frontend Developer"
   intro={{
     title: 'Hi! I’m José Manuel Lucas',
-    subtitle: 'I build scalable and efficient websites based on best practices',
+    subtitle: 'I build scalable and efficient websites following best practices',
   }}
 >
   <Fragment slot="intro-description">
     <p>
       I have extensive experience <strong
         >developing, maintaining, and optimizing web projects</strong
-      > for companies and clients such as Freepik, PcComponentes, Series Yonkis or Albert and Ferrán
+      > for companies and clients such as Freepik, PcComponentes, Series Yonkis, and Albert and Ferrán
       Adrià.
     </p>
     <p>
       In recent years, I have worked as a <strong>technical leader</strong>, which has allowed me to
       acquire skills in <strong>communication, management, and team mentoring</strong>.
+    </p>
+  </Fragment>
+  <Fragment slot="technologies-description">
+    <p class={leading()}>
+      I am passionate about <strong>functional and reactive programming</strong>, <strong
+        >testing</strong
+      >, and <strong>design systems</strong>. I prioritize keeping my knowledge up to date and
+      applying best practices.
+    </p>
+    <p class={leading()}>
+      Although I usually work with <strong>frontend technologies</strong>, I consider myself a
+      versatile professional, which allows me to have a <strong
+        >comprehensive view of the development cycle</strong
+      >.
+    </p>
+  </Fragment>
+  <Fragment slot="conferences-description">
+    <p class={leading()}>
+      One of my passions is sharing knowledge and experiences with the community.<br />I believe
+      that learning and teaching others is one of the best ways to grow.
+    </p>
+    <p class={leading()}>
+      This is why I actively participate in events and publish articles as a guest contributor in
+      various media outlets.
     </p>
   </Fragment>
 </HomeScene>

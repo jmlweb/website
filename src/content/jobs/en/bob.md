@@ -1,5 +1,5 @@
 ---
-period: mar 2020 - dec 2020
+period: Mar 2020 - Dec 2020
 position: Senior Frontend Developer
 company:
   title:

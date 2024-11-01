@@ -1,5 +1,5 @@
 ---
-period: nov 2020 - now
+period: Nov 2020 - now
 position: Frontend Solutions Architect
 company:
   title:

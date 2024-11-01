@@ -1,5 +1,5 @@
 ---
-period: dec 2020 - nov 2021
+period: Dec 2020 - Nov 2021
 position: Frontend Tech Lead
 company:
   title:
