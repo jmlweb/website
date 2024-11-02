@@ -18,6 +18,7 @@
     "@iconify-json/ri": "^1.2.1",
     "@iconify-json/vscode-icons": "^1.2.2",
     "astro": "^4.16.7",
+    "astro-compressor": "^0.4.1",
     "astro-embed": "^0.7.4",
     "astro-icon": "^1.1.1",
     "cva": "1.0.0-beta.1",

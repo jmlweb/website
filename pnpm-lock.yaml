@@ -29,6 +29,9 @@ importers:
       astro:
         specifier: ^4.16.7
         version: 4.16.7(@types/node@22.7.5)(rollup@4.24.0)(typescript@5.6.3)
+      astro-compressor:
+        specifier: ^0.4.1
+        version: 0.4.1
       astro-embed:
         specifier: ^0.7.4
         version: 0.7.4(astro@4.16.7(@types/node@22.7.5)(rollup@4.24.0)(typescript@5.6.3))
@@ -842,6 +845,9 @@ packages:
     engines: {node: '>=16.0.0'}
     peerDependencies:
       astro: ^2.0.0 || ^3.0.0-beta || ^4.0.0-beta || ^5.0.0-beta
+
+  astro-compressor@0.4.1:
+    resolution: {integrity: sha512-IAgYAlxYRMolaptsFB9quH7RxX4eUeC4UfULCPhT+ILcg7m1kbaxuyUKqGg9Hh+KZ+FNPPDAz7DqUfl+HDWhQg==}
 
   astro-embed@0.7.4:
     resolution: {integrity: sha512-meDmEpmwu1wcz1i1KT4yAPJhydq/C4iyh1Pn7sepSbtXF85C05nJoE0cTDJHf0cwM4zMoYTYDluqFIQIfsdhHA==}
@@ -3429,6 +3435,8 @@ snapshots:
       '@types/node': 18.19.59
       acorn: 8.13.0
       astro: 4.16.7(@types/node@22.7.5)(rollup@4.24.0)(typescript@5.6.3)
+
+  astro-compressor@0.4.1: {}
 
   astro-embed@0.7.4(astro@4.16.7(@types/node@22.7.5)(rollup@4.24.0)(typescript@5.6.3)):
     dependencies:
