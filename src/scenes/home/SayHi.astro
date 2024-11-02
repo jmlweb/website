@@ -40,7 +40,7 @@ const t = useTranslations(lang);
           : button.dataset.messageEnable!;
       };
 
-      handleChange(localStorage.getItem('sayHi') === 'true');
+      handleChange(localStorage.getItem('sayHi') !== 'false');
 
       // Each time the button is clicked, update the count.
       button.addEventListener('click', (e) => {

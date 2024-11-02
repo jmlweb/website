@@ -48,7 +48,12 @@ const infoLink = cva({
     >
       {conference.youtube && (
         <div class="print-hidden mb-4 ring-1 ring-slate-900/10 dark:ring-white/10">
-          <YouTube id={conference.youtube} title={conference.title} posterQuality="high" />
+          <YouTube
+            id={conference.youtube}
+            title={conference.title}
+            posterQuality="high"
+            playlabel={t('conferences:playVideo')}
+          />
         </div>
       )}
       <div class="mt-2">
