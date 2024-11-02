@@ -1,4 +1,6 @@
 ---
+import { Head } from 'astro-capo';
+
 import '@/base.css';
 import Logo from '@/components/Logo.astro';
 import ThemeToggler from './ThemeToggler.astro';
@@ -16,7 +18,7 @@ const t = useTranslations(lang);
 
 <!doctype html>
 <html lang={lang} class="dark">
-  <head>
+  <Head>
     <meta charset="UTF-8" />
     <meta name="description" content="José Manuel Lucas | Frontend, TypeScript, CSS, Next.js" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -24,14 +26,19 @@ const t = useTranslations(lang);
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title ?? 'José Manuel Lucas'}</title>
-    <script
-      is:inline
-      defer
-      src="https://cloud.umami.is/script.js"
-      data-website-id="df65ee54-96b0-47ae-ab5a-1e88ecb18c14"></script>
+    {
+      Astro.site?.href === 'https://jmlweb.es' && (
+        <script
+          is:inline
+          defer
+          src="https://cloud.umami.is/script.js"
+          data-website-id="df65ee54-96b0-47ae-ab5a-1e88ecb18c14"
+        />
+      )
+    }
     <link rel="“alternate”" hreflang="“es”" href="http://jmlweb.es" />
     <link rel="“alternate”" hreflang="en" href="http://jmlweb.es/en" />
-  </head>
+  </Head>
   <body
     class="optimize-legibility min-h-screen overflow-y-auto overflow-x-hidden scroll-smooth bg-gradient-to-b from-slate-50 to-slate-100 font-sans text-slate-800/90 antialiased dark:from-slate-900 dark:to-slate-950 dark:text-slate-300/75"
   >

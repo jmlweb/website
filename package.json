@@ -12,12 +12,15 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
+    "@astrojs/sitemap": "^3.2.1",
     "@astrojs/tailwind": "^5.1.2",
     "@fontsource-variable/dm-sans": "^5.1.0",
     "@fontsource/domine": "^5.1.0",
     "@iconify-json/ri": "^1.2.1",
     "@iconify-json/vscode-icons": "^1.2.2",
+    "@playform/compress": "^0.1.6",
     "astro": "^4.16.7",
+    "astro-capo": "^0.0.1",
     "astro-compressor": "^0.4.1",
     "astro-embed": "^0.7.4",
     "astro-icon": "^1.1.1",
@@ -35,6 +38,7 @@
     "prettier": "^3.3.3",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.6.8",
+    "rehype-preset-minify": "^7.0.1",
     "sharp": "^0.33.5",
     "vite": "^5.4.9"
   }

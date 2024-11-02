@@ -8,6 +8,13 @@ import icon from 'astro-icon';
 
 import compressor from 'astro-compressor';
 
+
+import sitemap from '@astrojs/sitemap';
+
+
+import playformCompress from '@playform/compress';
+
+
 const { SITE_URL = 'https://jmlweb.es' } = loadEnv(
   process.env.NODE_ENV ?? 'production',
   process.cwd(),
@@ -20,8 +27,13 @@ export default defineConfig({
   site: SITE_URL,
   integrations: [tailwind({
     applyBaseStyles: false,
-  }), icon(), compressor()],
+  }), icon(), sitemap(), playformCompress({
+    CSS: false,
+  }), compressor()],
   devToolbar: {
     enabled: false,
   },
+  markdown: {
+    rehypePlugins: ['rehype-preset-minify'],
+  }
 });
