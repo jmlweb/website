@@ -1,0 +1,12 @@
+{
+  "title": "Programación funcional en TypeScript con fp-ts",
+  "type": "talk",
+  "year": 2023,
+  "language": "es",
+  "for": {
+    "title": "JSDay Canarias",
+    "href": "https://jsdaycanarias.com/"
+  },
+  "place": "San Cristóbal de la Laguna",
+  "weight": 6
+}

@@ -1,4 +1,4 @@
-import { defineCollection, reference, z } from 'astro:content';
+import { defineCollection, z } from 'astro:content';
 
 const jobs = defineCollection({
   type: 'content',
@@ -14,10 +14,10 @@ const jobs = defineCollection({
 });
 
 const conferences = defineCollection({
-  type: 'content',
+  type: 'data',
   schema: z.object({
     title: z.string(),
-    type: z.union([z.literal('talk'), z.literal('workshop')]),
+    type: z.union([z.literal('talk'), z.literal('workshop'), z.literal('article')]),
     year: z.number(),
     language: z.union([z.literal('en'), z.literal('es')]),
     for: z.object({
@@ -32,5 +32,5 @@ const conferences = defineCollection({
 
 export const collections = {
   jobs,
-  // conferences,
+  conferences,
 };

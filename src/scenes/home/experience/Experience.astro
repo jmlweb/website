@@ -7,9 +7,7 @@ import { pipe, sortWith } from 'mochila-ts';
 import ExperienceItem from './ExperienceItem.astro';
 
 const rawJobs = pipe(sortWith<CollectionEntry<'jobs'>>((a, b) => b.data.weight - a.data.weight))(
-  await getCollection('jobs', ({ slug }: CollectionEntry<'jobs'>) =>
-    slug.startsWith(Astro.currentLocale ?? 'es'),
-  ),
+  await getCollection('jobs', ({ slug }) => slug.startsWith(Astro.currentLocale ?? 'es')),
 );
 
 const jobs = await Promise.all(
@@ -22,7 +20,7 @@ const jobs = await Promise.all(
 
 <div
   id="experience"
-  class="wrapper grid-cols-[1fr_1px_1fr] grid-rows-2 items-start gap-x-3 ~mt-4/6 before:col-start-2 before:col-end-2 before:row-start-1 before:row-end-[span_20] before:h-full before:rounded-lg before:bg-slate-200 before:content-[''] lg:grid lg:gap-x-5 dark:before:bg-slate-800"
+  class="wrapper grid-cols-[1fr_1px_1fr] grid-rows-2 items-start gap-x-3 overflow-hidden ~mt-4/6 before:col-start-2 before:col-end-2 before:row-start-1 before:row-end-[span_20] before:h-full before:rounded-lg before:bg-slate-200 before:content-[''] lg:grid lg:gap-x-5 dark:before:bg-slate-800"
 >
   {
     jobs.map(({ period, position, company, rendered: { Content } }) => (

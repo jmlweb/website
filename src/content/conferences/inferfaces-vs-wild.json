@@ -1,0 +1,13 @@
+{
+  "title": "Interfaces vs wild. Building safer interfaces with TypeScript and Functional Programming",
+  "type": "talk",
+  "year": 2019,
+  "language": "es",
+  "youtube": "yLgIDFeeufA",
+  "for": {
+    "title": "Wey Wey Web",
+    "href": "https://www.weyweyweb.com/"
+  },
+  "place": "Málaga",
+  "weight": 8
+}

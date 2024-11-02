@@ -17,12 +17,10 @@ const rawConferences = pipe(
   sortWith<CollectionEntry<'conferences'>>((a, b) => b.data.weight - a.data.weight),
 )(await getCollection('conferences'));
 
-const conferences = await Promise.all(
-  rawConferences.map(async ({ data, render }) => ({
-    ...data,
-    rendered: await render(),
-  })),
-);
+const conferences = rawConferences.map(({ data, ...rest }) => ({
+  ...data,
+  ...rest,
+}));
 
 const article = cva({
   base: 'rounded-md border border-slate-200 bg-slate-50 ~p-4/6 dark:border-slate-800 dark:bg-slate-950/40 flex flex-col',
@@ -36,6 +34,17 @@ const article = cva({
 
 const infoLink = cva({
   base: 'underline decoration-slate-600 underline-offset-4 transition-colors  dark:decoration-slate-600 dark:hover:text-slate-200 hover:text-slate-900',
+});
+
+const typeText = cva({
+  base: 'mr-1.5 inline font-semibold after:ml-1.5 after:text-slate-500 after:content-["·"] dark:after:text-slate-400',
+  variants: {
+    type: {
+      talk: 'text-cyan-600 dark:text-cyan-300',
+      workshop: 'text-indigo-600 dark:text-indigo-300',
+      article: 'text-orange-500 dark:text-amber-400',
+    },
+  },
 });
 ---
 
@@ -58,9 +67,11 @@ const infoLink = cva({
       )}
       <div class="mt-2">
         <p
-          class={`mr-1.5 inline font-semibold after:ml-1.5 after:text-slate-500 after:content-['·'] dark:after:text-slate-400 ${conference.type === 'talk' ? 'text-cyan-600 dark:text-cyan-300' : 'text-indigo-600 dark:text-indigo-300'}`}
+          class={typeText({
+            type: conference.type,
+          })}
         >
-          {t(`conferences:${conference.type === 'workshop' ? 'workshop' : 'talk'}`)}
+          {t(`conferences:${conference.type}`)}
         </p>
         <h3
           class="inline font-semibold text-slate-900 dark:text-slate-200"
@@ -77,16 +88,20 @@ const infoLink = cva({
         ) : (
           conference.for.title
         )}
-        /
-        {!conference.place ? (
-          'Online'
-        ) : (
-          <ExternalLink
-            class={infoLink()}
-            href={`https://www.google.com/maps/place/${conference.place}`}
-          >
-            {conference.place}
-          </ExternalLink>
+        {conference.type !== 'article' && (
+          <Fragment>
+            /{' '}
+            {!conference.place ? (
+              'Online'
+            ) : (
+              <ExternalLink
+                class={infoLink()}
+                href={`https://www.google.com/maps/place/${conference.place}`}
+              >
+                {conference.place}
+              </ExternalLink>
+            )}
+          </Fragment>
         )}
       </p>
       <div class="mt-4 flex flex-wrap items-center gap-3">
@@ -100,7 +115,7 @@ const infoLink = cva({
             class="-mt-0.5 size-5"
             aria-label={t('conferences:language')}
           />{' '}
-          {t(`common:${conference.language === 'en' ? 'en' : 'es'}`)}
+          {t(`common:${conference.language}`)}
         </p>
       </div>
     </article>
