@@ -29,6 +29,7 @@ export default defineConfig({
     applyBaseStyles: false,
   }), icon(), sitemap(), playformCompress({
     CSS: false,
+    Image: false,
   }), compressor()],
   devToolbar: {
     enabled: false,
