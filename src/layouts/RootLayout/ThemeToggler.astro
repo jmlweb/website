@@ -24,61 +24,54 @@ const icon = cva({
 <theme-toggler
   data-message-enable={t('darkMode:enable')}
   data-message-disable={t('darkMode:disable')}
+  class="js-only"
 >
-  <button
-    aria-pressed="true"
-    aria-label={t('darkMode:disable')}
-    aria-live="polite"
-    class="group relative inline-flex h-8 items-center rounded-full bg-slate-100 opacity-20 shadow-md ring-1 ring-inset ring-slate-300 aria-pressed:bg-slate-950 aria-pressed:ring-slate-700"
-  >
+  <template>
     <span aria-hidden="true" class={iconWrapper()}>
       <Icon name="ri:sun-line" class={icon({ theme: 'light' })} />
     </span>
     <span aria-hidden="true" class={iconWrapper()}>
       <Icon name="ri:moon-line" class={icon({ theme: 'dark' })} />
     </span>
-  </button>
+  </template>
 </theme-toggler>
-
-<noscript>
-  <style>
-    theme-toggler {
-      display: none;
-    }
-  </style>
-</noscript>
 
 <script>
   import { isDarkAtom } from '@/store';
 
   class ThemeToggler extends HTMLElement {
+    button: HTMLButtonElement;
+
+    constructor() {
+      super();
+      this.button = document.createElement('button');
+      this.button.className =
+        "group relative inline-flex h-8 items-center rounded-full bg-slate-100 shadow-md ring-1 ring-inset ring-slate-300 aria-pressed:bg-slate-950 aria-pressed:ring-slate-700 before:absolute before:left-0 before:top-0 before:size-8 before:rounded-full before:border before:border-amber-400/50 before:bg-amber-300 before:transition before:content-[''] aria-pressed:before:translate-x-full aria-pressed:before:border-indigo-500/50 aria-pressed:before:bg-indigo-600";
+      this.button.setAttribute('aria-live', 'polite');
+    }
+
+    handleChange(newValue: boolean) {
+      this.button.setAttribute('aria-pressed', newValue ? 'true' : 'false');
+      this.button.setAttribute(
+        'aria-label',
+        newValue ? this.dataset.messageDisable! : this.dataset.messageEnable!,
+      );
+    }
+
     connectedCallback() {
-      const button = this.querySelector<HTMLButtonElement>('button');
-      if (!button) {
-        return;
+      const template = this.querySelector<HTMLTemplateElement>('template');
+      if (!template || !('content' in template)) {
+        throw new Error('Template not valid');
       }
-
-      const decorationClasses =
-        "before:absolute before:left-0 before:top-0 before:size-8 before:rounded-full before:border before:border-amber-400/50 before:bg-amber-300 before:transition before:content-[''] aria-pressed:before:translate-x-full aria-pressed:before:border-indigo-500/50 aria-pressed:before:bg-indigo-600";
-
-      const handleChange = (newValue: boolean) => {
-        button.setAttribute('aria-pressed', newValue ? 'true' : 'false');
-        button.setAttribute(
-          'aria-label',
-          newValue ? this.dataset.messageDisable! : this.dataset.messageEnable!,
-        );
-      };
-
-      handleChange(isDarkAtom.get());
-
-      button.classList.remove('opacity-20');
-      button.classList.add(...decorationClasses.split(' '));
+      this.button.innerHTML = template.innerHTML;
+      this.handleChange(isDarkAtom.get());
+      this.appendChild(this.button);
 
       isDarkAtom.listen((isDark) => {
-        handleChange(isDark);
+        this.handleChange(isDark);
       });
 
-      button.addEventListener('click', () => {
+      this.button.addEventListener('click', () => {
         const newValue = !isDarkAtom.get();
         localStorage.setItem('theme', newValue ? 'dark' : 'light');
         isDarkAtom.set(newValue);

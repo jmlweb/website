@@ -1,4 +1,6 @@
 ---
+import { cva } from '@/utils/cva';
+
 import { Icon } from 'astro-icon/components';
 
 const ITEMS = [
@@ -111,18 +113,29 @@ const ITEMS = [
     label: 'Arduino',
   },
 ];
+
+const icon = cva({
+  base: 'size-8',
+  variants: {
+    visibleOn: {
+      dark: 'hidden dark:inline-block',
+      light: 'inline-block dark:hidden',
+      always: 'inline-block',
+    }
+  }
+})
 ---
 
-<ul id="technologies" class="grid grid-cols-[repeat(auto-fill,minmax(88px,1fr))] gap-3 lg:col-span-2 ~mt-4/8 opacity-20 transition-opacity duration-1000">
+<ul id="technologies" class="grid grid-cols-[repeat(auto-fill,minmax(88px,1fr))] gap-3 lg:col-span-2 ~mt-4/8">
   {
     ITEMS.map((item) => (
       <li class="flex flex-col items-center rounded border bg-slate-50 border-slate-200 dark:border-slate-800 dark:bg-slate-900">
         <span class="grid flex-1 place-items-center p-2 pb-1">
           {typeof item.icon === 'string' ? (
-            <Icon name={`vscode-icons:${item.icon}`} class="inline-block size-8" aria-hidden="true" />
+            <Icon name={`vscode-icons:${item.icon}`} class={icon({ visibleOn: 'always' })} aria-hidden="true" />
           ) : (
-            <Icon name={`vscode-icons:${item.icon.dark}`} class="size-8 inline-block dark:hidden" aria-hidden="true" />
-            <Icon name={`vscode-icons:${item.icon.light}`} class="size-8 hidden dark:inline-block" aria-hidden="true" />
+            <Icon name={`vscode-icons:${item.icon.dark}`} class={icon({ visibleOn: 'light' })} aria-hidden="true" />
+            <Icon name={`vscode-icons:${item.icon.light}`} class={icon({ visibleOn: 'dark' })} aria-hidden="true" />
           )}
         </span>
         <span class="inline-block p-2 pt-0 text-center text-sm font-medium">{item.label}</span>
@@ -130,16 +143,3 @@ const ITEMS = [
     ))
   }
 </ul>
-
-<noscript>
-  <style>
-    #technologies {
-      opacity: 1;
-    }
-  </style>
-</noscript>
-
-<script>
-  const technologies = document.querySelector<HTMLUListElement>('#technologies');
-  technologies?.classList.remove('opacity-20');
-</script>

@@ -6,6 +6,7 @@ import Logo from '@/components/Logo.astro';
 import ThemeToggler from './ThemeToggler.astro';
 import { container } from '@/styles';
 import { useTranslations, getLangFromUrl } from '@/utils/i18n';
+import UmamiScript from './UmamiScript.astro';
 
 interface Props {
   title?: string;
@@ -14,6 +15,17 @@ interface Props {
 const { title } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+const translationLink =
+  lang === 'en'
+    ? {
+        href: '/',
+        text: 'Español',
+      }
+    : {
+        href: '/en',
+        text: 'English',
+      };
 ---
 
 <!doctype html>
@@ -26,13 +38,10 @@ const t = useTranslations(lang);
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title ?? 'José Manuel Lucas'}</title>
-    <script
-      is:inline
-      defer
-      src="https://cloud.umami.is/script.js"
-      data-website-id="df65ee54-96b0-47ae-ab5a-1e88ecb18c14"></script>
+    <UmamiScript />
     <link rel="“alternate”" hreflang="“es”" href="http://jmlweb.es" />
     <link rel="“alternate”" hreflang="en" href="http://jmlweb.es/en" />
+    <link href="/sitemap-index.xml" rel="sitemap" />
   </Head>
   <body
     class="optimize-legibility min-h-screen overflow-y-auto overflow-x-hidden scroll-smooth bg-gradient-to-b from-slate-50 to-slate-100 font-sans text-slate-800/90 antialiased dark:from-slate-900 dark:to-slate-950 dark:text-slate-300/75"
@@ -48,7 +57,7 @@ const t = useTranslations(lang);
           <div class="flex items-center ~gap-6/8">
             <a
               class="text-base text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200"
-              href={lang === 'en' ? '/' : '/en'}>{lang === 'en' ? 'Español' : 'English'}</a
+              href={translationLink.href}>{translationLink.text}</a
             >
             <ThemeToggler />
           </div>
@@ -66,6 +75,13 @@ const t = useTranslations(lang);
         </div>
       </footer>
     </div>
+    <noscript>
+      <style>
+        .js-only {
+          display: none !important;
+        }
+      </style>
+    </noscript>
   </body>
 </html>
 
@@ -76,36 +92,4 @@ const t = useTranslations(lang);
   document.documentElement.classList.toggle('dark', isDarkMode);
 </script>
 
-<script>
-  import { isDarkAtom } from '@/store';
-
-  const AnimationBlocker = () => {
-    const css = document.createElement('style');
-    css.appendChild(
-      document.createTextNode(
-        `* {
-        -webkit-transition: none !important;
-        -moz-transition: none !important;
-        -o-transition: none !important;
-        -ms-transition: none !important;
-        transition: none !important;
-      }`,
-      ),
-    );
-    document.head.appendChild(css);
-    window.getComputedStyle(css).opacity;
-    return () => document.head.removeChild(css);
-  };
-
-  isDarkAtom.listen((isDark) => {
-    const unblock = AnimationBlocker();
-    document.documentElement.classList.toggle('dark', isDark);
-    setTimeout(() => unblock(), 500);
-  });
-
-  window.addEventListener('storage', (e) => {
-    if (e.key === 'theme') {
-      isDarkAtom.set(e.newValue === 'dark');
-    }
-  });
-</script>
+<script src="./theme.ts"></script>
