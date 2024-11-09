@@ -38,6 +38,7 @@ const icon = cva({
 
 <script>
   import { isDarkAtom } from '@/store';
+  import { querySelector } from '@/utils/dom';
 
   class ThemeToggler extends HTMLElement {
     button: HTMLButtonElement;
@@ -59,10 +60,7 @@ const icon = cva({
     }
 
     connectedCallback() {
-      const template = this.querySelector<HTMLTemplateElement>('template');
-      if (!template || !('content' in template)) {
-        throw new Error('Template not valid');
-      }
+      const template = querySelector<HTMLTemplateElement>('template', this);
       this.button.innerHTML = template.innerHTML;
       this.handleChange(isDarkAtom.get());
       this.appendChild(this.button);

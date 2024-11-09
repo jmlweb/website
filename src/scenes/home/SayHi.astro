@@ -18,12 +18,11 @@ const t = useTranslations(lang);
 </say-hi>
 
 <script>
+  import { querySelector } from '@/utils/dom';
+
   class SayHi extends HTMLElement {
     connectedCallback() {
-      const button = this.querySelector<HTMLButtonElement>('button');
-      if (!button) {
-        return;
-      }
+      const button = querySelector<HTMLButtonElement>('button', this);
 
       const handleChange = (isEnabled: boolean) => {
         button.ariaPressed = String(isEnabled);

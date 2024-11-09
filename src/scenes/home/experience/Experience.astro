@@ -32,9 +32,11 @@ const jobs = await Promise.all(
 </div>
 
 <script>
+  import { querySelectorAll } from '@/utils/dom';
+
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const hiddenClasses = ['opacity-0', 'odd:-translate-x-10', 'even:translate-x-10'];
-    const articles = document.querySelectorAll<HTMLElement>('#experience article');
+    const articles = querySelectorAll<HTMLElement>('#experience article');
     const appearingObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
