@@ -38,10 +38,12 @@ const icon = cva({
 
 <script>
   import { isDarkAtom } from '@/store';
-  import { querySelector } from '@/utils/dom';
+  import { querySelector, Dataset } from '@/utils/dom';
+  import { handleShow, handleHide, handleUpdate } from '@/components/SimpleTooltip/tooltipEvents';
 
   class ThemeToggler extends HTMLElement {
     button: HTMLButtonElement;
+    dataValue: ReturnType<typeof Dataset>;
 
     constructor() {
       super();
@@ -49,14 +51,16 @@ const icon = cva({
       this.button.className =
         "group relative inline-flex h-8 items-center rounded-full bg-slate-100 shadow-md ring-1 ring-inset ring-slate-300 aria-pressed:bg-slate-950 aria-pressed:ring-slate-700 before:absolute before:left-0 before:top-0 before:size-8 before:rounded-full before:border before:border-amber-400/50 before:bg-amber-300 before:transition before:content-[''] aria-pressed:before:translate-x-full aria-pressed:before:border-indigo-500/50 aria-pressed:before:bg-indigo-600";
       this.button.setAttribute('aria-live', 'polite');
+      this.dataValue = Dataset(this);
     }
 
     handleChange(newValue: boolean) {
       this.button.setAttribute('aria-pressed', newValue ? 'true' : 'false');
       this.button.setAttribute(
         'aria-label',
-        newValue ? this.dataset.messageDisable! : this.dataset.messageEnable!,
+        newValue ? this.dataValue('messageDisable') : this.dataValue('messageEnable'),
       );
+      handleUpdate({ message: this.button.getAttribute('aria-label') ?? '' });
     }
 
     connectedCallback() {
@@ -73,6 +77,17 @@ const icon = cva({
         const newValue = !isDarkAtom.get();
         localStorage.setItem('theme', newValue ? 'dark' : 'light');
         isDarkAtom.set(newValue);
+      });
+
+      this.button.addEventListener('mouseenter', () => {
+        handleShow({
+          trigger: this.button,
+          message: this.button.getAttribute('aria-label') ?? '',
+        });
+      });
+
+      this.button.addEventListener('mouseleave', () => {
+        handleHide();
       });
     }
   }

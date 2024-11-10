@@ -1,0 +1,165 @@
+<simple-tooltip class="js-only"></simple-tooltip>
+
+<script>
+  import {
+    subscribe,
+    unsubscribe,
+    type TooltipShowPayload,
+    type TooltipUpdatePayload,
+  } from './tooltipEvents';
+
+  class SimpleTooltip extends HTMLElement {
+    root: HTMLDivElement;
+    content: HTMLSpanElement;
+    arrow: HTMLSpanElement;
+    timeout?: NodeJS.Timeout;
+
+    constructor() {
+      super();
+
+      this.root = document.createElement('div');
+      this.root.setAttribute('role', 'tooltip');
+      this.root.setAttribute('hidden', 'true');
+      this.root.classList.add(
+        'absolute',
+        'top-0',
+        'left-0',
+        'w-max',
+        'py-1.5',
+        'px-3',
+        'text-xs',
+        'font-bold',
+        'rounded-1',
+        'bg-slate-500',
+        'dark:bg-slate-600',
+        'text-slate-100',
+        'shadow-lg',
+        'shadow-slate-50/15',
+        'dark:shadow-none',
+        'animate-fade-in',
+        'animate-duration-300',
+        'z-5',
+      );
+
+      this.content = document.createElement('span');
+      this.content.classList.add('block');
+
+      this.arrow = document.createElement('span');
+      this.arrow.setAttribute('aria-hidden', 'true');
+      this.arrow.classList.add(
+        'absolute',
+        'block',
+        'w-1.5',
+        'aspect-square',
+        'rotate-45',
+        'bg-slate-500',
+        'dark:bg-slate-600',
+      );
+
+      this.root.append(this.content, this.arrow);
+    }
+
+    initialize() {
+      import('@floating-ui/dom').then(({ arrow, computePosition, flip, offset, shift }) => {
+        this.append(this.root);
+
+        const show = ({
+          trigger,
+          message,
+          offset: offsetConfig = 8,
+          shiftPadding = 16,
+        }: TooltipShowPayload) => {
+          clearTimeout(this.timeout);
+          this.content.textContent = message;
+
+          computePosition(trigger, this.root, {
+            middleware: [
+              offset(offsetConfig),
+              flip(),
+              shift({
+                padding: shiftPadding,
+              }),
+              arrow({ element: this.arrow }),
+            ],
+          })
+            .then(({ x, y, placement, middlewareData }) => {
+              Object.assign(this.root.style, {
+                top: `${y}px`,
+                left: `${x}px`,
+              });
+
+              const { arrow } = middlewareData;
+              if (arrow == null) {
+                return;
+              }
+
+              const staticSide = {
+                top: 'bottom',
+                right: 'left',
+                bottom: 'top',
+                left: 'right',
+              }[placement.split('-')[0]]!;
+
+              Object.assign(this.arrow.style, {
+                left: arrow.x != null ? `${arrow.x}px` : '',
+                top: arrow.y != null ? `${arrow.y}px` : '',
+                right: '',
+                bottom: '',
+                [staticSide]: '-3px',
+              });
+            })
+            .catch(() => {
+              this.root.hidden = true;
+            });
+          this.root.hidden = false;
+        };
+
+        const update = ({ message }: TooltipUpdatePayload) => {
+          this.content.textContent = message;
+        };
+
+        const hide = () => {
+          clearTimeout(this.timeout);
+          this.timeout = setTimeout(() => {
+            this.root.hidden = true;
+          }, 150);
+        };
+
+        subscribe(({ type, payload }) => {
+          switch (type) {
+            case 'show':
+              return show(payload);
+            case 'update':
+              return update(payload);
+            case 'hide':
+              return hide();
+            default:
+              throw new Error(`Unknown tooltip event type: ${type}`);
+          }
+        });
+      });
+    }
+
+    destroy() {
+      clearTimeout(this.timeout);
+      unsubscribe();
+      this.root.remove();
+    }
+
+    connectedCallback() {
+      const supportsHoverMatchmedia = window.matchMedia('(hover: hover)');
+      supportsHoverMatchmedia.addEventListener('change', (e) => {
+        if (e.matches) {
+          this.initialize();
+        } else {
+          this.destroy();
+        }
+      });
+      if (supportsHoverMatchmedia.matches) {
+        this.initialize();
+      }
+    }
+  }
+
+  customElements.define('simple-tooltip', SimpleTooltip);
+</script>

@@ -26,7 +26,7 @@ const SOCIAL_NETWORKS = [
 ];
 ---
 
-<div class="flex flex-wrap gap-4">
+<social-networks class="flex flex-wrap gap-4">
   {
     SOCIAL_NETWORKS.map((socialNetwork) => (
       <ExternalLink
@@ -38,4 +38,21 @@ const SOCIAL_NETWORKS = [
       </ExternalLink>
     ))
   }
-</div>
+</social-networks>
+
+<script>
+  import { handleShow, handleHide } from '@/components/SimpleTooltip/tooltipEvents';
+  import { querySelector, querySelectorAll } from '@/utils/dom';
+
+  class SocialNetworks extends HTMLElement {
+    connectedCallback() {
+      querySelectorAll<HTMLAnchorElement>('a', this).forEach((link) => {
+        const message = querySelector<HTMLSpanElement>('.sr-only', link).textContent!;
+        link.addEventListener('mouseenter', () => handleShow({ message, trigger: link }));
+        link.addEventListener('mouseleave', handleHide);
+      });
+    }
+  }
+
+  customElements.define('social-networks', SocialNetworks);
+</script>

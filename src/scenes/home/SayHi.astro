@@ -5,47 +5,56 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<say-hi class="js-only">
-  <button
-    aria-pressed="true"
-    aria-label={t('sayHi:disable')}
-    aria-live="polite"
-    data-message-enable={t('sayHi:enable')}
-    data-message-disable={t('sayHi:disable')}
-    class="print-hidden relative inline-block cursor-pointer motion-safe:aria-pressed:before:say-hi before:inline-block before:grayscale before:content-['👋🏻'] hover:opacity-80 aria-pressed:before:grayscale-0"
-  >
-  </button>
+<say-hi
+  class="js-only"
+  data-message-enable={t('sayHi:enable')}
+  data-message-disable={t('sayHi:disable')}
+>
 </say-hi>
 
 <script>
-  import { querySelector } from '@/utils/dom';
+  import { Dataset } from '@/utils/dom';
+
+  const strToBool = (str: string | null) => str === 'true';
 
   class SayHi extends HTMLElement {
+    button: HTMLButtonElement;
+    dataValue: ReturnType<typeof Dataset>;
+
+    constructor() {
+      super();
+      this.button = document.createElement('button');
+      this.button.className =
+        "print-hidden relative inline-block cursor-pointer motion-safe:aria-pressed:before:say-hi before:inline-block before:grayscale before:content-['👋🏻'] hover:opacity-80 aria-pressed:before:grayscale-0";
+      this.dataValue = Dataset(this);
+    }
+
+    handleChange(newValue: boolean) {
+      this.button.setAttribute('aria-pressed', String(newValue));
+      this.button.setAttribute(
+        'aria-label',
+        newValue ? this.dataValue('messageDisable') : this.dataValue('messageEnable'),
+      );
+    }
+
     connectedCallback() {
-      const button = querySelector<HTMLButtonElement>('button', this);
+      this.handleChange(localStorage.getItem('sayHi') !== 'false');
+      this.button.setAttribute('aria-live', 'polite');
+      this.appendChild(this.button);
 
-      const handleChange = (isEnabled: boolean) => {
-        button.ariaPressed = String(isEnabled);
-        button.ariaLabel = isEnabled
-          ? button.dataset.messageDisable!
-          : button.dataset.messageEnable!;
-      };
-
-      handleChange(localStorage.getItem('sayHi') !== 'false');
-
-      // Each time the button is clicked, update the count.
-      button.addEventListener('click', (e) => {
-        const newState = (e.currentTarget as any).ariaPressed === 'true' ? false : true;
+      this.button.addEventListener('click', (e) => {
+        const newState = !strToBool((e.currentTarget as any).ariaPressed);
         localStorage.setItem('sayHi', String(newState));
-        handleChange(newState);
+        this.handleChange(newState);
       });
 
       window.addEventListener('storage', (e) => {
         if (e.key === 'sayHi') {
-          handleChange(e.newValue === 'true');
+          this.handleChange(strToBool(e.newValue));
         }
       });
     }
   }
+
   customElements.define('say-hi', SayHi);
 </script>

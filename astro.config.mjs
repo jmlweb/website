@@ -31,6 +31,7 @@ export default defineConfig({
     CSS: false,
     Image: false,
     JavaScript: false,
+    SVG: false,
   }), compressor()],
   devToolbar: {
     enabled: false,

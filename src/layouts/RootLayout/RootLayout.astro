@@ -7,6 +7,7 @@ import ThemeToggler from './ThemeToggler.astro';
 import { container } from '@/styles';
 import { useTranslations, getLangFromUrl } from '@/utils/i18n';
 import UmamiScript from './UmamiScript.astro';
+import SimpleTooltip from '@/components/SimpleTooltip/SimpleTooltip.astro';
 
 interface Props {
   title?: string;
@@ -75,6 +76,7 @@ const translationLink =
         </div>
       </footer>
     </div>
+    <SimpleTooltip />
     <noscript>
       <style>
         .js-only {
