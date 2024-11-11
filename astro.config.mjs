@@ -38,5 +38,6 @@ export default defineConfig({
   },
   markdown: {
     rehypePlugins: ['rehype-preset-minify'],
-  }
+  },
+  prefetch: true,
 });

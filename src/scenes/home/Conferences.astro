@@ -96,7 +96,7 @@ const typeText = cva({
             ) : (
               <ExternalLink
                 class={infoLink()}
-                href={`https://www.google.com/maps/place/${conference.place}`}
+                href={`https://www.google.com/maps/place/${encodeURIComponent(conference.place)}`}
               >
                 {conference.place}
               </ExternalLink>

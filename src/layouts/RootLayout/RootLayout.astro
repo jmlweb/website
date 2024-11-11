@@ -1,4 +1,5 @@
 ---
+import { getImage } from 'astro:assets';
 import { Head } from 'astro-capo';
 
 import '@/base.css';
@@ -8,6 +9,7 @@ import { container } from '@/styles';
 import { useTranslations, getLangFromUrl } from '@/utils/i18n';
 import UmamiScript from './UmamiScript.astro';
 import SimpleTooltip from '@/components/SimpleTooltip/SimpleTooltip.astro';
+import pictureSrc from '@/images/looking-down.png';
 
 interface Props {
   title?: string;
@@ -27,6 +29,8 @@ const translationLink =
         href: '/en',
         text: 'English',
       };
+
+const { src: ogImage } = await getImage({ src: pictureSrc, height: 627 });
 ---
 
 <!doctype html>
@@ -43,40 +47,14 @@ const translationLink =
     <link rel="“alternate”" hreflang="“es”" href="http://jmlweb.es" />
     <link rel="“alternate”" hreflang="en" href="http://jmlweb.es/en" />
     <link href="/sitemap-index.xml" rel="sitemap" />
-  </Head>
-  <body
-    class="optimize-legibility min-h-screen overflow-y-auto overflow-x-hidden scroll-smooth bg-gradient-to-b from-slate-50 to-slate-100 font-sans text-slate-800/90 antialiased dark:from-slate-900 dark:to-slate-950 dark:text-slate-300/75"
-  >
-    <div class="grid min-h-screen grid-rows-[auto_1fr_auto]">
-      <div class="print-hidden border-b border-slate-300 dark:border-slate-800">
-        <header
-          class={container({
-            class: 'flex items-center justify-between ~py-3/5',
-          })}
-        >
-          <Logo color="reactive" />
-          <div class="flex items-center ~gap-6/8">
-            <a
-              class="text-base text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200"
-              href={translationLink.href}>{translationLink.text}</a
-            >
-            <ThemeToggler />
-          </div>
-        </header>
-      </div>
-      <div class="flex flex-col">
-        <slot />
-      </div>
-      <footer class="~mt-12/16 ~py-6/8">
-        <div class={container()}>
-          <p>
-            <span class="font-medium">José Manuel Lucas</span>
-            <span class="text-slate-500">/ Murcia ({t('common:spain')})</span>
-          </p>
-        </div>
-      </footer>
-    </div>
-    <SimpleTooltip />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:image" content={`${Astro.site?.protocol}//${Astro.site?.host}${ogImage}`} />
+    <meta
+      property="og:description"
+      content="José Manuel Lucas | Frontend, TypeScript, CSS, Next.js"
+    />
     <noscript>
       <style>
         .js-only {
@@ -84,6 +62,39 @@ const translationLink =
         }
       </style>
     </noscript>
+  </Head>
+  <body
+    class="optimize-legibility grid min-h-screen grid-rows-[auto_1fr_auto] overflow-y-auto overflow-x-hidden scroll-smooth bg-gradient-to-b from-slate-50 to-slate-100 font-sans text-slate-800/90 antialiased dark:from-slate-900 dark:to-slate-950 dark:text-slate-300/75"
+  >
+    <div class="print-hidden border-b border-slate-300 dark:border-slate-800">
+      <header
+        class={container({
+          class: 'flex items-center justify-between ~py-3/5',
+        })}
+      >
+        <Logo color="reactive" />
+        <div class="flex items-center ~gap-6/8">
+          <a
+            class="text-base text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200"
+            data-astro-prefetch
+            href={translationLink.href}>{translationLink.text}</a
+          >
+          <ThemeToggler />
+        </div>
+      </header>
+    </div>
+    <div class="flex flex-col">
+      <slot />
+    </div>
+    <footer class="~mt-12/16 ~py-6/8">
+      <div class={container()}>
+        <p>
+          <span class="font-medium">José Manuel Lucas</span>
+          <span class="text-slate-500">/ Murcia ({t('common:spain')})</span>
+        </p>
+      </div>
+    </footer>
+    <SimpleTooltip />
   </body>
 </html>
 
