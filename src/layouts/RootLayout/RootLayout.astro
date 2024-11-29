@@ -73,19 +73,19 @@ const { src: ogImage } = await getImage({ src: pictureSrc, height: 627 });
         })}
       >
         <Logo color="reactive" />
-        <div class="flex items-center ~gap-6/8">
+        <nav class="flex items-center ~gap-6/8">
           <a
             class="text-base text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200"
             data-astro-prefetch
             href={translationLink.href}>{translationLink.text}</a
           >
           <ThemeToggler />
-        </div>
+        </nav>
       </header>
     </div>
-    <div class="flex flex-col">
+    <main class="flex flex-col">
       <slot />
-    </div>
+    </main>
     <footer class="~mt-12/16 ~py-6/8">
       <div class={container()}>
         <p>
