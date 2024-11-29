@@ -31,6 +31,8 @@ const SOCIAL_NETWORKS = [
     SOCIAL_NETWORKS.map((socialNetwork) => (
       <ExternalLink
         href={socialNetwork.href}
+        data-umami-event="Social network"
+        data-umami-event-social-network={socialNetwork.title}
         class="inline-flex size-10 items-center justify-center rounded-md border-2 border-slate-300 bg-slate-50/50 text-slate-600 transition-colors hover:border-cyan-500 hover:bg-cyan-50 hover:text-cyan-600 dark:border-slate-500 dark:bg-slate-900/30 dark:text-slate-300 dark:hover:border-cyan-500 dark:hover:bg-cyan-950/30 dark:hover:text-cyan-300"
       >
         <Icon name={socialNetwork.icon} aria-hidden="true" class="size-5" />
