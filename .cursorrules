@@ -1,53 +1,21 @@
-You are an expert in JavaScript, TypeScript, and Astro framework for scalable web development.
+You are an expert in JavaScript, TypeScript, TailwindCSS, Web Performance Optimization and Astro framework for scalable web development.
 
 Key Principles
 
 - Write concise, technical responses with accurate Astro examples.
-- Leverage Astro's partial hydration and multi-framework support effectively.
-- Prioritize static generation and minimal JavaScript for optimal performance.
+- Prioritize static generation and minimal client-side JavaScript for optimal performance.
 - Use descriptive variable names and follow Astro's naming conventions.
-- Organize files using Astro's file-based routing system.
-
-Astro Project Structure
-
-- Use the recommended Astro project structure:
-  - src/
-    - components/
-    - content/
-    - icons/
-    - images/
-    - layouts/
-    - pages/
-    - scenes/
-    - utils/
-  - public/
-  - astro.config.mjs
-
-Component Development
-
-- Create .astro files for Astro components.
-- Implement proper component composition and reusability.
-- Use Astro's component props for data passing.
-- Leverage Astro's built-in components like <Markdown /> when appropriate.
-
-Routing and Pages
-
-- Utilize Astro's file-based routing system in the src/pages/ directory.
-- Implement dynamic routes using [...slug].astro syntax.
-- Use getStaticPaths() for generating static pages with dynamic routes.
-- Implement proper 404 handling with a 404.astro page.
-
-Content Management
-
-- Use Markdown (.md) or MDX (.mdx) files for content-heavy pages.
-- Leverage Astro's built-in support for frontmatter in Markdown files.
-- Implement content collections for organized content management.
+- Prefer a functional approach to development, but don't be afraid to use imperative code when it's more readable.
 
 Styling
 
-- Use TailwindCSS for styling
-- Prefer TailwindCSS classes over custom CSS
-- Prefer CSS or TailwindCSS over JavaScript for styling when possible
+- Use TailwindCSS for styling.
+- Integrate TailwindCSS with Astro @astrojs/tailwind
+- Don't use arbitrary classes and prefer utility classes (i.e. `mt-4` instead of `mt-[16px]`).
+- Use the `fluid-tailwind` package to scale the values of the utility classes depending on the screen size.
+- Use the `cva` package when needed to create consistent and scalable CSS classes.
+- Prefer CSS-only solutions (like CSS scroll driven animations) over JavaScript alternatives.
+- Prefer TailwindCSS classes over custom CSS classes.
 
 Performance Optimization
 
@@ -62,13 +30,11 @@ Performance Optimization
 Data Fetching
 
 - Use Astro.props for passing data to components.
-- Implement getStaticPaths() for fetching data at build time.
-- Use Astro.glob() for working with local files efficiently.
-- Implement proper error handling for data fetching operations.
+- Use the new version of collections to fetch data at build time.
 
 SEO and Meta Tags
 
-- Use Astro's <head> tag for adding meta information.
+- Use `astro-capo` package to improve the order of the meta tags.
 - Implement canonical URLs for proper SEO.
 - Use the <SEO> component pattern for reusable SEO setups.
 
@@ -82,40 +48,14 @@ Build and Deployment
 
 - Optimize the build process using Astro's build command.
 - Implement proper environment variable handling for different environments.
-- Use static hosting platforms compatible with Astro (Netlify, Vercel, etc.).
+- Use static hosting platforms compatible with Astro (Vercel).
 - Implement proper CI/CD pipelines for automated builds and deployments.
-
-Styling with Tailwind CSS
-
-- Integrate Tailwind CSS with Astro @astrojs/tailwind
-
-Tailwind CSS Best Practices
-
-- Use Tailwind utility classes extensively in your Astro components.
-- Leverage Tailwind's responsive design utilities (sm:, md:, lg:, etc.).
-- Utilize Tailwind's color palette and spacing scale for consistency.
-- Implement custom theme extensions in tailwind.config.cjs when necessary.
-- Never use the @apply directive
-
-Testing
-
-- Implement unit tests for utility functions and helpers.
-- Use end-to-end testing tools like Cypress for testing the built site.
-- Implement visual regression testing if applicable.
 
 Accessibility
 
 - Ensure proper semantic HTML structure in Astro components.
 - Implement ARIA attributes where necessary.
 - Ensure keyboard navigation support for interactive elements.
-
-Key Conventions
-
-1. Follow Astro's Style Guide for consistent code formatting.
-2. Use TypeScript for enhanced type safety and developer experience.
-3. Implement proper error handling and logging.
-4. Leverage Astro's RSS feed generation for content-heavy sites.
-5. Use Astro's Image component for optimized image delivery.
 
 Performance Metrics
 
