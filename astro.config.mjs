@@ -6,11 +6,7 @@ import tailwind from '@astrojs/tailwind';
 
 import icon from 'astro-icon';
 
-import compressor from 'astro-compressor';
-
-
 import sitemap from '@astrojs/sitemap';
-
 
 import playformCompress from '@playform/compress';
 
@@ -32,7 +28,7 @@ export default defineConfig({
     Image: false,
     JavaScript: false,
     SVG: false,
-  }), compressor()],
+  })],
   devToolbar: {
     enabled: false,
   },
