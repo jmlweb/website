@@ -1,6 +1,6 @@
 ---
 import { getImage } from 'astro:assets';
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 
 import '@/base.css';
 import Logo from '@/components/Logo.astro';
@@ -62,7 +62,7 @@ const { src: ogImage } = await getImage({ src: pictureSrc, height: 627 });
         }
       </style>
     </noscript>
-    <ViewTransitions />
+    <ClientRouter />
   </head>
   <body
     class="optimize-legibility grid min-h-screen grid-rows-[auto_1fr_auto] overflow-y-auto overflow-x-hidden scroll-smooth bg-gradient-to-b from-slate-50 to-slate-100 font-sans text-slate-800/90 antialiased dark:from-slate-900 dark:to-slate-950 dark:text-slate-300/75"
@@ -102,10 +102,18 @@ const { src: ogImage } = await getImage({ src: pictureSrc, height: 627 });
 </html>
 
 <script is:inline>
-  const isDarkMode =
-    localStorage.getItem('theme') === 'dark' ||
-    (!('theme' in localStorage) && !window.matchMedia('(prefers-color-scheme: light)').matches);
-  document.documentElement.classList.toggle('dark', isDarkMode);
+  const updateDarkMode = (newDocument) => {
+    const isDarkMode =
+      localStorage.getItem('theme') === 'dark' ||
+      (!('theme' in localStorage) && !window.matchMedia('(prefers-color-scheme: light)').matches);
+    newDocument.documentElement.classList.toggle('dark', isDarkMode);
+  };
+
+  updateDarkMode(document);
+
+  document.addEventListener('astro:before-swap', (ev) => {
+    updateDarkMode(ev.newDocument);
+  });
 </script>
 
 <script src="./theme.ts"></script>
