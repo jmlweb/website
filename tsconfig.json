@@ -3,8 +3,13 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
+      "@/*": ["src/*"]
     },
+    "jsx": "preserve",
+    "jsxImportSource": "astro",
+    "verbatimModuleSyntax": true,
+    "types": ["astro/client"]
   },
-  "exclude": ["src2"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

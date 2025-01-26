@@ -5,7 +5,7 @@ Key Principles
 - Write concise, technical responses with accurate Astro examples.
 - Prioritize static generation and minimal client-side JavaScript for optimal performance.
 - Use descriptive variable names and follow Astro's naming conventions.
-- Prefer a functional approach to development, but don't be afraid to use imperative code when it's more readable.
+- Prefer a functional approach to development, use `mochila-ts` piping capabilities to enhance readability.
 
 Styling
 

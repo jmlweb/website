@@ -19,21 +19,45 @@ const { SITE_URL = 'https://jmlweb.es' } = loadEnv(
 
 // https://astro.build/config
 export default defineConfig({
-  i18n: { defaultLocale: 'es', locales: ['es', 'en'] },
+  i18n: { 
+    defaultLocale: 'es', 
+    locales: ['es', 'en'],
+    routing: {
+      prefixDefaultLocale: false
+    }
+  },
   site: SITE_URL,
-  integrations: [tailwind({
-    applyBaseStyles: false,
-  }), icon(), sitemap(), playformCompress({
-    CSS: false,
-    Image: false,
-    JavaScript: false,
-    SVG: false,
-  })],
+  integrations: [
+    tailwind({
+      applyBaseStyles: false,
+    }), 
+    icon(), 
+    sitemap({
+      i18n: {
+        defaultLocale: 'es',
+        locales: {
+          es: 'es-ES',
+          en: 'en-US'
+        }
+      }
+    }), 
+    playformCompress()
+  ],
+  // Enable image optimization
+  image: {
+    remotePatterns: [{
+      protocol: 'https'
+    }],
+    format: ['avif', 'webp']
+  },
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: 'hover'
+  },
   devToolbar: {
-    enabled: false,
+    enabled: true
   },
   markdown: {
     rehypePlugins: ['rehype-preset-minify'],
   },
-  prefetch: true,
 });

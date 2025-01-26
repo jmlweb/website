@@ -1,6 +1,6 @@
 ---
 import { getImage } from 'astro:assets';
-import { Head } from 'astro-capo';
+import { ViewTransitions } from 'astro:transitions';
 
 import '@/base.css';
 import Logo from '@/components/Logo.astro';
@@ -62,6 +62,7 @@ const { src: ogImage } = await getImage({ src: pictureSrc, height: 627 });
         }
       </style>
     </noscript>
+    <ViewTransitions />
   </head>
   <body
     class="optimize-legibility grid min-h-screen grid-rows-[auto_1fr_auto] overflow-y-auto overflow-x-hidden scroll-smooth bg-gradient-to-b from-slate-50 to-slate-100 font-sans text-slate-800/90 antialiased dark:from-slate-900 dark:to-slate-950 dark:text-slate-300/75"
